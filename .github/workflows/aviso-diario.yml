@@ -1,0 +1,26 @@
+name: Aviso diario
+
+on:
+  schedule:
+    # 7:00 am en Ciudad de México (UTC-6, sin horario de verano) = 13:00 UTC
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+    inputs:
+      fecha:
+        description: "Fecha a enviar (AAAA-MM-DD). Vacío = hoy."
+        required: false
+
+jobs:
+  enviar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Publicar el aviso del día en Telegram
+        run: node scripts/aviso-diario.mjs
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          GROUP_CHAT_ID: ${{ secrets.GROUP_CHAT_ID }}
+          FECHA: ${{ inputs.fecha }}

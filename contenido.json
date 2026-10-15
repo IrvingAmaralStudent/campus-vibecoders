@@ -1,0 +1,20 @@
+{
+  "portalUrl": "https://irvingamaralstudent.github.io/campus-vibecoders/",
+  "dias": [
+    {
+      "fecha": "2026-10-15",
+      "titulo": "Qué es (y qué no es) un vibecoder",
+      "aviso": "*Vibecoders · Qué es (y qué no es) un vibecoder*\nJueves 15 de octubre\n\nEntender la diferencia entre generar código con IA y construir software con IA del que eres responsable. Dejar Claude Code instalado.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: captura de Claude Code instalado + 5 líneas en tus palabras\n\nTodo el material y tu checklist aquí 👉 {link}"
+    },
+    {
+      "fecha": "2026-10-16",
+      "titulo": "Terminal y Git: el idioma del que trabaja con agentes",
+      "aviso": "*Vibecoders · Terminal y Git: el idioma del que trabaja con agentes*\nViernes 16 de octubre\n\nMoverte con soltura en la terminal y entender commits y ramas. Claude Code vive en la terminal y todo su trabajo queda en Git: si no lo entiendes, no puedes revisarlo.\n\n⏱ ≈ 2 h 25 min\n✅ Entrega: link a tu repo con 5 commits hechos a mano\n\nTodo el material y tu checklist aquí 👉 {link}"
+    },
+    {
+      "fecha": "2026-10-17",
+      "titulo": "Laboratorio: tu primera sesión real con Claude Code",
+      "aviso": "*Vibecoders · Laboratorio: tu primera sesión real con Claude Code*\nSábado 17 de octubre · laboratorio\n\nConstruir algo pequeño de principio a fin con Claude Code: pedir, revisar, probar y guardar en Git. Es la primera vuelta del ciclo que vas a repetir todo el programa.\n\n⏱ ≈ 2 h 50 min (sábado)\n✅ Entrega: página personal hecha con Claude Code + BITACORA.md\n\nTodo el material y tu checklist aquí 👉 {link}"
+    }
+  ]
+}
