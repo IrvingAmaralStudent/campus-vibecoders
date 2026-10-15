@@ -4,7 +4,7 @@
   "fase": 1,
   "semanaTitulo": "Claude Code y el ciclo pedir-revisar-probar",
   "entregableSemana": "App web de una página en TypeScript (gestor de gastos personales) que guarda datos en localStorage, con repo en GitHub, CLAUDE.md y README.",
-  "titulo": "Laboratorio: elige tu proyecto personal",
+  "titulo": "Laboratorio: elige y define tu proyecto personal",
   "objetivo": "Definir el proyecto personal que vas a construir a lo largo del programa, y terminar el curso de Claude Code.",
   "bloques": [
     {
