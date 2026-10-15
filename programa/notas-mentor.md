@@ -10,3 +10,4 @@ Ejemplos:
 ## Notas
 
 (sin notas por ahora)
+- [aplicado] (2026-10-15, semana-01) PRUEBA DEL SISTEMA - en el sábado 24 cambia el título a "Laboratorio: elige y define tu proyecto personal"
