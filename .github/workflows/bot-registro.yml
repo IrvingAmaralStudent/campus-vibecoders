@@ -1,0 +1,27 @@
+name: Bot de registro
+
+on:
+  schedule:
+    # Cada 10 minutos: atiende a quien entra al grupo o pide su código.
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: bot-registro
+  cancel-in-progress: false
+
+jobs:
+  atender:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Atender novedades del bot
+        run: node scripts/bot-registro.mjs
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          GROUP_CHAT_ID: ${{ secrets.GROUP_CHAT_ID }}
+          MENTOR_CHAT_ID: ${{ secrets.MENTOR_CHAT_ID }}
+          ALUMNOS: ${{ secrets.ALUMNOS }}
