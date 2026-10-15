@@ -1,0 +1,646 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><style>[hidden]{display:none!important}img{max-width:100%}body{margin:0}</style></head><body><title>Campus Vibecoders</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: una columna de lectura (máx. 880px) con barra de fase arriba y pestañas Hoy / Semana / Equipo / Mentor */
+:root {
+  --bg: #F2F4F8;
+  --surface: #FFFFFF;
+  --ink: #142033;
+  --muted: #5A6678;
+  --line: #D8DEE8;
+  --accent: #1F4FD1;
+  --accent-soft: #E3EAFC;
+  --signal: #A3510A;
+  --signal-soft: #FBEEDD;
+  --ok: #15803D;
+  --ok-soft: #DDF3E4;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --r: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D131C; --surface: #151D29; --ink: #E5EBF3; --muted: #95A2B5; --line: #263244;
+    --accent: #84A4FF; --accent-soft: #1C2A4D; --signal: #F2A440; --signal-soft: #3A2A14;
+    --ok: #5BD48A; --ok-soft: #15301F; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D131C; --surface: #151D29; --ink: #E5EBF3; --muted: #95A2B5; --line: #263244;
+  --accent: #84A4FF; --accent-soft: #1C2A4D; --signal: #F2A440; --signal-soft: #3A2A14;
+  --ok: #5BD48A; --ok-soft: #15301F; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 56px;
+}
+.wrap { max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.15; }
+h1 { font-size: clamp(1.6rem, 4vw, 2.1rem); font-weight: 800; font-stretch: 112%; letter-spacing: -0.01em; }
+h2 { font-size: 1.35rem; font-weight: 700; font-stretch: 105%; }
+h3 { font-size: 1.02rem; font-weight: 650; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.eyebrow { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.muted { color: var(--muted); }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+header.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; }
+.who { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--muted); }
+.who img { width: 26px; height: 26px; border-radius: 50%; }
+
+.phases { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.phase { border-top: 4px solid var(--line); padding-top: 6px; font-size: 0.78rem; color: var(--muted); min-width: 0; }
+.phase b { display: block; font-family: var(--font-mono); font-weight: 500; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.phase.done { border-color: var(--ok); }
+.phase.now { border-color: var(--accent); color: var(--ink); }
+
+nav.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+nav.tabs button { font: 600 0.9rem var(--font-body); background: none; border: 0; color: var(--muted); padding: 10px 14px; border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; }
+nav.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 22px; display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.notice { background: var(--surface); border: 1px dashed var(--line); border-radius: var(--r); padding: 22px; color: var(--muted); }
+
+.daynav { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.btn { font: 600 0.86rem var(--font-body); border-radius: 8px; padding: 8px 14px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.btn[disabled] { opacity: 0.45; cursor: default; }
+.btn.small { padding: 5px 10px; font-size: 0.8rem; }
+
+.dayhead { display: flex; flex-direction: column; gap: 6px; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.82rem; color: var(--muted); }
+.objetivo { font-size: 1.02rem; max-width: 65ch; }
+
+.meter { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.meter > i { display: block; height: 100%; background: var(--ok); width: 0; transition: width .3s; }
+
+ol.blocks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.block { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 4px 12px; align-items: start; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; }
+.block.done { background: var(--ok-soft); border-color: transparent; }
+.block.sinia { border-left: 4px solid var(--signal); }
+.block input[type="checkbox"] { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--ok); }
+.block .body { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.block .title { font-weight: 600; overflow-wrap: anywhere; }
+.block .detail { color: var(--muted); font-size: 0.9rem; white-space: pre-line; max-width: 65ch; }
+.block .min { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
+.chip { display: inline-block; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); margin-right: 6px; vertical-align: 1px; }
+.chip.sinia { background: var(--signal-soft); color: var(--signal); }
+.chip.extra { background: transparent; border: 1px solid var(--line); color: var(--muted); }
+.chip.proyecto, .chip.practica { background: var(--ok-soft); color: var(--ok); }
+.chip.lang { background: transparent; border: 1px solid var(--line); color: var(--muted); }
+
+.box { border-radius: 8px; padding: 16px; background: var(--bg); display: flex; flex-direction: column; gap: 10px; }
+.box.feedback { background: var(--accent-soft); }
+label { font-weight: 600; font-size: 0.86rem; }
+input[type="url"], input[type="text"], textarea, select { width: 100%; font: 0.92rem var(--font-body); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; }
+textarea { min-height: 84px; resize: vertical; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.status { font-size: 0.82rem; color: var(--muted); }
+
+.week { display: flex; flex-direction: column; gap: 10px; }
+.weekrow { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; background: var(--surface); text-align: left; font: inherit; color: inherit; width: 100%; }
+.weekrow:hover { border-color: var(--accent); }
+.weekrow.today { border-color: var(--accent); }
+.pill { font-family: var(--font-mono); font-size: 0.72rem; padding: 3px 8px; border-radius: 999px; background: var(--line); color: var(--muted); white-space: nowrap; }
+.pill.ok { background: var(--ok-soft); color: var(--ok); }
+.pill.part { background: var(--accent-soft); color: var(--accent); }
+
+.tablewrap { overflow-x: auto; }
+table.matrix { border-collapse: collapse; font-size: 0.85rem; }
+.matrix th, .matrix td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: center; white-space: nowrap; }
+.matrix th:first-child, .matrix td:first-child { text-align: left; position: sticky; left: 0; background: var(--surface); }
+.matrix thead th { font-family: var(--font-mono); font-weight: 500; font-size: 0.72rem; color: var(--muted); }
+.cell { display: inline-block; width: 18px; height: 18px; border-radius: 4px; background: var(--line); }
+.cell.part { background: var(--accent); opacity: .45; }
+.cell.ok { background: var(--ok); }
+.person { display: inline-flex; align-items: center; gap: 8px; }
+.person img { width: 22px; height: 22px; border-radius: 50%; }
+
+.evid { border: 1px solid var(--line); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+.evid p { margin: 0; white-space: pre-line; overflow-wrap: anywhere; }
+.draftweek { border: 1px solid var(--line); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+details summary { cursor: pointer; font-weight: 600; }
+details .panel { margin-top: 10px; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.8rem; color: var(--muted); align-items: center; }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+@media (max-width: 520px) {
+  .panel { padding: 16px; }
+  .weekrow { grid-template-columns: minmax(0, 1fr) auto; }
+  .weekrow .mono { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) { .meter > i { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Programa de formación</div>
+      <h1>Campus Vibecoders</h1>
+    </div>
+    <div class="who" id="who"></div>
+  </header>
+
+  <div class="phases" id="phases" aria-label="Fases del programa">
+    <div class="phase" data-f="1"><b>Fase 1</b>Fundamentos</div>
+    <div class="phase" data-f="2"><b>Fase 2</b>Stack profesional</div>
+    <div class="phase" data-f="3"><b>Fase 3</b>Proyectos reales</div>
+    <div class="phase" data-f="4"><b>Fase 4</b>Autonomía y agentes</div>
+  </div>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" id="tab-hoy" aria-selected="true" data-tab="hoy">Hoy</button>
+    <button role="tab" id="tab-semana" aria-selected="false" data-tab="semana">Semana</button>
+    <button role="tab" id="tab-equipo" aria-selected="false" data-tab="equipo" hidden>Equipo</button>
+    <button role="tab" id="tab-mentor" aria-selected="false" data-tab="mentor" hidden>Mentor</button>
+  </nav>
+
+  <main id="view">
+    <div class="notice">
+      <h3>Cargando el temario…</h3>
+      <p>Aquí aparece la actividad del día: videos, lecturas, práctica con Claude Code, un reto sin IA y lo que debes entregar. Si no carga, recarga la página o avisa en el grupo.</p>
+    </div>
+  </main>
+</div>
+
+<script id="contenido" type="application/json">
+/*CONTENIDO*/{"portalUrl":"https://irvingamaralstudent.github.io/campus-vibecoders/","formUrl":"","dias":[{"fecha":"2026-10-15","semana":0,"fase":1,"semanaTitulo":"Puesta a punto: herramientas y mentalidad","entregableSemana":"Claude Code instalado y funcionando, repo sandbox en GitHub con tus primeros commits y una página personal hecha con Claude Code.","titulo":"Qué es (y qué no es) un vibecoder","objetivo":"Entender la diferencia entre generar código con IA y construir software con IA del que eres responsable. Dejar Claude Code instalado.","bloques":[{"tipo":"leer","idioma":"es","titulo":"¿Qué es el vibe coding? (Cloudflare)","url":"https://www.cloudflare.com/es-es/learning/ai/ai-vibe-coding/","minutos":15,"detalle":"Qué es, de dónde viene el término (Andrej Karpathy, 2025) y sus riesgos: seguridad, fuga de datos y código que nadie entiende. La idea central del programa: si revisas, pruebas y puedes explicar el código, ya no es \"vibe coding\" a ciegas; es desarrollo profesional asistido por IA."},{"tipo":"ver","idioma":"en-sub","titulo":"Andrej Karpathy: Software Is Changing (Again)","url":"https://www.youtube.com/watch?v=LCEmiRjPEtQ","minutos":40,"detalle":"La charla de quien inventó el término. Fíjate en lo que dice de verificar lo que genera la IA y de mantenerla \"con correa corta\".\nVideo en inglés: activa subtítulos en ⚙ Configuración → Subtítulos → Traducir automáticamente → Español."},{"tipo":"curso","idioma":"es","titulo":"MoureDev: Claude Code, curso completo desde cero (parte 1)","url":"https://www.youtube.com/watch?v=TCq7eZ9Lhc8","minutos":45,"detalle":"El curso principal de Claude Code del programa, en español (3 horas, 2026). Hoy mira los primeros 45 minutos: qué es Claude Code y cómo se instala. Lo continuarás en los próximos días."},{"tipo":"practica","idioma":"es","titulo":"Instala Claude Code y haz tu primera pregunta","url":"https://code.claude.com/docs/es/quickstart","minutos":30,"detalle":"Sigue los pasos 1 y 2 de la guía de inicio rápido. En Windows usa PowerShell e instala también Git for Windows.\nAl terminar corre: claude --version\nLuego, en cualquier carpeta, abre claude y pregúntale: \"¿Qué puedes hacer en esta carpeta y qué no?\""},{"tipo":"extra","idioma":"en","titulo":"Simon Willison: Not all AI-assisted programming is vibe coding","url":"https://simonwillison.net/2025/Mar/19/vibe-coding/","minutos":15,"detalle":"Artículo corto en inglés; puedes usar \"Traducir página\" del navegador. Explica por qué revisar y entender el código cambia todo."}],"entregable":"Captura de pantalla de `claude --version` funcionando (súbela a tu repo o a un link compartido) y, en la caja de explicación, 5 líneas con tus palabras: ¿qué diferencia hay entre un vibecoder profesional y alguien que copia y pega lo que dice la IA?","pregunta":"¿Qué parte de tu trabajo crees que la IA hará mejor que tú, y qué parte nunca deberías delegarle?","whatsapp":"*Vibecoders · Qué es (y qué no es) un vibecoder*\nJueves 15 de octubre\n\nEntender la diferencia entre generar código con IA y construir software con IA del que eres responsable. Dejar Claude Code instalado.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: captura de Claude Code instalado + 5 líneas en tus palabras\n\nTodo el material y tu checklist aquí 👉 {link}"},{"fecha":"2026-10-16","semana":0,"fase":1,"semanaTitulo":"Puesta a punto: herramientas y mentalidad","entregableSemana":"Claude Code instalado y funcionando, repo sandbox en GitHub con tus primeros commits y una página personal hecha con Claude Code.","titulo":"Terminal y Git: el idioma del que trabaja con agentes","objetivo":"Moverte con soltura en la terminal y entender commits y ramas. Claude Code vive en la terminal y todo su trabajo queda en Git: si no lo entiendes, no puedes revisarlo.","bloques":[{"tipo":"leer","idioma":"es","titulo":"Guía de terminal para Claude Code","url":"https://code.claude.com/docs/es/terminal-guide","minutos":15,"detalle":"Cómo abrir la terminal, moverte entre carpetas y pegar comandos. Si ya lo dominas, léela en diagonal."},{"tipo":"ver","idioma":"es","titulo":"Curso de Git desde cero (freeCodeCamp Español)","url":"https://www.youtube.com/watch?v=h2ZzlNVl-nI","minutos":50,"detalle":"Mira la primera parte: qué es Git, repositorios, commits, historial y ramas. Abre tu terminal y repite cada comando mientras lo ves."},{"tipo":"practica","idioma":"es","titulo":"Learn Git Branching: secuencia de Introducción","url":"https://learngitbranching.js.org/?locale=es_AR","minutos":35,"detalle":"Juego interactivo en español. Completa los 4 niveles de \"Introducción\": commits, ramas, merge y rebase. Sin IA: el objetivo es que lo entiendas tú."},{"tipo":"leer","idioma":"es","titulo":"Pro Git, capítulo 2: Fundamentos de Git","url":"https://git-scm.com/book/es/v2","minutos":20,"detalle":"Libro oficial en español. Lee 2.1 a 2.3: obtener un repositorio, guardar cambios y ver el historial. Úsalo como referencia de consulta."},{"tipo":"sinia","titulo":"Reto sin IA: cinco commits a mano","minutos":25,"detalle":"Crea una cuenta gratuita en GitHub (si no tienes) y un repo sandbox, clónalo y haz 5 commits con mensajes claros: crea un README, edítalo, agrega un archivo, crea una rama, haz merge. Todo con comandos git escritos por ti, sin pedir ayuda a la IA. Si te atoras, usa git status y git log antes de buscar."},{"tipo":"extra","idioma":"en-sub","titulo":"MIT Missing Semester: The Shell","url":"https://missing.csail.mit.edu/2020/course-shell/","minutos":45,"detalle":"Clase del MIT sobre la terminal, más a fondo: rutas, redirección (>) y pipes (|). El video está en YouTube, enlazado desde la página.\nVideo en inglés: activa subtítulos en ⚙ Configuración → Subtítulos → Traducir automáticamente → Español."}],"entregable":"Link a tu repo sandbox en GitHub con al menos 5 commits y una rama mergeada. En la explicación: qué comando te costó más y qué aprendiste al equivocarte.","pregunta":"Si Claude Code hace 20 cambios en tu proyecto y algo se rompe, ¿cómo usarías Git para encontrar qué cambio lo rompió?","whatsapp":"*Vibecoders · Terminal y Git: el idioma del que trabaja con agentes*\nViernes 16 de octubre\n\nMoverte con soltura en la terminal y entender commits y ramas. Claude Code vive en la terminal y todo su trabajo queda en Git: si no lo entiendes, no puedes revisarlo.\n\n⏱ ≈ 2 h 25 min\n✅ Entrega: link a tu repo con 5 commits hechos a mano\n\nTodo el material y tu checklist aquí 👉 {link}"},{"fecha":"2026-10-17","semana":0,"fase":1,"semanaTitulo":"Puesta a punto: herramientas y mentalidad","entregableSemana":"Claude Code instalado y funcionando, repo sandbox en GitHub con tus primeros commits y una página personal hecha con Claude Code.","titulo":"Laboratorio: tu primera sesión real con Claude Code","objetivo":"Construir algo pequeño de principio a fin con Claude Code: pedir, revisar, probar y guardar en Git. Es la primera vuelta del ciclo que vas a repetir todo el programa.","bloques":[{"tipo":"curso","idioma":"es","titulo":"MoureDev: Claude Code, curso completo (parte 2)","url":"https://www.youtube.com/watch?v=TCq7eZ9Lhc8","minutos":60,"detalle":"Continúa desde donde te quedaste el jueves. Practica en tu terminal lo que vaya mostrando."},{"tipo":"leer","idioma":"es","titulo":"Inicio rápido: pasos 3 a 7","url":"https://code.claude.com/docs/es/quickstart","minutos":15,"detalle":"Cómo preguntarle a Claude por el proyecto, hacer cambios, usar Git desde Claude y los comandos esenciales (/clear, /help, claude -c)."},{"tipo":"proyecto","titulo":"Construye tu página personal con Claude Code","minutos":75,"detalle":"En tu repo sandbox, pídele a Claude Code una página HTML de presentación tuya (quién eres, qué estudias, qué quieres construir).\n1. Antes de pedir nada, presiona Shift+Tab hasta entrar en modo plan y pídele un plan.\n2. Lee el plan, cambia al menos una cosa y apruébalo.\n3. Abre la página en el navegador y pídele 2 mejoras concretas.\n4. Haz commit y push."},{"tipo":"sinia","titulo":"Bitácora de prompts","minutos":20,"detalle":"Crea un archivo BITACORA.md en tu repo y escribe, sin IA: cada prompt que usaste, qué respondió Claude, qué aceptaste, qué rechazaste y por qué. Esta bitácora la vas a mantener todo el programa."},{"tipo":"extra","idioma":"en","titulo":"Claude Code 101 (Anthropic Academy, certificado oficial)","url":"https://anthropic.skilljar.com/claude-code-101","minutos":60,"detalle":"Curso oficial gratuito con certificado, en inglés. Para quien quiera la certificación de Anthropic."}],"entregable":"Link a tu repo con la página personal y el archivo BITACORA.md. En la explicación: qué cambiaste del plan que te propuso Claude y por qué.","pregunta":"¿Qué hizo Claude que no esperabas? ¿Fue algo bueno o algo que tuviste que corregir?","whatsapp":"*Vibecoders · Laboratorio: tu primera sesión real con Claude Code*\nSábado 17 de octubre · laboratorio\n\nConstruir algo pequeño de principio a fin con Claude Code: pedir, revisar, probar y guardar en Git. Es la primera vuelta del ciclo que vas a repetir todo el programa.\n\n⏱ ≈ 2 h 50 min (sábado)\n✅ Entrega: página personal hecha con Claude Code + BITACORA.md\n\nTodo el material y tu checklist aquí 👉 {link}"}]}/*FIN*/
+</script>
+<script>
+(() => {
+  let EMB = { portalUrl: "", dias: [] };
+  try { EMB = JSON.parse(document.getElementById("contenido").textContent.replace("/*CONTENIDO*/", "").replace("/*FIN*/", "")); } catch (e) {}
+  const TIPOS = { ver: "Video", leer: "Lectura", curso: "Curso", practica: "Práctica con IA", sinia: "Sin IA", proyecto: "Proyecto", extra: "Extra opcional" };
+  const IDIOMAS = { es: "ES", "en-sub": "EN · subtítulos", en: "EN" };
+  const DIAS_ES = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+  const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+
+  const S = {
+    db: null, user: null, me: null, isMentor: false,
+    dias: (EMB.dias || []).filter((d) => d && d.fecha).sort((a, b) => a.fecha < b.fecha ? -1 : 1),
+    borradores: [], progreso: {}, config: { portalUrl: EMB.portalUrl || "" },
+    local: { dias: {} }, dbWritable: null,
+    tab: "hoy", fecha: null, drafts: {}, status: {}, writeQ: Promise.resolve(),
+  };
+  try { const l = JSON.parse(localStorage.getItem("cv-progreso") || "null"); if (l && l.dias) S.local = l; } catch (e) {}
+  try { S.codigo = localStorage.getItem("cv-codigo") || ""; } catch (e) { S.codigo = ""; }
+  try { const t = localStorage.getItem("cv-tab"); if (t) S.tab = t; } catch (e) {}
+  if (location.hash && ["hoy", "semana", "equipo", "mentor"].includes(location.hash.slice(1))) S.tab = location.hash.slice(1);
+
+  const $ = (s) => document.querySelector(s);
+  function el(tag, attrs, ...kids) {
+    const n = document.createElement(tag);
+    if (attrs) for (const [k, v] of Object.entries(attrs)) {
+      if (v == null || v === false) continue;
+      if (k === "class") n.className = v;
+      else if (k === "text") n.textContent = v;
+      else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+      else n.setAttribute(k, v === true ? "" : v);
+    }
+    for (const c of kids.flat()) if (c != null && c !== false) n.append(c.nodeType ? c : document.createTextNode(String(c)));
+    return n;
+  }
+  const hoyISO = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
+  function fechaLarga(iso) { const [y, m, d] = iso.split("-").map(Number); const dt = new Date(y, m - 1, d); return DIAS_ES[dt.getDay()] + " " + d + " " + MESES[m - 1]; }
+  function fechaCorta(iso) { const [y, m, d] = iso.split("-").map(Number); const dt = new Date(y, m - 1, d); return DIAS_ES[dt.getDay()].slice(0, 3) + " " + d + " " + MESES[m - 1]; }
+  const safeUrl = (u) => (typeof u === "string" && /^https:\/\//i.test(u.trim())) ? u.trim() : null;
+  const byFecha = (a, b) => a.fecha < b.fecha ? -1 : a.fecha > b.fecha ? 1 : 0;
+
+  function miProg() {
+    const remoto = S.me && S.me.id && S.progreso[S.me.id];
+    if (!remoto) return S.local;
+    // Combina lo guardado en este navegador con lo sincronizado; lo sincronizado gana.
+    const dias = { ...S.local.dias };
+    for (const [f, p] of Object.entries(remoto.dias || {})) dias[f] = { ...(dias[f] || {}), ...p, bloques: { ...((dias[f] || {}).bloques || {}), ...(p.bloques || {}) } };
+    return { dias, feedback: remoto.feedback };
+  }
+  function estadoDia(prog, dia) {
+    const p = prog && prog.dias && prog.dias[dia.fecha];
+    if (!p) return "none";
+    if (p.completo) return "ok";
+    const marcados = Object.values(p.bloques || {}).filter(Boolean).length;
+    return (marcados || p.evidencia || p.explicacion) ? "part" : "none";
+  }
+
+  function diaActual() {
+    if (!S.dias.length) return null;
+    if (S.fecha) { const f = S.dias.find((d) => d.fecha === S.fecha); if (f) return f; }
+    const hoy = hoyISO();
+    const pasados = S.dias.filter((d) => d.fecha <= hoy);
+    return pasados.length ? pasados[pasados.length - 1] : S.dias[0];
+  }
+
+  // ---------- render ----------
+  function render() {
+    for (const b of document.querySelectorAll("nav.tabs button")) b.setAttribute("aria-selected", String(b.dataset.tab === S.tab));
+    $("#tab-mentor").hidden = !S.isMentor;
+    $("#tab-equipo").hidden = !S.isMentor;
+    if (!S.isMentor && (S.tab === "equipo" || S.tab === "mentor")) S.tab = "hoy";
+    const d = diaActual();
+    const fase = d ? Number(d.fase) || 1 : 0;
+    for (const p of document.querySelectorAll(".phase")) {
+      const f = Number(p.dataset.f);
+      p.classList.toggle("done", fase > f);
+      p.classList.toggle("now", fase === f);
+    }
+    const v = $("#view");
+    const keepScroll = window.scrollY;
+    const act = document.activeElement;
+    const focoId = act && act.id && v.contains(act) ? act.id : null;
+    const sel = focoId && "selectionStart" in act ? [act.selectionStart, act.selectionEnd] : null;
+    v.replaceChildren(
+      S.tab === "hoy" ? viewHoy()
+      : S.tab === "semana" ? viewSemana()
+      : S.tab === "equipo" && S.isMentor ? viewEquipo()
+      : S.tab === "mentor" && S.isMentor ? viewMentor()
+      : viewHoy()
+    );
+    window.scrollTo(0, keepScroll);
+    if (focoId) {
+      const n = document.getElementById(focoId);
+      if (n) { n.focus({ preventScroll: true }); if (sel) try { n.setSelectionRange(sel[0], sel[1]); } catch (e) {} }
+    }
+  }
+
+  function sincroniza() { return !!(S.db && S.me && S.me.id && S.dbWritable !== false); }
+  // Cada persona se identifica con el código personal que le da su mentor; los nombres nunca están en la página.
+  function codigoAlumno() { return (S.codigo || "").trim().toUpperCase(); }
+  // El formulario se configura con un link "prellenado" cuyos valores de ejemplo son CODIGO, FECHA, EVIDENCIA, EXPLICACION y REFLEXION.
+  function urlFormulario(dia, dr) {
+    const base = safeUrl(EMB.formUrl);
+    if (!base) return null;
+    const v = { CODIGO: codigoAlumno(), FECHA: dia.fecha + " · " + dia.titulo, EVIDENCIA: dr.evidencia || "", EXPLICACION: dr.explicacion || "", REFLEXION: dr.reflexion || "" };
+    return base.replace(/CODIGO|FECHA|EVIDENCIA|EXPLICACION|REFLEXION/g, (k) => encodeURIComponent(v[k]));
+  }
+  function textoEntrega(dia, dr) {
+    const codigo = codigoAlumno();
+    return "*Entrega · " + dia.titulo + "*\n" + fechaLarga(dia.fecha) + (codigo ? " · " + codigo : "") + "\n\n" +
+      (dr.evidencia ? "Evidencia: " + dr.evidencia + "\n\n" : "") +
+      (dr.explicacion ? "En mis palabras:\n" + dr.explicacion + "\n\n" : "") +
+      (dr.reflexion ? "Reflexión: " + dr.reflexion : "");
+  }
+
+  function bloqueRow(dia, b, i, prog, editable) {
+    const done = !!(prog && prog.dias && prog.dias[dia.fecha] && prog.dias[dia.fecha].bloques && prog.dias[dia.fecha].bloques[i]);
+    const tipo = TIPOS[b.tipo] ? b.tipo : "leer";
+    const url = safeUrl(b.url);
+    const id = "b-" + dia.fecha + "-" + i;
+    const cb = el("input", { type: "checkbox", id, "aria-label": "Marcar como hecho", disabled: !editable });
+    cb.checked = done;
+    cb.addEventListener("change", () => guardarBloque(dia.fecha, i, cb.checked));
+    return el("li", { class: "block" + (done ? " done" : "") + (tipo === "sinia" ? " sinia" : "") },
+      cb,
+      el("div", { class: "body" },
+        el("div", { class: "title" },
+          el("span", { class: "chip " + tipo, text: TIPOS[tipo] }),
+          IDIOMAS[b.idioma] ? el("span", { class: "chip lang", title: b.idioma === "en-sub" ? "En inglés, con subtítulos en español" : b.idioma === "en" ? "Solo en inglés" : "En español", text: IDIOMAS[b.idioma] }) : null,
+          url ? el("a", { href: url, target: "_blank", rel: "noopener", text: b.titulo }) : el("span", { text: b.titulo })),
+        b.detalle ? el("div", { class: "detail", text: b.detalle }) : null),
+      el("div", { class: "min", text: b.minutos ? b.minutos + " min" : "" }));
+  }
+
+  function diaCard(dia, opts) {
+    const editable = opts.editable;
+    const prog = opts.prog;
+    const bloques = Array.isArray(dia.bloques) ? dia.bloques : [];
+    const p = (prog && prog.dias && prog.dias[dia.fecha]) || {};
+    const hechos = bloques.filter((_, i) => p.bloques && p.bloques[i]).length;
+    const minTotal = bloques.filter((b) => b.tipo !== "extra").reduce((s, b) => s + (Number(b.minutos) || 0), 0);
+    const pct = bloques.length ? Math.round((hechos / bloques.length) * 100) : 0;
+
+    const card = el("section", { class: "panel" },
+      el("div", { class: "dayhead" },
+        el("div", { class: "eyebrow", text: "Semana " + dia.semana + " · " + (dia.semanaTitulo || "") }),
+        el("h2", { text: dia.titulo }),
+        el("div", { class: "meta" },
+          el("span", { class: "mono", text: fechaLarga(dia.fecha) }),
+          el("span", { class: "mono", text: "≈ " + (Math.round(minTotal / 30) / 2) + " h (sin extras)" }),
+          editable ? el("span", { class: "mono", text: hechos + "/" + bloques.length + " actividades" }) : null)),
+      dia.objetivo ? el("p", { class: "objetivo", text: dia.objetivo }) : null,
+      editable ? el("div", { class: "meter", role: "progressbar", "aria-valuenow": pct, "aria-valuemin": 0, "aria-valuemax": 100 }, el("i", { style: "width:" + pct + "%" })) : null,
+      el("ol", { class: "blocks" }, bloques.map((b, i) => bloqueRow(dia, b, i, prog, editable))));
+
+    if (dia.entregable || dia.pregunta) {
+      const key = dia.fecha;
+      const dr = S.drafts[key] || (S.drafts[key] = { evidencia: p.evidencia || "", explicacion: p.explicacion || "", reflexion: p.reflexion || "" });
+      const box = el("div", { class: "box" },
+        el("h3", { text: "Entrega del día" }),
+        dia.entregable ? el("p", { style: "margin:0;white-space:pre-line", text: dia.entregable }) : null);
+      if (editable) {
+        const ev = el("input", { type: "url", id: "ev-" + key, placeholder: "https://github.com/… (repo, PR o captura)" }); ev.value = dr.evidencia;
+        ev.addEventListener("input", () => { dr.evidencia = ev.value; });
+        const ex = el("textarea", { id: "ex-" + key, placeholder: "Qué hiciste, qué le pediste a la IA, qué rechazaste y por qué. Escríbelo tú, sin IA." }); ex.value = dr.explicacion;
+        ex.addEventListener("input", () => { dr.explicacion = ex.value; });
+        box.append(
+          el("div", { class: "field" }, el("label", { for: "ev-" + key, text: "Link de tu evidencia" }), ev),
+          el("div", { class: "field" }, el("label", { for: "ex-" + key, text: "Explícalo con tus palabras" }), ex));
+        if (dia.pregunta) {
+          const rf = el("textarea", { id: "rf-" + key, placeholder: "Tu respuesta" }); rf.value = dr.reflexion;
+          rf.addEventListener("input", () => { dr.reflexion = rf.value; });
+          box.append(el("div", { class: "field" }, el("label", { for: "rf-" + key, text: "Pregunta de reflexión: " + dia.pregunta }), rf));
+        }
+        const st = el("span", { class: "status", text: S.status[key] || (p.completo ? "Día marcado como completo" : "") });
+        const stc = el("span", { class: "status" });
+        const tx = el("textarea", { hidden: true, "aria-label": "Texto de la entrega", readonly: true });
+        box.append(el("div", { class: "row" },
+          el("button", { class: "btn", onclick: () => guardarEntrega(key, false) }, "Guardar"),
+          el("button", { class: "btn primary", onclick: () => guardarEntrega(key, true) }, p.completo ? "Actualizar y mantener completo" : "Guardar y marcar día completo"),
+          st),
+          el("div", { class: "row" },
+            el("button", { class: "btn small", onclick: () => {
+              const t = textoEntrega(dia, dr);
+              navigator.clipboard.writeText(t).then(() => { stc.textContent = "Copiado. Pégalo en el grupo de WhatsApp."; },
+                () => { tx.value = t; tx.hidden = false; tx.select(); stc.textContent = "Selecciona el texto y cópialo con Ctrl+C."; });
+            } }, "Copiar entrega para WhatsApp"), stc),
+          tx);
+        if (!sincroniza()) {
+          const formOk = !!safeUrl(EMB.formUrl);
+          const cd = el("input", { type: "text", id: "codigo-alumno", placeholder: "Ej. VC-7K2", autocomplete: "off", maxlength: "12", style: "max-width:12rem;text-transform:uppercase" });
+          cd.value = S.codigo || "";
+          cd.addEventListener("input", () => { S.codigo = cd.value; try { localStorage.setItem("cv-codigo", cd.value.trim().toUpperCase()); } catch (e) {} actualizarLink(); });
+          box.append(el("div", { class: "field" }, el("label", { for: "codigo-alumno", text: "Tu código personal (te lo dio tu mentor; solo lo escribes una vez)" }), cd));
+          const enviar = formOk ? el("a", { class: "btn primary", target: "_blank", rel: "noopener", style: "text-decoration:none" }, "Enviar mi entrega") : null;
+          const actualizarLink = () => { if (enviar) enviar.href = urlFormulario(dia, dr); };
+          actualizarLink();
+          for (const n of box.querySelectorAll("input, textarea")) n.addEventListener("input", actualizarLink);
+          box.append(el("div", { class: "box", style: "background:var(--signal-soft)" },
+            el("p", { style: "margin:0", text: formOk
+              ? "Cuando termines el día, guárdalo y envía tu entrega con este botón para que tu mentor la registre. Tu checklist se guarda solo en este navegador."
+              : "Tu avance se guarda en este navegador. Para que tu mentor vea tu entrega, cópiala y pégala en el grupo de WhatsApp." }),
+            enviar ? el("div", { class: "row" }, enviar) : null));
+        }
+      } else if (dia.pregunta) {
+        box.append(el("p", { style: "margin:0", class: "muted", text: "Pregunta de reflexión: " + dia.pregunta }));
+      }
+      card.append(box);
+    }
+    const fb = prog && prog.feedback && prog.feedback[dia.fecha];
+    if (fb && fb.texto) {
+      card.append(el("div", { class: "box feedback" },
+        el("h3", { text: "Comentario de tu mentor" }),
+        el("p", { style: "margin:0;white-space:pre-line", text: fb.texto })));
+    }
+    return card;
+  }
+
+  function viewHoy() {
+    const d = diaActual();
+    if (!d) return el("div", { class: "notice" }, el("h3", { text: "Todavía no hay días publicados" }),
+      el("p", { text: S.isMentor ? "Revisa la pestaña Mentor: ahí están las semanas listas para aprobar." : "El temario se publica cada semana. En cuanto esté, aquí verás la actividad de hoy." }));
+    const idx = S.dias.indexOf(d);
+    const prev = S.dias[idx - 1], next = S.dias[idx + 1];
+    const hoy = hoyISO();
+    const nav = el("div", { class: "daynav" },
+      el("button", { class: "btn small", disabled: !prev, onclick: () => { S.fecha = prev.fecha; render(); } }, "← Anterior"),
+      el("span", { class: "eyebrow", text: d.fecha === hoy ? "Hoy" : d.fecha < hoy ? "Día pasado" : "Próximo día" }),
+      el("button", { class: "btn small", disabled: !next, onclick: () => { S.fecha = next.fecha; render(); } }, "Siguiente →"));
+    const editable = !S.isMentor;
+    return el("div", { style: "display:flex;flex-direction:column;gap:14px" }, nav, diaCard(d, { editable, prog: miProg() }));
+  }
+
+  function viewSemana() {
+    if (!S.dias.length) return viewHoy();
+    const sem = {};
+    for (const d of S.dias) (sem[d.semana] = sem[d.semana] || []).push(d);
+    const cur = diaActual();
+    const hoy = hoyISO();
+    const prog = miProg();
+    const out = el("div", { style: "display:flex;flex-direction:column;gap:20px" });
+    const nums = Object.keys(sem).map(Number).sort((a, b) => b - a);
+    for (const n of nums) {
+      const dias = sem[n];
+      const f = dias[0];
+      const total = dias.length, ok = dias.filter((d) => estadoDia(prog, d) === "ok").length;
+      const panel = el("section", { class: "panel" },
+        el("div", { class: "dayhead" },
+          el("div", { class: "eyebrow", text: "Semana " + n + " · Fase " + (f.fase || 1) }),
+          el("h2", { text: f.semanaTitulo || "Semana " + n }),
+          f.entregableSemana ? el("p", { class: "objetivo", style: "margin:0", text: "Entregable de la semana: " + f.entregableSemana }) : null,
+          !S.isMentor ? el("div", { class: "meta" }, el("span", { class: "mono", text: ok + " de " + total + " días completos" })) : null),
+        el("div", { class: "week" }, dias.map((d) => {
+          const st = estadoDia(prog, d);
+          return el("button", { class: "weekrow" + (d.fecha === hoy ? " today" : ""), onclick: () => { S.fecha = d.fecha; setTab("hoy"); } },
+            el("span", { class: "mono muted", text: fechaCorta(d.fecha) }),
+            el("span", { style: "min-width:0;overflow-wrap:anywhere", text: d.titulo }),
+            S.isMentor ? el("span", { class: "pill", text: d.fecha === hoy ? "hoy" : "" })
+            : el("span", { class: "pill " + st, text: st === "ok" ? "completo" : st === "part" ? "en curso" : d.fecha > hoy ? "próximo" : "pendiente" }));
+        })));
+      out.append(panel);
+      if (cur && n === cur.semana) panel.style.borderColor = "var(--accent)";
+    }
+    return out;
+  }
+
+  let profCache = {};
+  async function resolverNombres(ids) {
+    if (!S.user || !ids.length) return;
+    try {
+      const ps = await S.user.profiles(ids);
+      let cambio = false;
+      for (const id of ids) {
+        const prev = profCache[id];
+        if (!prev || prev.name !== ps[id].name) cambio = true;
+        profCache[id] = ps[id];
+      }
+      if (cambio) render();
+    } catch (e) {}
+  }
+  function persona(id) {
+    const p = profCache[id];
+    return el("span", { class: "person" },
+      p ? el("img", { src: p.avatarUrl, alt: "" }) : null,
+      el("span", { text: (p && p.name) || "Participante" }));
+  }
+
+  function viewEquipo() {
+    const ids = Object.keys(S.progreso);
+    const hoy = hoyISO();
+    const dias = S.dias.filter((d) => d.fecha <= hoy);
+    if (!ids.length || !dias.length) return el("div", { class: "notice" }, el("h3", { text: "Aún no hay avance sincronizado" }),
+      el("p", { text: "Aquí aparece el avance de quienes entran con cuenta de la organización en Claude. Las entregas del resto llegan a tu formulario." }));
+    queueMicrotask(() => resolverNombres(ids));
+    const table = el("table", { class: "matrix" },
+      el("thead", null, el("tr", null, el("th", { text: "Persona" }), dias.map((d) => el("th", { title: d.titulo, text: fechaCorta(d.fecha) })), el("th", { text: "Completos" }))),
+      el("tbody", null, ids.map((id) => {
+        const prog = S.progreso[id];
+        const ok = dias.filter((d) => estadoDia(prog, d) === "ok").length;
+        return el("tr", null,
+          el("td", null, persona(id)),
+          dias.map((d) => { const st = estadoDia(prog, d); return el("td", null, el("span", { class: "cell " + st, title: d.titulo + ": " + (st === "ok" ? "completo" : st === "part" ? "en curso" : "sin avance") })); }),
+          el("td", { class: "mono", text: ok + "/" + dias.length }));
+      })));
+    return el("section", { class: "panel" },
+      el("div", { class: "dayhead" }, el("div", { class: "eyebrow", text: "Avance del grupo" }), el("h2", { text: "Quién va dónde" }),
+        el("p", { class: "muted", style: "margin:0", text: "Aquí aparece quien entra con cuenta de la organización en Claude. Las entregas del resto llegan a tu formulario; pídele a Claude el reporte de rezagados." })),
+      el("div", { class: "legend" },
+        el("span", null, el("i", { class: "cell ok" }), "Día completo"),
+        el("span", null, el("i", { class: "cell part" }), "En curso"),
+        el("span", null, el("i", { class: "cell" }), "Sin avance")),
+      el("div", { class: "tablewrap" }, table));
+  }
+
+  function viewMentor() {
+    const out = el("div", { style: "display:flex;flex-direction:column;gap:20px" });
+    out.append(panelWhatsapp(), panelBorradores(), panelEvidencias());
+    return out;
+  }
+
+  function panelWhatsapp() {
+    const d = diaActual();
+    const panel = el("section", { class: "panel" },
+      el("div", { class: "dayhead" }, el("div", { class: "eyebrow", text: "Aviso diario" }), el("h2", { text: "Mensaje para WhatsApp" })));
+    if (!d) { panel.append(el("p", { class: "muted", text: "Publica una semana para generar el mensaje." })); return panel; }
+    const sel = el("select", { id: "wa-dia" }, S.dias.map((x) => { const o = el("option", { value: x.fecha, text: fechaCorta(x.fecha) + " · " + x.titulo }); if (x.fecha === d.fecha) o.selected = true; return o; }));
+    sel.addEventListener("change", () => { S.fecha = sel.value; render(); });
+    const link = S.config.portalUrl || "";
+    const texto = (d.whatsapp || ("*" + d.titulo + "*\n" + (d.objetivo || ""))).split("{link}").join(link || "[link del portal]");
+    const ta = el("textarea", { id: "wa-texto", style: "min-height:180px" }); ta.value = texto;
+    const st = el("span", { class: "status" });
+    const copiar = el("button", { class: "btn primary", onclick: () => {
+      navigator.clipboard.writeText(ta.value).then(() => { st.textContent = "Copiado. Pégalo en el grupo."; }, () => { ta.select(); st.textContent = "Texto seleccionado: usa Ctrl+C."; });
+    } }, "Copiar mensaje");
+    panel.append(el("div", { class: "field" }, el("label", { for: "wa-dia", text: "Día" }), sel), ta, el("div", { class: "row" }, copiar, st));
+    if (!link) panel.append(el("p", { class: "status", text: "El mensaje todavía no lleva el link del portal; Claude lo configura al publicar." }));
+    return panel;
+  }
+
+  function panelBorradores() {
+    const panel = el("section", { class: "panel" },
+      el("div", { class: "dayhead" }, el("div", { class: "eyebrow", text: "Por aprobar" }), el("h2", { text: "Semanas en borrador" }),
+        el("p", { class: "muted", style: "margin:0", text: "Claude prepara cada semana aquí y solo tú la ves. Revísala y, cuando esté lista, dile a Claude en tu sesión: \"publica la semana N\" (con los cambios que quieras). El equipo solo ve lo publicado." })));
+    if (!S.borradores.length) { panel.append(el("p", { class: "muted", text: "No hay borradores pendientes. Pídele a Claude la siguiente semana." })); return panel; }
+    const sem = {};
+    for (const d of S.borradores) (sem[d.semana] = sem[d.semana] || []).push(d);
+    for (const n of Object.keys(sem).map(Number).sort((a, b) => a - b)) {
+      const dias = sem[n].sort(byFecha);
+      panel.append(el("div", { class: "draftweek" },
+        el("h3", { text: "Semana " + n + " · " + (dias[0].semanaTitulo || "") }),
+        dias.map((d) => el("details", null,
+          el("summary", { text: fechaCorta(d.fecha) + " · " + d.titulo }),
+          diaCard(d, { editable: false, prog: null })))));
+    }
+    return panel;
+  }
+
+  function panelEvidencias() {
+    const panel = el("section", { class: "panel" },
+      el("div", { class: "dayhead" }, el("div", { class: "eyebrow", text: "Revisión" }), el("h2", { text: "Entregas recientes" })));
+    const items = [];
+    for (const [uid, prog] of Object.entries(S.progreso)) {
+      for (const [fecha, p] of Object.entries((prog && prog.dias) || {})) {
+        if (p && (p.evidencia || p.explicacion || p.reflexion)) items.push({ uid, fecha, p, fb: prog.feedback && prog.feedback[fecha] });
+      }
+    }
+    items.sort((a, b) => String(b.p.actualizado || "").localeCompare(String(a.p.actualizado || "")));
+    if (!items.length) { panel.append(el("p", { class: "muted", text: "Aquí aparecerán las evidencias y explicaciones que entregue el equipo, listas para comentar." })); return panel; }
+    queueMicrotask(() => resolverNombres([...new Set(items.map((i) => i.uid))]));
+    for (const it of items.slice(0, 40)) {
+      const dia = S.dias.find((d) => d.fecha === it.fecha);
+      const key = "fb-" + it.uid + "-" + it.fecha;
+      const ta = el("textarea", { id: key, placeholder: "Comentario para esta persona (lo verá en su día)" });
+      ta.value = S.drafts[key] != null ? S.drafts[key] : (it.fb && it.fb.texto) || "";
+      ta.addEventListener("input", () => { S.drafts[key] = ta.value; });
+      const st = el("span", { class: "status", text: S.status[key] || (it.fb ? "Comentario enviado" : "") });
+      const url = safeUrl(it.p.evidencia);
+      panel.append(el("div", { class: "evid" },
+        el("div", { class: "row", style: "justify-content:space-between" }, persona(it.uid),
+          el("span", { class: "pill " + (it.p.completo ? "ok" : "part"), text: fechaCorta(it.fecha) + (it.p.completo ? " · completo" : " · en curso") })),
+        el("div", { class: "muted", style: "font-size:.85rem", text: dia ? dia.titulo : "" }),
+        url ? el("a", { href: url, target: "_blank", rel: "noopener", text: url, style: "overflow-wrap:anywhere" }) : (it.p.evidencia ? el("p", { text: it.p.evidencia }) : null),
+        it.p.explicacion ? el("p", { text: it.p.explicacion }) : null,
+        it.p.reflexion ? el("p", { class: "muted", text: "Reflexión: " + it.p.reflexion }) : null,
+        el("div", { class: "field" }, el("label", { for: key, text: "Tu comentario" }), ta),
+        el("div", { class: "row" }, el("button", { class: "btn small", onclick: () => enviarFeedback(it.uid, it.fecha, key) }, "Enviar comentario"), st)));
+    }
+    return panel;
+  }
+
+  // ---------- escrituras ----------
+  function enCola(fn) { S.writeQ = S.writeQ.then(fn, fn); return S.writeQ; }
+  function mezclar(a, b) {
+    const out = { ...a };
+    for (const [k, v] of Object.entries(b)) out[k] = (v && typeof v === "object" && !Array.isArray(v)) ? mezclar(a && typeof a[k] === "object" ? a[k] : {}, v) : v;
+    return out;
+  }
+  async function escribirMiProgreso(patch) {
+    S.local = mezclar(S.local, patch);
+    try { localStorage.setItem("cv-progreso", JSON.stringify(S.local)); } catch (e) {}
+    if (!S.db || !(S.me && S.me.id) || S.dbWritable === false) { render(); return; }
+    try { await escribirRemoto(patch); S.dbWritable = true; }
+    catch (e) { S.dbWritable = false; render(); }
+  }
+  async function escribirRemoto(patch) {
+    const ref = S.db.doc("progreso/" + S.me.id);
+    const existe = !!S.progreso[S.me.id];
+    if (existe) await ref.update(patch);
+    else { const snap = await ref.get(); if (snap.exists) await ref.update(patch); else await ref.set(patch); }
+  }
+  function guardarBloque(fecha, i, val) {
+    enCola(() => escribirMiProgreso({ dias: { [fecha]: { bloques: { [i]: val }, actualizado: new Date().toISOString() } } })
+      .catch((e) => { S.status[fecha] = "No se guardó la marca. Revisa tu conexión y vuelve a marcarla."; render(); }));
+  }
+  function guardarEntrega(fecha, completo) {
+    const dr = S.drafts[fecha] || {};
+    const ev = (dr.evidencia || "").trim();
+    if (completo && !ev && !(dr.explicacion || "").trim()) { S.status[fecha] = "Para marcar el día completo agrega tu link de evidencia o tu explicación."; render(); return; }
+    if (ev && !safeUrl(ev)) { S.status[fecha] = "El link debe empezar con https://"; render(); return; }
+    const patch = { evidencia: ev, explicacion: dr.explicacion || "", reflexion: dr.reflexion || "", actualizado: new Date().toISOString() };
+    if (completo) patch.completo = true;
+    S.status[fecha] = "Guardando…"; render();
+    enCola(() => escribirMiProgreso({ dias: { [fecha]: patch } })
+      .then(() => { S.status[fecha] = completo ? "Día completo. Buen trabajo." : "Guardado."; render(); })
+      .catch(() => { S.status[fecha] = "No se pudo guardar. Revisa tu conexión e inténtalo de nuevo."; render(); }));
+  }
+  function enviarFeedback(uid, fecha, key) {
+    const texto = (S.drafts[key] != null ? S.drafts[key] : "").trim();
+    if (!texto) { S.status[key] = "Escribe el comentario primero."; render(); return; }
+    S.status[key] = "Enviando…"; render();
+    enCola(() => S.db.doc("progreso/" + uid).update({ feedback: { [fecha]: { texto, at: new Date().toISOString() } } })
+      .then(() => { S.status[key] = "Comentario enviado"; delete S.drafts[key]; render(); })
+      .catch(() => { S.status[key] = "No se pudo enviar. Inténtalo de nuevo."; render(); }));
+  }
+  function setTab(t) {
+    S.tab = t;
+    try { localStorage.setItem("cv-tab", t); } catch (e) {}
+    render();
+    window.scrollTo(0, 0);
+  }
+  for (const b of document.querySelectorAll("nav.tabs button")) b.addEventListener("click", () => setTab(b.dataset.tab));
+
+  // ---------- arranque ----------
+  async function start() {
+    render();
+    for (let i = 0; i < 20 && !(window.claude && window.claude.use); i++) await new Promise((r) => setTimeout(r, 250));
+    if (!window.claude || !window.claude.use) return;
+    const [db, user] = await Promise.all([claude.use("db"), claude.use("user")]);
+    S.db = db; S.user = user;
+    if (user) {
+      S.me = await user.me();
+      S.isMentor = !!(S.me.canEdit || S.me.isOwner);
+      const w = $("#who");
+      w.replaceChildren(el("img", { src: S.me.avatarUrl, alt: "" }), el("span", { text: (S.me.name || "Tú") + (S.isMentor ? " · mentor" : "") }));
+    }
+    if (!db) { render(); return; }
+    if (S.tab === "mentor" && !S.isMentor) S.tab = "hoy";
+    db.collection("progreso").onSnapshot((snap) => {
+      const p = {}; for (const d of snap.docs) p[d.id] = d.data(); S.progreso = p; render();
+    }, () => {});
+    if (S.isMentor) {
+      db.collection("borradores").onSnapshot((snap) => {
+        S.borradores = snap.docs.map((d) => ({ _id: d.id, ...d.data() })).filter((d) => d.fecha).sort(byFecha);
+        render();
+      }, () => {});
+    }
+    render();
+  }
+  start();
+})();
+</script>
+</body></html>
