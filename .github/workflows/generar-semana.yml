@@ -7,6 +7,10 @@ on:
     # Viernes, sábado y domingo a las 9:00 am de Ciudad de México = 15:00 UTC
     - cron: "0 15 * * 0,5,6"
   workflow_dispatch:
+    inputs:
+      fecha_hoy:
+        description: "Solo para pruebas: fecha a usar como hoy (AAAA-MM-DD). Vacío = la fecha real."
+        required: false
 
 permissions:
   contents: write
@@ -35,6 +39,8 @@ jobs:
           git config user.email "campus-vibecoders@users.noreply.github.com"
           git fetch origin '+refs/heads/claude/*:refs/remotes/origin/claude/*' || true
       - name: Claude prepara la semana
+        env:
+          FECHA_HOY: ${{ inputs.fecha_hoy }}
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}

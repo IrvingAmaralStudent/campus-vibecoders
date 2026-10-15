@@ -18,7 +18,7 @@ Las ramas remotas ya están descargadas. Revisa si existe alguna rama `origin/cl
 - Si no tiene pendientes, vuelve a main (`git checkout main`) y termina sin cambios.
 
 **B) No hay rama pendiente. Decide si toca generar:**
-- Calcula la fecha de hoy en Ciudad de México (`TZ=America/Mexico_City date +%F`) y el próximo lunes (el lunes siguiente a hoy).
+- Calcula la fecha de hoy en Ciudad de México (`TZ=America/Mexico_City date +%F`; si la variable de entorno `FECHA_HOY` tiene valor, usa esa fecha como hoy) y el próximo lunes (el lunes siguiente a hoy).
 - Busca la fecha más reciente publicada en `programa/semanas`. Si es igual o posterior al sábado de la semana del próximo lunes, la semana ya existe: termina sin cambios.
 - La nueva semana es NN = número de semana publicada más alto + 1, con dos dígitos (ej. `semana-02`). Si NN es mayor que 15, el programa terminó: termina sin cambios.
 - Crea la rama: `git checkout -b claude/semana-NN`.
@@ -32,7 +32,7 @@ Las ramas remotas ya están descargadas. Revisa si existe alguna rama `origin/cl
 - Solo recursos gratuitos. Nada de empresas, clientes ni nombres del mentor en el contenido.
 - Verifica cada link antes de usarlo: `curl -sL -o /dev/null -w '%{http_code}' <url>` debe dar 200. Para YouTube usa `curl -s 'https://www.youtube.com/oembed?url=<link>&format=json'` y confirma título y canal. Nunca inventes URLs ni IDs de video.
 - Lunes a viernes: 4 o 5 bloques, entre 120 y 150 minutos sin contar extras, al menos una práctica con Claude Code y casi siempre un reto `sinia`. Sábado: laboratorio de hasta 180 minutos con un bloque `proyecto`.
-- El campo `whatsapp` sigue exactamente el formato del plan y deja `{link}` literal.
+- El campo `whatsapp` sigue exactamente el formato del plan y deja `{link}` literal. Si cambias el título, el objetivo, el tiempo o la entrega de un día, actualiza también su `whatsapp` para que coincida.
 - Antes del commit valida tu trabajo: cada archivo debe ser JSON válido con todos los campos y `node scripts/resumen-semana.mjs semana-NN` debe correr sin errores.
 
 ## 4. Lo que NO debes hacer
