@@ -1,10 +1,15 @@
 name: Semana propuesta
 
-# Cuando el agente sube una semana nueva (rama claude/semana-NN), abre o actualiza el PR de revisión
-# y le avisa al mentor por Telegram.
+# Cuando una semana nueva llega a una rama claude/semana-NN (por push o porque el flujo
+# "Generar semana" la subió), abre o actualiza el PR de revisión y avisa al mentor por Telegram.
 on:
   push:
     branches: ["claude/semana-*"]
+  workflow_dispatch:
+    inputs:
+      rama:
+        description: "Rama de la semana propuesta (ej. claude/semana-02)"
+        required: true
 
 permissions:
   contents: read
@@ -13,8 +18,12 @@ permissions:
 jobs:
   proponer:
     runs-on: ubuntu-latest
+    env:
+      RAMA: ${{ inputs.rama || github.ref_name }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.rama || github.ref }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -23,7 +32,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           MENTOR_CHAT_ID: ${{ secrets.MENTOR_CHAT_ID }}
-          RAMA: ${{ github.ref_name }}
         run: |
           SEMANA="${RAMA#claude/}"
           node scripts/resumen-semana.mjs "$SEMANA" > resumen.md

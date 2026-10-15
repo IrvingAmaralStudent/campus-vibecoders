@@ -1,0 +1,54 @@
+name: Generar semana
+
+# Claude Code prepara la semana siguiente (o aplica los cambios que pidió el mentor) y la deja como propuesta.
+# Usa la suscripción de Claude del mentor (secreto CLAUDE_CODE_OAUTH_TOKEN).
+on:
+  schedule:
+    # Viernes, sábado y domingo a las 9:00 am de Ciudad de México = 15:00 UTC
+    - cron: "0 15 * * 0,5,6"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+  pull-requests: read
+  id-token: write
+
+concurrency:
+  group: generar-semana
+  cancel-in-progress: false
+
+jobs:
+  generar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Preparar git
+        run: |
+          git config user.name "Campus Vibecoders"
+          git config user.email "campus-vibecoders@users.noreply.github.com"
+          git fetch origin '+refs/heads/claude/*:refs/remotes/origin/claude/*' || true
+      - name: Claude prepara la semana
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ github.token }}
+          claude_args: --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebFetch,WebSearch"
+          prompt: Lee y sigue al pie de la letra las instrucciones de programa/agente.md. Trabaja solo con git local; no hagas push (el flujo lo hace al terminar).
+      - name: Subir la propuesta y avisar al mentor
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          RAMA=$(git rev-parse --abbrev-ref HEAD)
+          if [[ "$RAMA" != claude/semana-* ]]; then echo "No hubo semana nueva ni cambios que subir."; exit 0; fi
+          if git rev-parse --verify -q "origin/$RAMA" >/dev/null && [ -z "$(git log "origin/$RAMA..HEAD" --oneline)" ]; then
+            echo "La rama $RAMA no tiene cambios nuevos."; exit 0
+          fi
+          git push origin "HEAD:$RAMA"
+          gh workflow run semana-propuesta.yml -f rama="$RAMA"
