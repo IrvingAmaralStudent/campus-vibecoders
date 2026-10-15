@@ -1,0 +1,42 @@
+{
+  "fecha": "2026-10-19",
+  "semana": 1,
+  "fase": 1,
+  "semanaTitulo": "Claude Code y el ciclo pedir-revisar-probar",
+  "entregableSemana": "App web de una página en TypeScript (gestor de gastos personales) que guarda datos en localStorage, con repo en GitHub, CLAUDE.md y README.",
+  "titulo": "Cómo piensa Claude Code",
+  "objetivo": "Entender el ciclo de trabajo de un agente (leer, planear, actuar, verificar) y arrancar el proyecto de la semana con un CLAUDE.md que tú entiendes.",
+  "bloques": [
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Cómo funciona Claude Code",
+      "url": "https://code.claude.com/docs/es/how-claude-code-works",
+      "minutos": 25,
+      "detalle": "El ciclo del agente, sus herramientas y cómo interactúa con tu proyecto. Entender esto te dice por qué a veces lee 10 archivos antes de cambiar uno."
+    },
+    {
+      "tipo": "curso",
+      "idioma": "es",
+      "titulo": "MoureDev: Claude Code, curso completo (parte 3)",
+      "url": "https://www.youtube.com/watch?v=TCq7eZ9Lhc8",
+      "minutos": 45,
+      "detalle": "Continúa el curso. Pon especial atención a la parte de CLAUDE.md y manejo de contexto."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Arranca el proyecto: gestor de gastos",
+      "minutos": 50,
+      "detalle": "Crea el repo gestor-gastos en GitHub. Pídele a Claude Code un proyecto vacío de TypeScript con Vite.\nCorre /init para que genere el CLAUDE.md.\nLuego pídele: \"Explícame cada archivo que creaste y para qué sirve\". Todavía no construyas funcionalidad."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: comenta el CLAUDE.md",
+      "minutos": 20,
+      "detalle": "Lee el CLAUDE.md que se generó y agrega a mano 3 reglas tuyas (por ejemplo: \"Responde en español\", \"Propón primero la solución más simple\", \"No instales dependencias sin preguntar\"). Haz commit."
+    }
+  ],
+  "entregable": "Link al repo gestor-gastos con el proyecto base y tu CLAUDE.md editado. En la explicación: qué es el CLAUDE.md y por qué agregaste esas 3 reglas.",
+  "pregunta": "¿Por qué crees que un agente necesita un archivo de instrucciones del proyecto, si ya puede leer todo el código?",
+  "whatsapp": "*Vibecoders · Cómo piensa Claude Code*\nLunes 19 de octubre\n\nEntender el ciclo de trabajo de un agente (leer, planear, actuar, verificar) y arrancar el proyecto de la semana con un CLAUDE.md que tú entiendes.\n\n⏱ ≈ 2 h 20 min\n✅ Entrega: repo gestor-gastos con CLAUDE.md editado por ti\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
