@@ -88,7 +88,7 @@ for (const u of novedades) {
   }
 
   // 3. Cualquier otro mensaje en privado (/start, /codigo, "hola"…): pedir el número.
-  if (m.chat.id !== MENTOR) await pedirNumero(m.chat.id);
+  await pedirNumero(m.chat.id);
 }
 
 if (ultimo) await api("getUpdates", { offset: ultimo + 1, timeout: 0 });
