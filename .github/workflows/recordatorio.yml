@@ -1,0 +1,28 @@
+name: Recordatorio de aprobación
+
+on:
+  schedule:
+    # Domingo 12:00 pm en Ciudad de México = 18:00 UTC
+    - cron: "0 18 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  recordar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Recordar semanas sin aprobar
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          MENTOR_CHAT_ID: ${{ secrets.MENTOR_CHAT_ID }}
+        run: |
+          gh pr list --state open --json url,title,headRefName -q '.[] | select(.headRefName | startswith("claude/semana-")) | [.url, .title] | @tsv' |
+          while IFS=$'\t' read -r URL TITULO; do node scripts/notificar.mjs recordatorio "$URL" "$TITULO"; done

@@ -9,6 +9,8 @@
 //
 // No guarda estado propio: al pedir las novedades con "offset", Telegram las da por leídas.
 
+import { execFileSync } from "node:child_process";
+
 const { TELEGRAM_BOT_TOKEN: token, GROUP_CHAT_ID, MENTOR_CHAT_ID, ALUMNOS } = process.env;
 if (!token) throw new Error("Falta el secreto TELEGRAM_BOT_TOKEN.");
 const GRUPO = Number(GROUP_CHAT_ID);
@@ -38,6 +40,60 @@ const pedirNumero = (chat) => api("sendMessage", {
   text: "👋 ¡Hola! Para darte tu <b>código personal</b> del programa, toca el botón de abajo y comparte tu número.\n\nSolo se usa para identificarte en la lista de tu mentor.",
   reply_markup: { keyboard: [[{ text: "📱 Compartir mi número", request_contact: true }]], resize_keyboard: true, one_time_keyboard: true },
 });
+
+// --- Comandos del mentor. Usan el CLI de GitHub con el token de la Action (GH_TOKEN).
+const REPO = process.env.GITHUB_REPOSITORY;
+const gh = (...args) => execFileSync("gh", args, { encoding: "utf8" }).trim();
+const semanasPendientes = () => JSON.parse(gh("pr", "list", "-R", REPO, "--state", "open", "--json", "number,url,title,headRefName"))
+  .filter((p) => p.headRefName.startsWith("claude/semana-"))
+  .sort((a, b) => (a.headRefName < b.headRefName ? -1 : 1));
+const responder = (texto) => api("sendMessage", { chat_id: MENTOR, text: texto, parse_mode: "HTML", link_preview_options: { is_disabled: true } });
+
+async function anotarCambio(texto) {
+  const [pr] = semanasPendientes();
+  const rama = pr ? pr.headRefName : "main";
+  const ruta = "programa/notas-mentor.md";
+  const actual = JSON.parse(gh("api", `repos/${REPO}/contents/${ruta}?ref=${encodeURIComponent(rama)}`));
+  const previo = Buffer.from(actual.content, "base64").toString("utf8");
+  const fecha = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Mexico_City" }).format(new Date());
+  const nuevo = previo.replace(/\n*$/, "\n") + `- [pendiente] (${fecha}${pr ? `, ${pr.headRefName.replace("claude/", "")}` : ""}) ${texto}\n`;
+  gh("api", "-X", "PUT", `repos/${REPO}/contents/${ruta}`,
+    "-f", `message=Nota del mentor: ${texto.slice(0, 60)}`,
+    "-f", `content=${Buffer.from(nuevo, "utf8").toString("base64")}`,
+    "-f", `sha=${actual.sha}`, "-f", `branch=${rama}`);
+  return pr;
+}
+
+async function atenderMentor(texto) {
+  const t = texto.toLowerCase();
+  try {
+    if (/^\/?aprobar\b/.test(t)) {
+      const [pr] = semanasPendientes();
+      if (!pr) return responder("No hay ninguna semana pendiente de aprobar. 👍");
+      const semana = pr.headRefName.replace("claude/", "");
+      gh("pr", "merge", String(pr.number), "-R", REPO, "--merge", "--delete-branch");
+      gh("workflow", "run", "publicar.yml", "-R", REPO, "-f", `anunciar=${semana}`);
+      return responder(`✅ <b>Aprobada:</b> ${esc(pr.title)}\n\nEn unos minutos queda en el portal y la anuncio en el grupo.`);
+    }
+    const cambio = texto.match(/^\/?cambios?\s*:?\s*([\s\S]+)/i);
+    if (cambio) {
+      const pr = await anotarCambio(cambio[1].trim());
+      return responder(pr
+        ? `📝 Anotado para <b>${esc(pr.title)}</b>. El agente lo aplica en su siguiente revisión (todos los días a las 9:00 am de viernes a domingo) y te aviso cuando esté.`
+        : "📝 Anotado. No hay semana pendiente, así que se aplicará al generar la siguiente.");
+    }
+    if (/^\/?estado\b/.test(t)) {
+      const pend = semanasPendientes();
+      return responder(pend.length
+        ? `📋 Pendiente de aprobar:\n${pend.map((p) => `• ${esc(p.title)}\n  ${p.url}`).join("\n")}\n\nResponde <b>aprobar</b> para publicarla.`
+        : "✅ No hay nada pendiente de aprobar. La próxima semana se genera el viernes a las 9:00 am.");
+    }
+    return responder("Puedo ayudarte con:\n\n• <b>aprobar</b> → publica la semana pendiente y la anuncia en el grupo\n• <b>cambios: …</b> → anoto lo que quieres cambiar y el agente lo corrige\n• <b>estado</b> → te digo qué está pendiente");
+  } catch (e) {
+    console.log(`Error con el comando del mentor: ${e.message}`);
+    return responder("⚠️ No pude completar eso. Inténtalo de nuevo en unos minutos; si sigue fallando, revísalo con Claude.");
+  }
+}
 
 const { result: novedades = [] } = await api("getUpdates", { timeout: 0, allowed_updates: ["message"] });
 let ultimo = 0;
@@ -87,7 +143,13 @@ for (const u of novedades) {
     continue;
   }
 
-  // 3. Cualquier otro mensaje en privado (/start, /codigo, "hola"…): pedir el número.
+  // 3. Mensajes del mentor: aprobar, pedir cambios o ver el estado de la semana propuesta.
+  if (m.chat.id === MENTOR && m.text && !/^\/start/.test(m.text)) {
+    await atenderMentor(m.text.trim());
+    continue;
+  }
+
+  // 4. Cualquier otro mensaje en privado (/start, /codigo, "hola"…): pedir el número.
   await pedirNumero(m.chat.id);
 }
 

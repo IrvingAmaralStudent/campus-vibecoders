@@ -1,0 +1,38 @@
+name: Semana propuesta
+
+# Cuando el agente sube una semana nueva (rama claude/semana-NN), abre o actualiza el PR de revisión
+# y le avisa al mentor por Telegram.
+on:
+  push:
+    branches: ["claude/semana-*"]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  proponer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Abrir o actualizar el PR y avisar al mentor
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          MENTOR_CHAT_ID: ${{ secrets.MENTOR_CHAT_ID }}
+          RAMA: ${{ github.ref_name }}
+        run: |
+          SEMANA="${RAMA#claude/}"
+          node scripts/resumen-semana.mjs "$SEMANA" > resumen.md
+          TITULO="$(head -1 resumen.md | sed 's/^## //')"
+          PR=$(gh pr list --head "$RAMA" --state open --json url -q '.[0].url')
+          if [ -n "$PR" ]; then
+            gh pr edit "$PR" --body-file resumen.md
+            node scripts/notificar.mjs propuesta "$SEMANA" "$PR" actualizada
+          else
+            PR=$(gh pr create --base main --head "$RAMA" --title "$TITULO" --body-file resumen.md)
+            node scripts/notificar.mjs propuesta "$SEMANA" "$PR"
+          fi

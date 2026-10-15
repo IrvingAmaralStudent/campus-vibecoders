@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-10-17",
+  "semana": 0,
+  "fase": 1,
+  "semanaTitulo": "Puesta a punto: herramientas y mentalidad",
+  "entregableSemana": "Claude Code instalado y funcionando, repo sandbox en GitHub con tus primeros commits y una página personal hecha con Claude Code.",
+  "titulo": "Laboratorio: tu primera sesión real con Claude Code",
+  "objetivo": "Construir algo pequeño de principio a fin con Claude Code: pedir, revisar, probar y guardar en Git. Es la primera vuelta del ciclo que vas a repetir todo el programa.",
+  "bloques": [
+    {
+      "tipo": "curso",
+      "idioma": "es",
+      "titulo": "MoureDev: Claude Code, curso completo (parte 2)",
+      "url": "https://www.youtube.com/watch?v=TCq7eZ9Lhc8",
+      "minutos": 60,
+      "detalle": "Continúa desde donde te quedaste el jueves. Practica en tu terminal lo que vaya mostrando."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Inicio rápido: pasos 3 a 7",
+      "url": "https://code.claude.com/docs/es/quickstart",
+      "minutos": 15,
+      "detalle": "Cómo preguntarle a Claude por el proyecto, hacer cambios, usar Git desde Claude y los comandos esenciales (/clear, /help, claude -c)."
+    },
+    {
+      "tipo": "proyecto",
+      "titulo": "Construye tu página personal con Claude Code",
+      "minutos": 75,
+      "detalle": "En tu repo sandbox, pídele a Claude Code una página HTML de presentación tuya (quién eres, qué estudias, qué quieres construir).\n1. Antes de pedir nada, presiona Shift+Tab hasta entrar en modo plan y pídele un plan.\n2. Lee el plan, cambia al menos una cosa y apruébalo.\n3. Abre la página en el navegador y pídele 2 mejoras concretas.\n4. Haz commit y push."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Bitácora de prompts",
+      "minutos": 20,
+      "detalle": "Crea un archivo BITACORA.md en tu repo y escribe, sin IA: cada prompt que usaste, qué respondió Claude, qué aceptaste, qué rechazaste y por qué. Esta bitácora la vas a mantener todo el programa."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "Claude Code 101 (Anthropic Academy, certificado oficial)",
+      "url": "https://anthropic.skilljar.com/claude-code-101",
+      "minutos": 60,
+      "detalle": "Curso oficial gratuito con certificado, en inglés. Para quien quiera la certificación de Anthropic."
+    }
+  ],
+  "entregable": "Link a tu repo con la página personal y el archivo BITACORA.md. En la explicación: qué cambiaste del plan que te propuso Claude y por qué.",
+  "pregunta": "¿Qué hizo Claude que no esperabas? ¿Fue algo bueno o algo que tuviste que corregir?",
+  "whatsapp": "*Vibecoders · Laboratorio: tu primera sesión real con Claude Code*\nSábado 17 de octubre · laboratorio\n\nConstruir algo pequeño de principio a fin con Claude Code: pedir, revisar, probar y guardar en Git. Es la primera vuelta del ciclo que vas a repetir todo el programa.\n\n⏱ ≈ 2 h 50 min (sábado)\n✅ Entrega: página personal hecha con Claude Code + BITACORA.md\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

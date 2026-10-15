@@ -6,6 +6,11 @@ on:
     - cron: "*/10 * * * *"
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
 concurrency:
   group: bot-registro
   cancel-in-progress: false
@@ -25,3 +30,4 @@ jobs:
           GROUP_CHAT_ID: ${{ secrets.GROUP_CHAT_ID }}
           MENTOR_CHAT_ID: ${{ secrets.MENTOR_CHAT_ID }}
           ALUMNOS: ${{ secrets.ALUMNOS }}
+          GH_TOKEN: ${{ github.token }}

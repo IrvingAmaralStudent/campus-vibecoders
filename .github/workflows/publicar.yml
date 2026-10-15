@@ -1,0 +1,55 @@
+name: Publicar portal
+
+on:
+  push:
+    branches: [main]
+    paths: ["programa/**", "portal/**", "scripts/construir.mjs"]
+  workflow_dispatch:
+    inputs:
+      anunciar:
+        description: "Semanas a anunciar en el grupo (ej. semana-02). Vacío = las que se agregaron en el último cambio."
+        required: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: publicar
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Armar el sitio
+        run: node scripts/construir.mjs
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deploy
+        uses: actions/deploy-pages@v4
+      - name: Anunciar semanas nuevas en el grupo
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          GROUP_CHAT_ID: ${{ secrets.GROUP_CHAT_ID }}
+          ANUNCIAR: ${{ inputs.anunciar }}
+          ANTES: ${{ github.event.before }}
+        run: |
+          if [ -n "$ANUNCIAR" ]; then
+            SEMANAS="$ANUNCIAR"
+          elif [ -n "$ANTES" ] && [ "$ANTES" != "0000000000000000000000000000000000000000" ]; then
+            SEMANAS=$(git diff --name-only --diff-filter=A "$ANTES" HEAD -- programa/semanas | cut -d/ -f3 | sort -u | tr '\n' ' ')
+          fi
+          if [ -n "$SEMANAS" ]; then node scripts/notificar.mjs publicada $SEMANAS; else echo "Sin semanas nuevas que anunciar."; fi

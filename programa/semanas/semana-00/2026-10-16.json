@@ -1,0 +1,60 @@
+{
+  "fecha": "2026-10-16",
+  "semana": 0,
+  "fase": 1,
+  "semanaTitulo": "Puesta a punto: herramientas y mentalidad",
+  "entregableSemana": "Claude Code instalado y funcionando, repo sandbox en GitHub con tus primeros commits y una página personal hecha con Claude Code.",
+  "titulo": "Terminal y Git: el idioma del que trabaja con agentes",
+  "objetivo": "Moverte con soltura en la terminal y entender commits y ramas. Claude Code vive en la terminal y todo su trabajo queda en Git: si no lo entiendes, no puedes revisarlo.",
+  "bloques": [
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Guía de terminal para Claude Code",
+      "url": "https://code.claude.com/docs/es/terminal-guide",
+      "minutos": 15,
+      "detalle": "Cómo abrir la terminal, moverte entre carpetas y pegar comandos. Si ya lo dominas, léela en diagonal."
+    },
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Curso de Git desde cero (freeCodeCamp Español)",
+      "url": "https://www.youtube.com/watch?v=h2ZzlNVl-nI",
+      "minutos": 50,
+      "detalle": "Mira la primera parte: qué es Git, repositorios, commits, historial y ramas. Abre tu terminal y repite cada comando mientras lo ves."
+    },
+    {
+      "tipo": "practica",
+      "idioma": "es",
+      "titulo": "Learn Git Branching: secuencia de Introducción",
+      "url": "https://learngitbranching.js.org/?locale=es_AR",
+      "minutos": 35,
+      "detalle": "Juego interactivo en español. Completa los 4 niveles de \"Introducción\": commits, ramas, merge y rebase. Sin IA: el objetivo es que lo entiendas tú."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Pro Git, capítulo 2: Fundamentos de Git",
+      "url": "https://git-scm.com/book/es/v2",
+      "minutos": 20,
+      "detalle": "Libro oficial en español. Lee 2.1 a 2.3: obtener un repositorio, guardar cambios y ver el historial. Úsalo como referencia de consulta."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: cinco commits a mano",
+      "minutos": 25,
+      "detalle": "Crea una cuenta gratuita en GitHub (si no tienes) y un repo sandbox, clónalo y haz 5 commits con mensajes claros: crea un README, edítalo, agrega un archivo, crea una rama, haz merge. Todo con comandos git escritos por ti, sin pedir ayuda a la IA. Si te atoras, usa git status y git log antes de buscar."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en-sub",
+      "titulo": "MIT Missing Semester: The Shell",
+      "url": "https://missing.csail.mit.edu/2020/course-shell/",
+      "minutos": 45,
+      "detalle": "Clase del MIT sobre la terminal, más a fondo: rutas, redirección (>) y pipes (|). El video está en YouTube, enlazado desde la página.\nVideo en inglés: activa subtítulos en ⚙ Configuración → Subtítulos → Traducir automáticamente → Español."
+    }
+  ],
+  "entregable": "Link a tu repo sandbox en GitHub con al menos 5 commits y una rama mergeada. En la explicación: qué comando te costó más y qué aprendiste al equivocarte.",
+  "pregunta": "Si Claude Code hace 20 cambios en tu proyecto y algo se rompe, ¿cómo usarías Git para encontrar qué cambio lo rompió?",
+  "whatsapp": "*Vibecoders · Terminal y Git: el idioma del que trabaja con agentes*\nViernes 16 de octubre\n\nMoverte con soltura en la terminal y entender commits y ramas. Claude Code vive en la terminal y todo su trabajo queda en Git: si no lo entiendes, no puedes revisarlo.\n\n⏱ ≈ 2 h 25 min\n✅ Entrega: link a tu repo con 5 commits hechos a mano\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

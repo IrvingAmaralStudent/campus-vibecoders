@@ -6,7 +6,7 @@ const { TELEGRAM_BOT_TOKEN: token, GROUP_CHAT_ID: chat, FECHA } = process.env;
 if (!token || !chat) throw new Error("Faltan los secretos TELEGRAM_BOT_TOKEN o GROUP_CHAT_ID.");
 
 const hoy = FECHA || new Intl.DateTimeFormat("en-CA", { timeZone: "America/Mexico_City" }).format(new Date());
-const { portalUrl, dias } = JSON.parse(fs.readFileSync(new URL("../contenido.json", import.meta.url), "utf8"));
+const { portalUrl, dias } = JSON.parse(fs.readFileSync(new URL("../dist/contenido.json", import.meta.url), "utf8"));
 const dia = dias.find((d) => d.fecha === hoy);
 if (!dia) { console.log(`Sin actividad publicada para ${hoy}; no se envía nada.`); process.exit(0); }
 

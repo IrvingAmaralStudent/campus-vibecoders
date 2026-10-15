@@ -1,0 +1,54 @@
+{
+  "fecha": "2026-10-15",
+  "semana": 0,
+  "fase": 1,
+  "semanaTitulo": "Puesta a punto: herramientas y mentalidad",
+  "entregableSemana": "Claude Code instalado y funcionando, repo sandbox en GitHub con tus primeros commits y una página personal hecha con Claude Code.",
+  "titulo": "Qué es (y qué no es) un vibecoder",
+  "objetivo": "Entender la diferencia entre generar código con IA y construir software con IA del que eres responsable. Dejar Claude Code instalado.",
+  "bloques": [
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "¿Qué es el vibe coding? (Cloudflare)",
+      "url": "https://www.cloudflare.com/es-es/learning/ai/ai-vibe-coding/",
+      "minutos": 15,
+      "detalle": "Qué es, de dónde viene el término (Andrej Karpathy, 2025) y sus riesgos: seguridad, fuga de datos y código que nadie entiende. La idea central del programa: si revisas, pruebas y puedes explicar el código, ya no es \"vibe coding\" a ciegas; es desarrollo profesional asistido por IA."
+    },
+    {
+      "tipo": "ver",
+      "idioma": "en-sub",
+      "titulo": "Andrej Karpathy: Software Is Changing (Again)",
+      "url": "https://www.youtube.com/watch?v=LCEmiRjPEtQ",
+      "minutos": 40,
+      "detalle": "La charla de quien inventó el término. Fíjate en lo que dice de verificar lo que genera la IA y de mantenerla \"con correa corta\".\nVideo en inglés: activa subtítulos en ⚙ Configuración → Subtítulos → Traducir automáticamente → Español."
+    },
+    {
+      "tipo": "curso",
+      "idioma": "es",
+      "titulo": "MoureDev: Claude Code, curso completo desde cero (parte 1)",
+      "url": "https://www.youtube.com/watch?v=TCq7eZ9Lhc8",
+      "minutos": 45,
+      "detalle": "El curso principal de Claude Code del programa, en español (3 horas, 2026). Hoy mira los primeros 45 minutos: qué es Claude Code y cómo se instala. Lo continuarás en los próximos días."
+    },
+    {
+      "tipo": "practica",
+      "idioma": "es",
+      "titulo": "Instala Claude Code y haz tu primera pregunta",
+      "url": "https://code.claude.com/docs/es/quickstart",
+      "minutos": 30,
+      "detalle": "Sigue los pasos 1 y 2 de la guía de inicio rápido. En Windows usa PowerShell e instala también Git for Windows.\nAl terminar corre: claude --version\nLuego, en cualquier carpeta, abre claude y pregúntale: \"¿Qué puedes hacer en esta carpeta y qué no?\""
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "Simon Willison: Not all AI-assisted programming is vibe coding",
+      "url": "https://simonwillison.net/2025/Mar/19/vibe-coding/",
+      "minutos": 15,
+      "detalle": "Artículo corto en inglés; puedes usar \"Traducir página\" del navegador. Explica por qué revisar y entender el código cambia todo."
+    }
+  ],
+  "entregable": "Captura de pantalla de `claude --version` funcionando (súbela a tu repo o a un link compartido) y, en la caja de explicación, 5 líneas con tus palabras: ¿qué diferencia hay entre un vibecoder profesional y alguien que copia y pega lo que dice la IA?",
+  "pregunta": "¿Qué parte de tu trabajo crees que la IA hará mejor que tú, y qué parte nunca deberías delegarle?",
+  "whatsapp": "*Vibecoders · Qué es (y qué no es) un vibecoder*\nJueves 15 de octubre\n\nEntender la diferencia entre generar código con IA y construir software con IA del que eres responsable. Dejar Claude Code instalado.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: captura de Claude Code instalado + 5 líneas en tus palabras\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
