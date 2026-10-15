@@ -1,0 +1,42 @@
+{
+  "fecha": "2026-10-29",
+  "semana": 2,
+  "fase": 1,
+  "semanaTitulo": "Cómo funciona una app web: HTTP, JSON, cliente y servidor, API REST, SQL básico",
+  "entregableSemana": "API en Node + SQLite con CRUD completo y frontend mínimo que la consume. Compuerta 1 (Fundamentos) al cerrar la semana.",
+  "titulo": "SQL básico y SQLite",
+  "objetivo": "Crear una base de datos SQLite y escribir consultas SQL para insertar, leer, actualizar y borrar datos.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "MoureDev: Curso completo de SQL y bases de datos desde cero",
+      "url": "https://www.youtube.com/watch?v=OuJerKzV5T0",
+      "minutos": 40,
+      "detalle": "Mira solo la parte de tablas, SELECT, INSERT, UPDATE, DELETE y WHERE; lo demás es opcional por ahora. Anota las 4 sentencias básicas."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "SQLite desde Node con Claude Code",
+      "minutos": 55,
+      "detalle": "Rama sqlite-tareas. Pídele a Claude Code: \"Crea un script de Node que use el módulo node:sqlite para crear tareas.db con una tabla tareas (id, titulo, hecha), inserte 3 filas y las muestre\".\nPídele que te explique cada sentencia SQL. Revisa que use consultas con parámetros (?) y no concatene texto. Agrega tareas.db al .gitignore. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: 6 consultas a mano",
+      "minutos": 35,
+      "detalle": "Sin IA, escribe y ejecuta 6 consultas sobre tu tabla: listar todas, buscar por id, listar las pendientes, marcar una como hecha, borrar una y contar cuántas hay. Guárdalas en consultas.sql."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "Node.js: módulo node:sqlite (referencia)",
+      "url": "https://nodejs.org/api/sqlite.html",
+      "minutos": 20,
+      "detalle": "Referencia oficial en inglés del módulo que usa el script. Opcional."
+    }
+  ],
+  "entregable": "Link al PR de hoy. En la explicación: base de datos con tabla de tareas y consultas y qué entendiste con tus palabras.",
+  "pregunta": "¿Por qué es peligroso armar una consulta SQL pegando texto del usuario?",
+  "whatsapp": "*Vibecoders · SQL básico y SQLite*\nJueves 29 de octubre\n\nCrear una base de datos SQLite y escribir consultas SQL para insertar, leer, actualizar y borrar datos.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: Base de datos con tabla de tareas y consultas\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

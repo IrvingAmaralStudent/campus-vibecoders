@@ -1,0 +1,42 @@
+{
+  "fecha": "2026-10-30",
+  "semana": 2,
+  "fase": 1,
+  "semanaTitulo": "Cómo funciona una app web: HTTP, JSON, cliente y servidor, API REST, SQL básico",
+  "entregableSemana": "API en Node + SQLite con CRUD completo y frontend mínimo que la consume. Compuerta 1 (Fundamentos) al cerrar la semana.",
+  "titulo": "API con base de datos y frontend mínimo",
+  "objetivo": "Conectar la API a SQLite con CRUD completo y consumirla desde una página con fetch.",
+  "bloques": [
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: Usar la Fetch API",
+      "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API/Using_Fetch",
+      "minutos": 20,
+      "detalle": "Cómo hacer GET y POST con fetch, leer la respuesta y manejar errores."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: CORS",
+      "url": "https://developer.mozilla.org/es/docs/Web/HTTP/CORS",
+      "minutos": 20,
+      "detalle": "Por qué el navegador bloquea peticiones entre orígenes distintos y cómo se permite."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "CRUD completo y página con Claude Code",
+      "minutos": 60,
+      "detalle": "Rama crud-frontend. Pídele a Claude Code en modo plan: \"Cambia mi API de tareas para que use SQLite y tenga GET, POST, PUT y DELETE con códigos de estado correctos, validación de datos y un index.html mínimo que liste, cree, marque y borre tareas con fetch\".\nRevisa el plan, prueba cada ruta con curl y la página en el navegador. Si falla por CORS, pídele que lo explique antes de arreglarlo. Actualiza el README. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: valida un campo",
+      "minutos": 30,
+      "detalle": "Sin IA, agrega a mano la validación para que POST /tareas responda 400 si el título está vacío o pasa de 100 caracteres. Pruébalo con curl."
+    }
+  ],
+  "entregable": "Link al PR de hoy. En la explicación: api con crud en sqlite y página que la consume y qué entendiste con tus palabras.",
+  "pregunta": "¿Qué parte del flujo cliente-API-base de datos te costó más entender?",
+  "whatsapp": "*Vibecoders · API con base de datos y frontend mínimo*\nViernes 30 de octubre\n\nConectar la API a SQLite con CRUD completo y consumirla desde una página con fetch.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: API con CRUD en SQLite y página que la consume\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

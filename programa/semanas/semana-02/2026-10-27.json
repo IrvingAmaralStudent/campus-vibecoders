@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-10-27",
+  "semana": 2,
+  "fase": 1,
+  "semanaTitulo": "Cómo funciona una app web: HTTP, JSON, cliente y servidor, API REST, SQL básico",
+  "entregableSemana": "API en Node + SQLite con CRUD completo y frontend mínimo que la consume. Compuerta 1 (Fundamentos) al cerrar la semana.",
+  "titulo": "JSON, métodos y códigos de estado",
+  "objetivo": "Leer y escribir JSON con soltura y elegir el método HTTP y el código de estado correctos para cada acción.",
+  "bloques": [
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: Trabajar con JSON",
+      "url": "https://developer.mozilla.org/es/docs/Learn_web_development/Core/Scripting/JSON",
+      "minutos": 25,
+      "detalle": "Sintaxis de JSON, diferencias con un objeto de JavaScript, JSON.parse y JSON.stringify."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: Métodos de petición HTTP",
+      "url": "https://developer.mozilla.org/es/docs/Web/HTTP/Methods",
+      "minutos": 20,
+      "detalle": "GET, POST, PUT, PATCH y DELETE: para qué sirve cada uno y cuáles son seguros o idempotentes."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: Códigos de estado HTTP",
+      "url": "https://developer.mozilla.org/es/docs/Web/HTTP/Status",
+      "minutos": 15,
+      "detalle": "Memoriza los grupos (2xx, 3xx, 4xx, 5xx) y los comunes: 200, 201, 204, 400, 404, 500."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Diseña JSON y respuestas con Claude Code",
+      "minutos": 45,
+      "detalle": "En una rama json-estados, pídele a Claude Code: \"Crea un archivo tareas.json con 5 tareas (id, titulo, hecha) y un script que lo lea, agregue una tarea y lo guarde\".\nLuego pídele: \"Dame una tabla con las acciones de una API de tareas, el método, la ruta y el código de estado de éxito y de error\". Corrige lo que no te convenza y compáralo con lo que leíste. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: elige método y código",
+      "minutos": 30,
+      "detalle": "Sin ayuda, escribe 8 situaciones (crear, listar, editar, borrar, no existe, datos inválidos, error del servidor, sin permiso) y para cada una el método, la ruta y el código de estado. Revisa con la documentación al final."
+    }
+  ],
+  "entregable": "Link al PR de hoy. En la explicación: tabla de métodos y códigos de estado y qué entendiste con tus palabras.",
+  "pregunta": "¿Por qué importa usar el método correcto si todo se podría hacer con POST?",
+  "whatsapp": "*Vibecoders · JSON, métodos y códigos de estado*\nMartes 27 de octubre\n\nLeer y escribir JSON con soltura y elegir el método HTTP y el código de estado correctos para cada acción.\n\n⏱ ≈ 2 h 15 min\n✅ Entrega: Tabla de métodos y códigos de estado\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
