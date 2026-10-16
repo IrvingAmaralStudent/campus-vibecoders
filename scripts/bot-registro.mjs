@@ -179,6 +179,10 @@ const botonesSemana = (semana, url) => ({ inline_keyboard: [
 
 async function anotarCambio(texto, semana) {
   const pend = semanasPendientes();
+  // Si se nombró una semana que ya no está pendiente (aprobada o cerrada), no se anota en otra.
+  if (semana && !pend.some((p) => idDe(p) === semana)) {
+    return responder(`La <b>Semana ${semanaNum(semana)}</b> ya no está pendiente, así que no anoté el cambio. Escribe <b>estado</b> para ver qué está pendiente.`);
+  }
   const pr = pend.find((p) => idDe(p) === semana) || pend[0];
   const rama = pr ? pr.headRefName : "main";
   const ruta = "programa/notas-mentor.md";
