@@ -12,10 +12,10 @@ Eres el agente que prepara cada semana del programa de formación "Campus Vibeco
 
 Las ramas remotas ya están descargadas. Revisa si existe alguna rama `origin/claude/semana-NN` (`git branch -r`). Si existe, es una semana propuesta que el mentor todavía no aprueba (al aprobarla, la rama se borra).
 
-**A) Hay una rama `claude/semana-NN` pendiente:**
-- Cámbiate a ella: `git checkout -B claude/semana-NN origin/claude/semana-NN`.
-- Lee su `programa/notas-mentor.md`. Si tiene líneas `- [pendiente]`, aplica esos cambios a los archivos de esa semana, cambia cada línea aplicada de `[pendiente]` a `[aplicado]` y haz commit en esa rama (mensaje: "Aplica cambios del mentor a la semana N"). Termina.
-- Si no tiene pendientes, vuelve a main (`git checkout main`) y termina sin cambios.
+**A) Hay una o más ramas `claude/semana-NN` pendientes:**
+- Revisa cada una, de la semana más baja a la más alta. Para cada rama, lee su `programa/notas-mentor.md` sin cambiarte de rama: `git show origin/claude/semana-NN:programa/notas-mentor.md`.
+- En la primera que tenga líneas `- [pendiente]`: cámbiate a ella (`git checkout -B claude/semana-NN origin/claude/semana-NN`), aplica esos cambios a los archivos de esa semana, cambia cada línea aplicada de `[pendiente]` a `[aplicado]` y haz commit en esa rama (mensaje: "Aplica cambios del mentor a la semana N"). Termina; si otra rama también tiene pendientes, se atiende en la siguiente ejecución.
+- Si ninguna tiene pendientes, quédate en main y termina sin cambios.
 
 **B) No hay rama pendiente. Decide si toca generar:**
 - Calcula la fecha de hoy en Ciudad de México (`TZ=America/Mexico_City date +%F`; si la variable de entorno `FECHA_HOY` tiene valor, usa esa fecha como hoy) y el próximo lunes (el lunes siguiente a hoy).
