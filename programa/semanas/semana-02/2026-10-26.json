@@ -1,0 +1,42 @@
+{
+  "fecha": "2026-10-26",
+  "semana": 2,
+  "fase": 1,
+  "semanaTitulo": "Cómo funciona una app web: HTTP, JSON, cliente y servidor, API REST, SQL básico",
+  "entregableSemana": "API en Node + SQLite con CRUD completo y frontend mínimo que la consume. Compuerta 1 (Fundamentos) al cerrar la semana.",
+  "titulo": "Cliente, servidor y HTTP",
+  "objetivo": "Explicar qué pasa entre que escribes una dirección y ves una página, e inspeccionar peticiones HTTP reales.",
+  "bloques": [
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: Visión general cliente-servidor",
+      "url": "https://developer.mozilla.org/es/docs/Learn_web_development/Extensions/Server-side/First_steps/Client-Server_overview",
+      "minutos": 25,
+      "detalle": "Qué es un cliente, qué es un servidor y cómo viaja una petición. Fíjate en la diferencia entre petición y respuesta."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: Generalidades del protocolo HTTP",
+      "url": "https://developer.mozilla.org/es/docs/Web/HTTP/Overview",
+      "minutos": 25,
+      "detalle": "Estructura de una petición y una respuesta: método, ruta, cabeceras y cuerpo."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Inspecciona HTTP con Claude Code",
+      "minutos": 50,
+      "detalle": "Crea el repo web-basico en GitHub y una rama practica-http.\nPídele a Claude Code: \"Explícame con un ejemplo qué contiene una petición y una respuesta HTTP y escribe un script de Node que haga un fetch a https://jsonplaceholder.typicode.com/todos/1 e imprima estado, cabeceras y cuerpo\".\nAbre las herramientas de desarrollo del navegador (pestaña Red) en cualquier sitio y compara con lo que imprimió el script. Revisa que entiendas cada línea del script. Commit y PR hacia main."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: dibuja el viaje de una petición",
+      "minutos": 30,
+      "detalle": "En papel o en un editor de diagramas, dibuja de memoria qué ocurre al abrir una página: navegador, servidor, petición, respuesta. Anota método, ruta y código de estado. Sube la foto o el archivo al repo."
+    }
+  ],
+  "entregable": "Link al PR de hoy. En la explicación: una petición http analizada y qué entendiste con tus palabras.",
+  "pregunta": "¿Qué crees que pasaría si el servidor no respondiera con un código de estado?",
+  "whatsapp": "*Vibecoders · Cliente, servidor y HTTP*\nLunes 26 de octubre\n\nExplicar qué pasa entre que escribes una dirección y ves una página, e inspeccionar peticiones HTTP reales.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: Una petición HTTP analizada\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

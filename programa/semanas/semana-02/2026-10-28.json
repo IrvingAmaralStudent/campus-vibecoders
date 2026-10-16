@@ -1,0 +1,42 @@
+{
+  "fecha": "2026-10-28",
+  "semana": 2,
+  "fase": 1,
+  "semanaTitulo": "Cómo funciona una app web: HTTP, JSON, cliente y servidor, API REST, SQL básico",
+  "entregableSemana": "API en Node + SQLite con CRUD completo y frontend mínimo que la consume. Compuerta 1 (Fundamentos) al cerrar la semana.",
+  "titulo": "Tu primer servidor y una API REST",
+  "objetivo": "Levantar un servidor en Node con rutas REST que responden JSON y probarlo con curl y el navegador.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "freeCodeCamp Español: APIs con Node.js y Express, curso desde cero",
+      "url": "https://www.youtube.com/watch?v=yd_QpXWrbtQ",
+      "minutos": 45,
+      "detalle": "Mira los primeros 45 minutos: qué es una API, rutas, Express y respuestas JSON. No copies el código, solo entiende la estructura."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Node.js: Aprende",
+      "url": "https://nodejs.org/es/learn",
+      "minutos": 20,
+      "detalle": "Introducción a Node.js y su modelo de ejecución. Lee la parte de qué es Node y cómo corre un servidor."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Construye la API de tareas con Claude Code",
+      "minutos": 55,
+      "detalle": "Rama api-tareas en tu repo web-basico. Pídele a Claude Code en modo plan: \"Quiero una API REST en Node con Express para tareas (id, titulo, hecha) con GET /tareas, GET /tareas/:id y POST /tareas, guardando en memoria. Primero propón el plan\".\nRevisa el plan, aprueba y deja que lo implemente. Prueba con curl cada ruta y con el navegador el GET. Pídele un README con los comandos. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: agrega una ruta a mano",
+      "minutos": 25,
+      "detalle": "Sin IA, agrega la ruta GET /tareas/pendientes que devuelva solo las tareas con hecha en false. Pruébala con curl y haz commit."
+    }
+  ],
+  "entregable": "Link al PR de hoy. En la explicación: servidor node con rutas de lectura y creación y qué entendiste con tus palabras.",
+  "pregunta": "¿Qué diferencia hay entre una ruta y un recurso en una API REST?",
+  "whatsapp": "*Vibecoders · Tu primer servidor y una API REST*\nMiércoles 28 de octubre\n\nLevantar un servidor en Node con rutas REST que responden JSON y probarlo con curl y el navegador.\n\n⏱ ≈ 2 h 25 min\n✅ Entrega: Servidor Node con rutas de lectura y creación\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
