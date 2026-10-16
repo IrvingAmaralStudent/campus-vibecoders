@@ -1,5 +1,6 @@
 // Bot de registro: da la bienvenida a quien entra al grupo y le entrega su código personal
-// cuando comparte su número en privado. Lo ejecuta la GitHub Action "Bot de registro", que se queda
+// cuando comparte su número en privado. Si el número no está en la lista del mentor y la persona está
+// en el grupo, le pide su nombre, le genera un código y lo guarda cifrado (scripts/registro.mjs). Lo ejecuta la GitHub Action "Bot de registro", que se queda
 // escuchando ~50 minutos (MINUTOS) y luego se relanza sola, así responde en segundos.
 //
 // Secretos que usa:
@@ -7,11 +8,13 @@
 //   GROUP_CHAT_ID       grupo del programa
 //   MENTOR_CHAT_ID      chat privado del mentor, para avisarle
 //   ALUMNOS             JSON [{codigo, nombre, telefono}] (lo sube contenido/sincronizar-alumnos.js)
+//   REGISTRO_KEY        llave (32 bytes en base64) para cifrar programa/registro.json
 //
 // No guarda estado propio: al pedir las novedades con "offset", Telegram las da por leídas.
 // Sin MINUTOS (o 0) atiende lo pendiente una sola vez y termina.
 
 import { execFileSync } from "node:child_process";
+import { crearRegistro } from "./registro.mjs";
 
 const { TELEGRAM_BOT_TOKEN: token, GROUP_CHAT_ID, MENTOR_CHAT_ID, ALUMNOS } = process.env;
 if (!token) throw new Error("Falta el secreto TELEGRAM_BOT_TOKEN.");
@@ -19,6 +22,8 @@ const GRUPO = Number(GROUP_CHAT_ID);
 const MENTOR = Number(MENTOR_CHAT_ID);
 const PORTAL = "https://irvingamaralstudent.github.io/campus-vibecoders/";
 const alumnos = JSON.parse(ALUMNOS || "[]");
+const registro = crearRegistro({ llave: process.env.REGISTRO_KEY, repo: process.env.GITHUB_REPOSITORY, ghToken: process.env.GH_TOKEN });
+await registro.cargar();
 
 const api = async (metodo, cuerpo) => {
   const r = await fetch(`https://api.telegram.org/bot${token}/${metodo}`, {
@@ -42,6 +47,53 @@ const pedirNumero = (chat) => api("sendMessage", {
   text: "👋 ¡Hola! Para darte tu <b>código personal</b> del programa, toca el botón de abajo y comparte tu número.\n\nSolo se usa para identificarte en la lista de tu mentor.",
   reply_markup: { keyboard: [[{ text: "📱 Compartir mi número", request_contact: true }]], resize_keyboard: true, one_time_keyboard: true },
 });
+
+// --- Registro.
+const nombreTelegram = (u) => [u.first_name, u.last_name].filter(Boolean).join(" ");
+const sinAcentos = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+// Nombre válido: solo letras, al menos dos palabras. Se devuelve con mayúscula inicial en cada palabra.
+function limpiarNombre(txt) {
+  const t = txt.trim().replace(/\s+/g, " ");
+  if (t.length > 60 || !/^[\p{L}' .-]+$/u.test(t) || t.split(" ").filter((w) => w.length > 1).length < 2) return "";
+  return t.split(" ").map((w) => w.charAt(0).toLocaleUpperCase("es") + w.slice(1).toLocaleLowerCase("es")).join(" ");
+}
+// Coinciden si todas las palabras del nombre más corto aparecen en el otro (al menos dos).
+function mismoNombre(a, b) {
+  const pa = sinAcentos(a).split(/\s+/).filter(Boolean), pb = sinAcentos(b).split(/\s+/).filter(Boolean);
+  const [corto, largo] = pa.length <= pb.length ? [pa, pb] : [pb, pa];
+  return corto.length >= 2 && corto.every((w) => largo.includes(w));
+}
+function nuevoCodigo(usados) {
+  const letras = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  for (;;) {
+    const c = "VC-" + Array.from(crypto.getRandomValues(new Uint8Array(3)), (n) => letras[n % letras.length]).join("");
+    if (!usados.has(c)) return c;
+  }
+}
+async function estaEnGrupo(id) {
+  const r = await api("getChatMember", { chat_id: GRUPO, user_id: id });
+  return r.ok && ["creator", "administrator", "member", "restricted"].includes(r.result.status);
+}
+async function entregarCodigo(chat, nombre, codigo, nota, nuevo = false) {
+  await api("sendMessage", {
+    chat_id: chat,
+    parse_mode: "HTML",
+    text: `✅ ¡Listo, ${esc(nombre.split(" ")[0])}!
+
+Tu código personal es: <b>${esc(codigo)}</b>
+
+Escríbelo en el portal la primera vez que mandes tu entrega; el portal lo recuerda. No lo compartas.
+
+📚 Portal: ${PORTAL}
+⏰ Cada mañana a las 7:00 publico en el grupo la actividad del día.`,
+    reply_markup: { remove_keyboard: true },
+  });
+  await avisarMentor(nuevo
+    ? `🆕 <b>${esc(nombre)}</b> se registró y recibió el código <b>${esc(codigo)}</b>.
+
+Si no es alumno del programa, sácalo del grupo y pídele a Claude que lo dé de baja.`
+    : `✅ <b>${esc(nombre)}</b> (${esc(codigo)}) ya recibió su código${nota}.`);
+}
 
 // --- Comandos del mentor. Usan el CLI de GitHub con el token de la Action (GH_TOKEN).
 const REPO = process.env.GITHUB_REPOSITORY;
@@ -116,39 +168,55 @@ async function atender(u) {
 
   if (m.chat.type !== "private") return;
 
-  // 2. Compartió su contacto: buscarlo en la lista y mandarle su código.
+  // 2. Compartió su contacto: si ya está en la lista o ya se registró, le da su código; si es nuevo, le pide su nombre.
   if (m.contact) {
     if (m.contact.user_id !== m.from.id) {
       await api("sendMessage", { chat_id: m.chat.id, text: "Necesito tu propio número. Toca el botón “📱 Compartir mi número”." });
       return;
     }
-    const a = alumnos.find((x) => tel10(x.telefono) && tel10(x.telefono) === tel10(m.contact.phone_number));
-    if (a) {
-      await api("sendMessage", {
-        chat_id: m.chat.id,
-        parse_mode: "HTML",
-        text: `✅ ¡Listo, ${esc(a.nombre.split(" ")[0])}!\n\nTu código personal es: <b>${esc(a.codigo)}</b>\n\nEscríbelo en el portal la primera vez que mandes tu entrega; el portal lo recuerda. No lo compartas.\n\n📚 Portal: ${PORTAL}\n⏰ Cada mañana a las 7:00 publico en el grupo la actividad del día.`,
-        reply_markup: { remove_keyboard: true },
-      });
-      await avisarMentor(`✅ <b>${esc(a.nombre)}</b> (${esc(a.codigo)}) ya recibió su código.`);
-    } else {
-      await api("sendMessage", {
-        chat_id: m.chat.id,
-        text: "No encontré tu número en la lista del programa. Ya le avisé a tu mentor; en cuanto te agregue, vuelve a tocar “📱 Compartir mi número”.",
-        reply_markup: { keyboard: [[{ text: "📱 Compartir mi número", request_contact: true }]], resize_keyboard: true, one_time_keyboard: true },
-      });
-      await avisarMentor(`⚠️ <b>${esc([m.from.first_name, m.from.last_name].filter(Boolean).join(" "))}</b> pidió su código, pero su número (${esc(m.contact.phone_number)}) no está en tu lista de alumnos.`);
+    const tel = tel10(m.contact.phone_number);
+    const a = alumnos.find((x) => tel10(x.telefono) && tel10(x.telefono) === tel);
+    if (a) return entregarCodigo(m.chat.id, a.nombre, a.codigo, "");
+    const r = registro.porTelefono(tel);
+    if (r && r.estado === "activo") return entregarCodigo(m.chat.id, registro.datos(r).nombre, r.codigo, "");
+    if (!(await estaEnGrupo(m.from.id))) {
+      await api("sendMessage", { chat_id: m.chat.id, text: "Todavía no estás en el grupo del programa. Pídele a tu mentor que te agregue y vuelve a escribirme.", reply_markup: { remove_keyboard: true } });
+      await avisarMentor(`⚠️ <b>${esc(nombreTelegram(m.from))}</b> quiso registrarse, pero no está en el grupo.`);
+      return;
     }
+    await registro.pendiente(m.from.id, tel, m.contact.phone_number);
+    await api("sendMessage", {
+      chat_id: m.chat.id,
+      parse_mode: "HTML",
+      text: "📝 ¡Gracias! Ahora escríbeme tu <b>nombre completo</b> (nombre y apellido), tal como quieres que te identifique tu mentor.",
+      reply_markup: { remove_keyboard: true },
+    });
     return;
   }
 
-  // 3. Mensajes del mentor: aprobar, pedir cambios o ver el estado de la semana propuesta.
+  // 3. Está registrándose y escribió su nombre: generar su código.
+  const pend = registro.porUsuario(m.from.id);
+  if (pend && pend.estado === "pendiente" && m.text && !m.text.startsWith("/")) {
+    const nombre = limpiarNombre(m.text);
+    if (!nombre) {
+      await api("sendMessage", { chat_id: m.chat.id, parse_mode: "HTML", text: "Escríbeme tu <b>nombre y apellido</b>, solo con letras. Por ejemplo: <i>Ana López</i>" });
+      return;
+    }
+    // Si coincide con alguien de la lista del mentor que aún no tiene teléfono, se queda con su código.
+    const ocupados = new Set(registro.codigos());
+    const previo = alumnos.find((x) => !tel10(x.telefono) && !ocupados.has(x.codigo) && mismoNombre(x.nombre, nombre));
+    const codigo = previo ? previo.codigo : nuevoCodigo(new Set([...ocupados, ...alumnos.map((x) => x.codigo)]));
+    await registro.activar(pend, codigo, previo ? previo.nombre.trim() : nombre);
+    return entregarCodigo(m.chat.id, previo ? previo.nombre.trim() : nombre, codigo, previo ? " (lo reconocí por su nombre en tu lista)" : "", !previo);
+  }
+
+  // 4. Mensajes del mentor: aprobar, pedir cambios o ver el estado de la semana propuesta.
   if (m.chat.id === MENTOR && m.text && !/^\/start/.test(m.text)) {
     await atenderMentor(m.text.trim());
     return;
   }
 
-  // 4. Cualquier otro mensaje en privado (/start, /codigo, "hola"…): pedir el número.
+  // 5. Cualquier otro mensaje en privado (/start, /codigo, "hola"…): pedir el número.
   await pedirNumero(m.chat.id);
 }
 

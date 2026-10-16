@@ -35,6 +35,7 @@ jobs:
           GROUP_CHAT_ID: ${{ secrets.GROUP_CHAT_ID }}
           MENTOR_CHAT_ID: ${{ secrets.MENTOR_CHAT_ID }}
           ALUMNOS: ${{ secrets.ALUMNOS }}
+          REGISTRO_KEY: ${{ secrets.REGISTRO_KEY }}
           GH_TOKEN: ${{ github.token }}
       - name: Relanzar el bot
         env:
