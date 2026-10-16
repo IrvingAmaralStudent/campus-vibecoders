@@ -6,6 +6,8 @@
 //                  d: { nombre, telefono, telegram } cifrado }
 // "pendiente" = ya compartió su número y falta que escriba su nombre. "baja" = el mentor lo dio de baja
 // (también se usa para alumnos de la lista del mentor: entonces solo lleva codigo y t).
+// Mentores agregados desde el chat: { estado: "mentor", fecha, d: { telegram, nombre } cifrado }.
+// Invitaciones de mentor sin usar: { estado: "invitacion", fecha, t: huella del token } (valen 48 h y una sola vez).
 import crypto from "node:crypto";
 
 const RUTA = "programa/registro.json";
@@ -61,6 +63,37 @@ export function crearRegistro({ llave, repo, ghToken }) {
       await guardar(`Registro: baja de ${codigo}`);
     },
     datos: (x) => descifrar(x.d),
+    async reactivar(codigo) {
+      const x = lista.find((y) => y.estado === "baja" && y.codigo === codigo);
+      if (!x) return false;
+      // Si se había registrado con el bot, vuelve a activo; si venía de la lista del mentor, basta con quitar la baja.
+      if (x.d) Object.assign(x, { estado: "activo", fecha: new Date().toISOString() });
+      else lista = lista.filter((y) => y !== x);
+      await guardar(`Registro: alta de nuevo de ${codigo}`);
+      return true;
+    },
+    mentores: () => lista.filter((x) => x.estado === "mentor").map((x) => descifrar(x.d)),
+    async invitarMentor() {
+      const token = crypto.randomBytes(9).toString("base64url");
+      lista.push({ estado: "invitacion", fecha: new Date().toISOString(), t: huella("i", token) });
+      await guardar("Registro: invitación de mentor");
+      return token;
+    },
+    async usarInvitacion(token, telegram, nombre) {
+      const limite = Date.now() - 48 * 3600_000;
+      const inv = lista.find((x) => x.estado === "invitacion" && x.t === huella("i", token) && Date.parse(x.fecha) > limite);
+      if (!inv) return false;
+      lista = lista.filter((x) => x !== inv && !(x.estado === "mentor" && descifrar(x.d).telegram === telegram));
+      lista.push({ estado: "mentor", fecha: new Date().toISOString(), d: cifrar({ telegram, nombre }) });
+      await guardar("Registro: nuevo mentor");
+      return true;
+    },
+    async quitarMentor(telegram) {
+      const antes = lista.length;
+      lista = lista.filter((x) => !(x.estado === "mentor" && descifrar(x.d).telegram === telegram));
+      if (lista.length !== antes) await guardar("Registro: se quitó un mentor");
+      return lista.length !== antes;
+    },
     async pendiente(id, tel10, telefono) {
       lista = lista.filter((x) => !(x.estado === "pendiente" && (x.u === huella("u", id) || x.t === huella("t", tel10))));
       lista.push({ estado: "pendiente", fecha: new Date().toISOString(), t: huella("t", tel10), u: huella("u", id), d: cifrar({ telefono }) });

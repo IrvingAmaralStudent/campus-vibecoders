@@ -22,6 +22,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           MENTOR_CHAT_ID: ${{ secrets.MENTOR_CHAT_ID }}
+          REGISTRO_KEY: ${{ secrets.REGISTRO_KEY }}
         run: |
           gh pr list --state open --json url,title,headRefName -q '.[] | select(.headRefName | startswith("claude/semana-")) | [(.headRefName | sub("^claude/"; "")), .url, .title] | @tsv' |
           while IFS=$'\t' read -r SEMANA URL TITULO; do node scripts/notificar.mjs recordatorio "$SEMANA" "$URL" "$TITULO"; done

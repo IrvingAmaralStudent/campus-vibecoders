@@ -20,7 +20,9 @@ import { crearRegistro } from "./registro.mjs";
 const { TELEGRAM_BOT_TOKEN: token, GROUP_CHAT_ID, MENTOR_CHAT_ID, ALUMNOS } = process.env;
 if (!token) throw new Error("Falta el secreto TELEGRAM_BOT_TOKEN.");
 const GRUPO = Number(GROUP_CHAT_ID);
-const MENTORES = String(MENTOR_CHAT_ID || "").split(",").map((x) => Number(x.trim())).filter(Boolean);
+// Mentores: los del secreto MENTOR_CHAT_ID (fijos) más los que se agregan desde el chat con una invitación.
+const MENTORES_BASE = String(MENTOR_CHAT_ID || "").split(",").map((x) => Number(x.trim())).filter(Boolean);
+let MENTORES = MENTORES_BASE;
 const esMentor = (id) => MENTORES.includes(id);
 // Mentor que está hablando con el bot en este momento: a él se le responde y a los demás se les avisa.
 let chatMentor = MENTORES[0], quienMentor = "";
@@ -40,6 +42,8 @@ async function reintentar(fn, intentos = 6) {
 
 const registro = crearRegistro({ llave: process.env.REGISTRO_KEY, repo: process.env.GITHUB_REPOSITORY, ghToken: process.env.GH_TOKEN });
 await reintentar(() => registro.cargar());
+const cargarMentores = () => { MENTORES = [...new Set([...MENTORES_BASE, ...registro.mentores().map((m) => m.telegram)])]; };
+cargarMentores();
 
 const api = async (metodo, cuerpo) => {
   const r = await reintentar(() => fetch(`https://api.telegram.org/bot${token}/${metodo}`, {
@@ -58,7 +62,7 @@ const avisarOtros = async (texto) => { for (const id of MENTORES.filter((x) => x
 
 const me = (await api("getMe", {})).result;
 // Menú "/" del chat del mentor (los alumnos solo ven /codigo).
-for (const id of MENTORES) await api("setMyCommands", {
+const menuMentor = (id) => api("setMyCommands", {
   scope: { type: "chat", chat_id: id },
   commands: [
     { command: "estado", description: "Qué está pendiente de aprobar" },
@@ -68,8 +72,12 @@ for (const id of MENTORES) await api("setMyCommands", {
     { command: "aviso", description: "Publicar en el grupo la actividad de hoy" },
     { command: "alumnos", description: "Ver la lista de alumnos y sus códigos" },
     { command: "baja", description: "Dar de baja a un alumno (escribe: baja VC-XXX)" },
+    { command: "alta", description: "Reactivar a un alumno dado de baja (escribe: alta VC-XXX)" },
+    { command: "mentor", description: "Invitar a un nuevo mentor" },
+    { command: "mentores", description: "Ver o quitar mentores" },
   ],
 });
+for (const id of MENTORES) await menuMentor(id);
 const enlace = `https://t.me/${me.username}?start=registro`;
 const pedirNumero = (chat) => api("sendMessage", {
   chat_id: chat,
@@ -101,6 +109,23 @@ async function darDeBaja(codigo) {
   await avisarOtros(`🗑️ <b>${esc(quienMentor)}</b> dio de baja a ${esc(a.nombre)} (${esc(codigo)}).`);
   return responder(`🗑️ Di de baja a <b>${esc(a.nombre)}</b> (${esc(codigo)}). Ya no puede pedir su código ni aparece en la lista.` +
     (r.ok ? " También lo saqué del grupo." : "\n\n👉 Sácalo tú del grupo de Telegram (yo no soy administrador del grupo)."));
+}
+
+async function listarMentores() {
+  const extra = registro.mentores();
+  const lineas = MENTORES_BASE.map((id) => `• ${id === chatMentor ? "Tú" : "Mentor fijo"} (configurado por Claude)`)
+    .concat(extra.map((m) => `• ${esc(m.nombre)}${m.telegram === chatMentor ? " (tú)" : ""}`));
+  const botones = extra.filter((m) => m.telegram !== chatMentor).map((m) => [{ text: `🗑️ Quitar a ${m.nombre}`, callback_data: `quitar:${m.telegram}` }]);
+  return responder(`👥 <b>${MENTORES.length} mentores</b>\n\n${lineas.join("\n")}\n\nPara invitar a otro, escribe <b>mentor</b>.`, botones.length ? { reply_markup: { inline_keyboard: botones } } : {});
+}
+async function quitarMentor(telegram) {
+  const m = registro.mentores().find((x) => x.telegram === telegram);
+  if (!m || !(await registro.quitarMentor(telegram))) return responder("Esa persona ya no es mentor.");
+  cargarMentores();
+  await api("deleteMyCommands", { scope: { type: "chat", chat_id: telegram } });
+  await api("sendMessage", { chat_id: telegram, text: "Ya no tienes el rol de mentor en Campus Vibecoders. ¡Gracias por tu ayuda!" });
+  await avisarOtros(`👤 <b>${esc(quienMentor)}</b> quitó a ${esc(m.nombre)} como mentor.`);
+  return responder(`👤 Quité a <b>${esc(m.nombre)}</b> como mentor.`);
 }
 
 // La actividad de hoy, para quien se registra después del aviso de las 7:00 (el mismo texto del aviso).
@@ -261,6 +286,7 @@ async function atenderBoton(q) {
       return texto ? anotarCambio(texto, semana) : responder("No encontré el texto; escríbemelo otra vez.");
     }
     if (accion === "bajasi") { await quitarBotones(); return darDeBaja(semana); }
+    if (accion === "quitar") { await quitarBotones(); return quitarMentor(Number(semana)); }
     if (accion === "no") return api("editMessageText", { chat_id: chatMentor, message_id: q.message.message_id, text: "👌 Ok, no lo anoto." });
   } catch (e) {
     console.log(`Error con un botón del mentor: ${e.message}`);
@@ -272,7 +298,7 @@ async function atenderMentor(m) {
   chatMentor = m.chat.id; quienMentor = m.from.first_name || "Otro mentor";
   const texto = m.text.trim();
   const t = texto.toLowerCase();
-  const esComando = /^\/?(aprobar|estado|generar|aviso|cambios?|alumnos|baja)\b/.test(t);
+  const esComando = /^\/?(aprobar|estado|generar|aviso|cambios?|alumnos|baja|alta|mentor|mentores)\b/.test(t);
   try {
     // Respondió a un mensaje de una semana (la propuesta, el recordatorio o "¿qué quieres cambiar?"): es un cambio.
     const r = m.reply_to_message;
@@ -280,6 +306,20 @@ async function atenderMentor(m) {
     if (semanaCitada && !esComando) return anotarCambio(texto, semanaCitada);
     if (/^\/?aprobar\b/.test(t)) return aprobar(null);
     if (/^\/?alumnos\b/.test(t)) return listarAlumnos();
+    if (/^\/?mentores\b/.test(t)) return listarMentores();
+    if (/^\/?mentor\b/.test(t)) {
+      const token = await registro.invitarMentor();
+      return responder(`👤 <b>Invitación para un nuevo mentor</b>\n\nReenvíale este link a la persona. Lo abre, toca <b>Iniciar</b> y queda como mentor: recibe los avisos y puede aprobar o pedir cambios.\n\nhttps://t.me/${me.username}?start=mentor-${token}\n\nSirve una sola vez y vence en 48 horas.`);
+    }
+    const alta = t.match(/^\/?alta\b\s*(vc-\w{3})?/);
+    if (alta) {
+      if (!alta[1]) return responder("Escribe <b>alta</b> seguido del código. Por ejemplo: <b>alta VC-7K2</b>.");
+      const codigo = alta[1].toUpperCase();
+      if (!(await registro.reactivar(codigo))) return responder(`No encontré a nadie dado de baja con el código ${esc(codigo)}.`);
+      const a = lista().find((x) => x.codigo === codigo);
+      await avisarOtros(`♻️ <b>${esc(quienMentor)}</b> reactivó a ${esc(a ? a.nombre : codigo)} (${esc(codigo)}).`);
+      return responder(`♻️ Reactivé a <b>${esc(a ? a.nombre : codigo)}</b> (${esc(codigo)}). Ya puede pedir su código de nuevo. Si lo sacaste del grupo, vuelve a agregarlo.`);
+    }
     const baja = t.match(/^\/?baja\b\s*(vc-\w{3})?/);
     if (baja) {
       const a = baja[1] && lista().find((x) => x.codigo === baja[1].toUpperCase());
@@ -315,7 +355,7 @@ async function atenderMentor(m) {
         { text: "✅ Sí, anótalo", callback_data: `anotar:${semana}` }, { text: "❌ No", callback_data: "no:" },
       ]] } });
     }
-    return responder("Puedo ayudarte con:\n\n• <b>estado</b> → te muestro lo pendiente, con botones para aprobar o pedir cambios\n• <b>aprobar</b> → publica la semana pendiente y la anuncia en el grupo\n• <b>cambios</b> → me dices qué cambiar y el agente lo corrige en ese momento\n• <b>generar</b> → arranco al agente ya, sin esperar al fin de semana\n• <b>aviso</b> → publico en el grupo la actividad de hoy\n• <b>alumnos</b> → la lista de alumnos con sus códigos\n• <b>baja VC-XXX</b> → doy de baja a un alumno\n\nTambién puedes responder a cualquier mensaje de una semana con lo que quieras cambiar.");
+    return responder("Puedo ayudarte con:\n\n• <b>estado</b> → te muestro lo pendiente, con botones para aprobar o pedir cambios\n• <b>aprobar</b> → publica la semana pendiente y la anuncia en el grupo\n• <b>cambios</b> → me dices qué cambiar y el agente lo corrige en ese momento\n• <b>generar</b> → arranco al agente ya, sin esperar al fin de semana\n• <b>aviso</b> → publico en el grupo la actividad de hoy\n• <b>alumnos</b> → la lista de alumnos con sus códigos\n• <b>baja VC-XXX</b> / <b>alta VC-XXX</b> → doy de baja o reactivo a un alumno\n• <b>mentor</b> → te doy un link para invitar a un nuevo mentor\n• <b>mentores</b> → la lista de mentores, con botón para quitar\n\nTambién puedes responder a cualquier mensaje de una semana con lo que quieras cambiar.");
   } catch (e) {
     console.log(`Error con el comando del mentor: ${e.message}`);
     return responder("⚠️ No pude completar eso. Inténtalo de nuevo en unos minutos; si sigue fallando, revísalo con Claude.");
@@ -341,6 +381,22 @@ async function atender(u) {
   }
 
   if (m.chat.type !== "private") return;
+
+  // Abrió un link de invitación de mentor.
+  const inv = (m.text || "").match(/^\/start mentor-([\w-]+)/);
+  if (inv) {
+    if (esMentor(m.from.id)) return api("sendMessage", { chat_id: m.chat.id, text: "Ya eres mentor. Escribe estado para ver lo pendiente." });
+    const nombre = nombreTelegram(m.from) || "Mentor";
+    if (!(await registro.usarInvitacion(inv[1], m.from.id, nombre))) {
+      return api("sendMessage", { chat_id: m.chat.id, text: "Esta invitación ya no es válida (se usó o venció). Pide una nueva a quien te invitó." });
+    }
+    cargarMentores();
+    await menuMentor(m.from.id);
+    chatMentor = m.from.id;
+    await avisarOtros(`👤 <b>${esc(nombre)}</b> aceptó la invitación y ya es mentor.`);
+    return api("sendMessage", { chat_id: m.chat.id, parse_mode: "HTML", reply_markup: { remove_keyboard: true },
+      text: `👋 ¡Bienvenido/a, ${esc(m.from.first_name || nombre)}! Ya eres <b>mentor</b> de Campus Vibecoders.\n\nTe van a llegar las semanas para revisar, con botones para aprobarlas o pedir cambios. Escribe <b>estado</b> para ver lo pendiente o toca el menú <b>/</b> para ver todo lo que puedes hacer.` });
+  }
 
   // 2. Compartió su contacto: si ya está en la lista o ya se registró, le da su código; si es nuevo, le pide su nombre.
   if (m.contact) {

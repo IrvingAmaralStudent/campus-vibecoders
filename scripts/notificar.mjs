@@ -1,17 +1,25 @@
 // Mensajes del flujo semanal. Uso:
 //   node scripts/notificar.mjs propuesta <semana-NN> <url del PR> [actualizada]   → aviso al mentor
 //   node scripts/notificar.mjs recordatorio <semana-NN> <url del PR> <título>      → recordatorio al mentor
+//   node scripts/notificar.mjs vigilante                                           → el bot estaba caído
 //   node scripts/notificar.mjs publicada <semana-NN> [<semana-NN> …]               → anuncio al grupo
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { enviar, esc } from "./telegram.mjs";
+import { crearRegistro } from "./registro.mjs";
 
 const raiz = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const [accion, ...args] = process.argv.slice(2);
 const { MENTOR_CHAT_ID, GROUP_CHAT_ID: grupo } = process.env;
 // Puede haber varios mentores (MENTOR_CHAT_ID separado por coma): el aviso les llega a todos.
 const mentores = String(MENTOR_CHAT_ID || "").split(",").map((x) => x.trim()).filter(Boolean);
+// Más los agregados desde el chat (registro cifrado); si no se puede leer, solo los fijos.
+try {
+  const reg = crearRegistro({ llave: process.env.REGISTRO_KEY, repo: process.env.GITHUB_REPOSITORY, ghToken: process.env.GH_TOKEN });
+  await reg.cargar();
+  for (const m of reg.mentores()) if (!mentores.includes(String(m.telegram))) mentores.push(String(m.telegram));
+} catch (e) { console.log(`Aviso: solo aviso a los mentores fijos (${e.message}).`); }
 const avisarMentores = async (html, extra) => { for (const id of mentores) await enviar(id, html, extra); };
 const leerSemana = (s) => {
   const c = path.join(raiz, "programa", "semanas", s);
@@ -37,6 +45,8 @@ if (accion === "propuesta") {
 } else if (accion === "recordatorio") {
   const [semana, url, titulo] = args;
   await avisarMentores(`⏰ <b>Recordatorio:</b> la <b>Semana ${Number(semana.replace("semana-", ""))}</b> sigue sin aprobar.\n${esc(titulo)}\n\nSi no la apruebas, el lunes no habrá aviso para el grupo.` + ayuda, botones(semana, url));
+} else if (accion === "vigilante") {
+  await avisarMentores("⚠️ El Asistente estaba detenido y ya lo reinicié. Si hoy faltó algún aviso, escríbeme: <b>aviso</b>");
 } else if (accion === "publicada") {
   const { portalUrl } = JSON.parse(fs.readFileSync(path.join(raiz, "programa", "config.json"), "utf8"));
   for (const s of args) {

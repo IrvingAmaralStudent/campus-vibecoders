@@ -32,6 +32,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           MENTOR_CHAT_ID: ${{ secrets.MENTOR_CHAT_ID }}
+          REGISTRO_KEY: ${{ secrets.REGISTRO_KEY }}
         run: |
           SEMANA="${RAMA#claude/}"
           node scripts/resumen-semana.mjs "$SEMANA" > resumen.md

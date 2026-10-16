@@ -9,6 +9,7 @@ on:
 
 permissions:
   actions: write
+  contents: read
 
 concurrency:
   group: vigilante
@@ -18,11 +19,13 @@ jobs:
   revisar:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Revisar y reiniciar si hace falta
         env:
           GH_TOKEN: ${{ github.token }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           MENTOR_CHAT_ID: ${{ secrets.MENTOR_CHAT_ID }}
+          REGISTRO_KEY: ${{ secrets.REGISTRO_KEY }}
         run: |
           activos() { gh run list -R "$GITHUB_REPOSITORY" -w bot-registro.yml -L 10 --json status -q '[.[] | select(.status != "completed")] | length'; }
           # Entre que una ejecución termina y la siguiente arranca pasan unos segundos: se revisa dos veces.
@@ -31,8 +34,4 @@ jobs:
           if [ "$(activos)" != "0" ]; then echo "El bot está corriendo."; exit 0; fi
           gh workflow run bot-registro.yml -R "$GITHUB_REPOSITORY"
           echo "El bot estaba detenido; lo reinicié."
-          for ID in ${MENTOR_CHAT_ID//,/ }; do
-            curl -s -o /dev/null "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-              --data-urlencode "chat_id=${ID}" \
-              --data-urlencode "text=⚠️ El Asistente estaba detenido y ya lo reinicié. Si hoy faltó algún aviso, escríbeme: aviso"
-          done
+          node scripts/notificar.mjs vigilante
