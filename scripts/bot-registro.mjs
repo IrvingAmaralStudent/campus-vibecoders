@@ -58,7 +58,7 @@ if (MENTOR) await api("setMyCommands", {
   commands: [
     { command: "estado", description: "Qué está pendiente de aprobar" },
     { command: "aprobar", description: "Publicar la semana pendiente" },
-    { command: "cambios", description: "Pedir cambios a la semana (escribe: cambios: …)" },
+    { command: "cambios", description: "Pedir cambios a la semana pendiente" },
     { command: "generar", description: "Arrancar al agente ya" },
     { command: "aviso", description: "Publicar en el grupo la actividad de hoy" },
   ],
@@ -111,46 +111,123 @@ Si no es alumno del programa, sácalo del grupo y pídele a Claude que lo dé de
     : `✅ <b>${esc(nombre)}</b> (${esc(codigo)}) ya recibió su código${nota}.`);
 }
 
-// --- Comandos del mentor. Usan el CLI de GitHub con el token de la Action (GH_TOKEN).
+// --- Mentor: aprobar, pedir cambios y ver la semana, con botones o escribiendo. Usan el CLI de GitHub (GH_TOKEN).
 const REPO = process.env.GITHUB_REPOSITORY;
 const gh = (...args) => execFileSync("gh", args, { encoding: "utf8" }).trim();
 const semanasPendientes = () => JSON.parse(gh("pr", "list", "-R", REPO, "--state", "open", "--json", "number,url,title,headRefName"))
   .filter((p) => p.headRefName.startsWith("claude/semana-"))
   .sort((a, b) => (a.headRefName < b.headRefName ? -1 : 1));
-const responder = (texto) => api("sendMessage", { chat_id: MENTOR, text: texto, parse_mode: "HTML", link_preview_options: { is_disabled: true } });
+const responder = (texto, extra = {}) => api("sendMessage", { chat_id: MENTOR, text: texto, parse_mode: "HTML", link_preview_options: { is_disabled: true }, ...extra });
+// "semana-01" ↔ "Semana 1": los mensajes llevan "Semana N" para saber de qué semana se habla al responderles.
+const semanaId = (n) => `semana-${String(n).padStart(2, "0")}`;
+const semanaNum = (id) => Number(id.replace("semana-", ""));
+const semanaDeTexto = (txt) => { const x = String(txt || "").match(/Semana (\d+)/); return x ? semanaId(x[1]) : null; };
+const idDe = (pr) => pr.headRefName.replace("claude/", "");
+const prDe = (semana) => semanasPendientes().find((p) => idDe(p) === semana);
+// Los mismos botones que manda scripts/notificar.mjs con cada propuesta.
+const botonesSemana = (semana, url) => ({ inline_keyboard: [
+  [{ text: "✅ Aprobar", callback_data: `aprobar:${semana}` }, { text: "✏️ Pedir cambios", callback_data: `cambios:${semana}` }],
+  [{ text: "📄 Ver cada día", callback_data: `detalle:${semana}` }, { text: "🔗 GitHub", url }],
+] });
 
-async function anotarCambio(texto) {
-  const [pr] = semanasPendientes();
+async function anotarCambio(texto, semana) {
+  const pend = semanasPendientes();
+  const pr = pend.find((p) => idDe(p) === semana) || pend[0];
   const rama = pr ? pr.headRefName : "main";
   const ruta = "programa/notas-mentor.md";
   const actual = JSON.parse(gh("api", `repos/${REPO}/contents/${ruta}?ref=${encodeURIComponent(rama)}`));
   const previo = Buffer.from(actual.content, "base64").toString("utf8");
   const fecha = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Mexico_City" }).format(new Date());
-  const nuevo = previo.replace(/\n*$/, "\n") + `- [pendiente] (${fecha}${pr ? `, ${pr.headRefName.replace("claude/", "")}` : ""}) ${texto}\n`;
+  const nuevo = previo.replace(/\n*$/, "\n") + `- [pendiente] (${fecha}${pr ? `, ${idDe(pr)}` : ""}) ${texto.replace(/\s*\n\s*/g, " ")}\n`;
   gh("api", "-X", "PUT", `repos/${REPO}/contents/${ruta}`,
     "-f", `message=Nota del mentor: ${texto.slice(0, 60)}`,
     "-f", `content=${Buffer.from(nuevo, "utf8").toString("base64")}`,
     "-f", `sha=${actual.sha}`, "-f", `branch=${rama}`);
-  return pr;
+  // El agente lo aplica ya, sin esperar al fin de semana; al terminar llega la semana actualizada con botones.
+  if (pr) gh("workflow", "run", "generar-semana.yml", "-R", REPO);
+  return responder(pr
+    ? `📝 Anotado para la <b>Semana ${semanaNum(idDe(pr))}</b>. Ya le pedí al agente que lo aplique; en unos 10 a 20 minutos te mando la semana actualizada para que la revises.`
+    : "📝 Anotado. No hay semana pendiente, así que lo tomo en cuenta al preparar la siguiente.");
 }
 
-async function atenderMentor(texto) {
-  const t = texto.toLowerCase();
+async function aprobar(semana) {
+  const pr = semana ? prDe(semana) : semanasPendientes()[0];
+  if (!pr) return responder(semana ? `La Semana ${semanaNum(semana)} ya no está pendiente (¿ya la aprobaste?). 👍` : "No hay ninguna semana pendiente de aprobar. 👍");
+  gh("pr", "merge", String(pr.number), "-R", REPO, "--merge", "--delete-branch");
+  gh("workflow", "run", "publicar.yml", "-R", REPO, "-f", `anunciar=${idDe(pr)}`);
+  return responder(`✅ <b>Aprobada:</b> ${esc(pr.title)}\n\nEn unos minutos queda en el portal y la anuncio en el grupo.`);
+}
+
+const DIAS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+async function detalle(semana) {
+  const pr = prDe(semana);
+  const ref = encodeURIComponent(pr ? pr.headRefName : "main");
+  const dir = `programa/semanas/${semana}`;
+  const archivos = JSON.parse(gh("api", `repos/${REPO}/contents/${dir}?ref=${ref}`))
+    .filter((f) => f.name.endsWith(".json")).sort((a, b) => (a.name < b.name ? -1 : 1));
+  const partes = archivos.map((f) => {
+    const d = JSON.parse(gh("api", "-H", "Accept: application/vnd.github.raw", `repos/${REPO}/contents/${dir}/${f.name}?ref=${ref}`));
+    const fecha = new Date(`${d.fecha}T12:00:00Z`);
+    const min = d.bloques.filter((b) => b.tipo !== "extra").reduce((s, b) => s + (b.minutos || 0), 0);
+    return `<b>${DIAS[fecha.getUTCDay()]} ${fecha.getUTCDate()}: ${esc(d.titulo)}</b>\n<i>${esc(d.objetivo)}</i>\n` +
+      d.bloques.map((b) => `• ${esc(b.titulo)} (${b.minutos} min${b.tipo === "extra" ? ", extra" : ""})`).join("\n") +
+      `\n⏱ ${Math.floor(min / 60)} h ${min % 60} min · 📦 ${esc(d.entregable)}`;
+  });
+  // Telegram acepta hasta 4096 caracteres por mensaje.
+  const mensajes = [];
+  for (const p of partes) {
+    if (mensajes.length && mensajes[mensajes.length - 1].length + p.length < 3800) mensajes[mensajes.length - 1] += "\n\n" + p;
+    else mensajes.push(p);
+  }
+  mensajes[0] = `📄 <b>Semana ${semanaNum(semana)}</b>${pr ? "" : " (ya publicada)"}\n\n` + mensajes[0];
+  for (const [i, txt] of mensajes.entries()) {
+    const ultimo = i === mensajes.length - 1;
+    await responder(txt, ultimo && pr ? { reply_markup: { inline_keyboard: botonesSemana(semana, pr.url).inline_keyboard.slice(0, 1) } } : {});
+  }
+}
+
+const pedirCambios = (semana) => responder(
+  `✏️ ¿Qué quieres cambiar de la <b>Semana ${semanaNum(semana)}</b>?\n\nEscríbelo con tus palabras, como se lo dirías a una persona. Por ejemplo: <i>"el martes está muy pesado, quita un video"</i> o <i>"usa un curso en español para Git"</i>.`,
+  { reply_markup: { force_reply: true, input_field_placeholder: "Lo que quieres cambiar…" } });
+
+// Botones de los mensajes (solo los atiende si los toca el mentor).
+async function atenderBoton(q) {
+  if (q.from.id !== MENTOR) return api("answerCallbackQuery", { callback_query_id: q.id, text: "Este botón es solo para el mentor." });
+  const [accion, semana] = String(q.data || "").split(":");
+  await api("answerCallbackQuery", { callback_query_id: q.id });
+  const quitarBotones = () => api("editMessageReplyMarkup", { chat_id: MENTOR, message_id: q.message.message_id, reply_markup: { inline_keyboard: [] } });
   try {
-    if (/^\/?aprobar\b/.test(t)) {
-      const [pr] = semanasPendientes();
-      if (!pr) return responder("No hay ninguna semana pendiente de aprobar. 👍");
-      const semana = pr.headRefName.replace("claude/", "");
-      gh("pr", "merge", String(pr.number), "-R", REPO, "--merge", "--delete-branch");
-      gh("workflow", "run", "publicar.yml", "-R", REPO, "-f", `anunciar=${semana}`);
-      return responder(`✅ <b>Aprobada:</b> ${esc(pr.title)}\n\nEn unos minutos queda en el portal y la anuncio en el grupo.`);
+    if (accion === "aprobar") { await quitarBotones(); return aprobar(semana); }
+    if (accion === "cambios") return pedirCambios(semana);
+    if (accion === "detalle") return detalle(semana);
+    if (accion === "anotar") {
+      // El texto a anotar viene citado entre « » en el mensaje de confirmación.
+      const texto = (q.message.text.match(/«([\s\S]+)»/) || [])[1];
+      await quitarBotones();
+      return texto ? anotarCambio(texto, semana) : responder("No encontré el texto; escríbemelo otra vez.");
     }
-    const cambio = texto.match(/^\/?cambios?\s*:?\s*([\s\S]+)/i);
+    if (accion === "no") return api("editMessageText", { chat_id: MENTOR, message_id: q.message.message_id, text: "👌 Ok, no lo anoto." });
+  } catch (e) {
+    console.log(`Error con un botón del mentor: ${e.message}`);
+    return responder("⚠️ No pude completar eso. Inténtalo de nuevo en unos minutos; si sigue fallando, revísalo con Claude.");
+  }
+}
+
+async function atenderMentor(m) {
+  const texto = m.text.trim();
+  const t = texto.toLowerCase();
+  const esComando = /^\/?(aprobar|estado|generar|aviso|cambios?)\b/.test(t);
+  try {
+    // Respondió a un mensaje de una semana (la propuesta, el recordatorio o "¿qué quieres cambiar?"): es un cambio.
+    const r = m.reply_to_message;
+    const semanaCitada = r && r.from && r.from.is_bot ? semanaDeTexto(r.text) : null;
+    if (semanaCitada && !esComando) return anotarCambio(texto, semanaCitada);
+    if (/^\/?aprobar\b/.test(t)) return aprobar(null);
+    const cambio = texto.match(/^\/?cambios?\b\s*:?\s*([\s\S]*)/i);
     if (cambio) {
-      const pr = await anotarCambio(cambio[1].trim());
-      return responder(pr
-        ? `📝 Anotado para <b>${esc(pr.title)}</b>. El agente lo aplica en su siguiente revisión (viernes a domingo a las 9:00 am) y te aviso cuando esté. Si no quieres esperar, escribe <b>generar</b>.`
-        : "📝 Anotado. No hay semana pendiente, así que se aplicará al generar la siguiente.");
+      if (cambio[1].trim()) return anotarCambio(cambio[1].trim(), null);
+      const [pr] = semanasPendientes();
+      return pr ? pedirCambios(idDe(pr)) : responder("No hay ninguna semana pendiente. Escribe <b>cambios:</b> seguido de lo que quieres y lo tomo en cuenta para la siguiente.");
     }
     if (/^\/?aviso\b/.test(t)) {
       gh("workflow", "run", "aviso-diario.yml", "-R", REPO);
@@ -160,13 +237,20 @@ async function atenderMentor(texto) {
       gh("workflow", "run", "generar-semana.yml", "-R", REPO);
       return responder("🤖 Arranqué al agente. Si hay cambios tuyos pendientes los aplica; si toca preparar la semana siguiente, la prepara. Tarda unos 10 a 20 minutos y te aviso aquí cuando haya algo que revisar. Si no había nada que hacer, no te llega mensaje.");
     }
+    const pend = semanasPendientes();
     if (/^\/?estado\b/.test(t)) {
-      const pend = semanasPendientes();
-      return responder(pend.length
-        ? `📋 Pendiente de aprobar:\n${pend.map((p) => `• ${esc(p.title)}\n  ${p.url}`).join("\n")}\n\nResponde <b>aprobar</b> para publicarla.`
-        : "✅ No hay nada pendiente de aprobar. La próxima semana se genera el viernes a las 9:00 am.");
+      if (!pend.length) return responder("✅ No hay nada pendiente de aprobar. La próxima semana se prepara el viernes a las 9:00 am.");
+      for (const p of pend) await responder(`📋 Pendiente de aprobar: <b>Semana ${semanaNum(idDe(p))}</b>\n${esc(p.title)}`, { reply_markup: botonesSemana(idDe(p), p.url) });
+      return;
     }
-    return responder("Puedo ayudarte con:\n\n• <b>aprobar</b> → publica la semana pendiente y la anuncia en el grupo\n• <b>cambios: …</b> → anoto lo que quieres cambiar y el agente lo corrige\n• <b>generar</b> → arranco al agente ya, sin esperar al fin de semana\n• <b>aviso</b> → publico en el grupo la actividad de hoy\n• <b>estado</b> → te digo qué está pendiente");
+    // Texto libre con una semana pendiente: preguntar si es un cambio.
+    if (pend.length && texto.length >= 8 && !texto.startsWith("/")) {
+      const semana = idDe(pend[0]);
+      return responder(`¿Anoto esto como cambio para la <b>Semana ${semanaNum(semana)}</b>?\n\n«${esc(texto)}»`, { reply_markup: { inline_keyboard: [[
+        { text: "✅ Sí, anótalo", callback_data: `anotar:${semana}` }, { text: "❌ No", callback_data: "no:" },
+      ]] } });
+    }
+    return responder("Puedo ayudarte con:\n\n• <b>estado</b> → te muestro lo pendiente, con botones para aprobar o pedir cambios\n• <b>aprobar</b> → publica la semana pendiente y la anuncia en el grupo\n• <b>cambios</b> → me dices qué cambiar y el agente lo corrige en ese momento\n• <b>generar</b> → arranco al agente ya, sin esperar al fin de semana\n• <b>aviso</b> → publico en el grupo la actividad de hoy\n\nTambién puedes responder a cualquier mensaje de una semana con lo que quieras cambiar.");
   } catch (e) {
     console.log(`Error con el comando del mentor: ${e.message}`);
     return responder("⚠️ No pude completar eso. Inténtalo de nuevo en unos minutos; si sigue fallando, revísalo con Claude.");
@@ -174,6 +258,7 @@ async function atenderMentor(texto) {
 }
 
 async function atender(u) {
+  if (u.callback_query) return atenderBoton(u.callback_query);
   const m = u.message;
   if (!m) return;
 
@@ -234,7 +319,7 @@ async function atender(u) {
 
   // 4. Mensajes del mentor: aprobar, pedir cambios o ver el estado de la semana propuesta.
   if (m.chat.id === MENTOR && m.text && !/^\/start/.test(m.text)) {
-    await atenderMentor(m.text.trim());
+    await atenderMentor(m);
     return;
   }
 
@@ -287,7 +372,7 @@ do {
   try {
     await revisarTareas();
     const espera = Math.max(0, Math.min(50, Math.floor((hasta - Date.now()) / 1000)));
-    const { result: novedades = [] } = await api("getUpdates", { offset, timeout: espera, allowed_updates: ["message"] });
+    const { result: novedades = [] } = await api("getUpdates", { offset, timeout: espera, allowed_updates: ["message", "callback_query"] });
     for (const u of novedades) {
       offset = u.update_id + 1;
       total++;

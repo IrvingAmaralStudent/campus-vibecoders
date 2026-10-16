@@ -1,6 +1,6 @@
 // Mensajes del flujo semanal. Uso:
 //   node scripts/notificar.mjs propuesta <semana-NN> <url del PR> [actualizada]   → aviso al mentor
-//   node scripts/notificar.mjs recordatorio <url del PR> <título>                  → recordatorio al mentor
+//   node scripts/notificar.mjs recordatorio <semana-NN> <url del PR> <título>      → recordatorio al mentor
 //   node scripts/notificar.mjs publicada <semana-NN> [<semana-NN> …]               → anuncio al grupo
 import fs from "node:fs";
 import path from "node:path";
@@ -15,17 +15,25 @@ const leerSemana = (s) => {
   return fs.readdirSync(c).filter((f) => f.endsWith(".json")).sort().map((f) => JSON.parse(fs.readFileSync(path.join(c, f), "utf8")));
 };
 
+// Botones que atiende el bot (scripts/bot-registro.mjs). El texto debe decir "Semana N" para que,
+// si el mentor le responde al mensaje, el bot sepa de qué semana habla.
+const botones = (semana, url) => ({ reply_markup: { inline_keyboard: [
+  [{ text: "✅ Aprobar", callback_data: `aprobar:${semana}` }, { text: "✏️ Pedir cambios", callback_data: `cambios:${semana}` }],
+  [{ text: "📄 Ver cada día", callback_data: `detalle:${semana}` }, { text: "🔗 GitHub", url }],
+] } });
+const ayuda = "\n\n💬 También puedes <b>responder a este mensaje</b> con lo que quieras cambiar.";
+
 if (accion === "propuesta") {
   const [semana, url, actualizada] = args;
   const d = leerSemana(semana);
   await enviar(mentor,
-    `📋 <b>${actualizada ? "Actualicé" : "Ya está lista"} la semana ${d[0].semana} para revisar</b>\n` +
+    `📋 <b>${actualizada ? "Actualicé" : "Ya está lista"} la Semana ${d[0].semana} para revisar</b>\n` +
     `${esc(d[0].semanaTitulo)}\n${d[0].fecha} a ${d[d.length - 1].fecha} · ${d.length} días\n\n` +
     d.map((x) => `• ${esc(x.titulo)}`).join("\n") +
-    `\n\n👀 Revisa y aprueba (Merge) aquí:\n${url}`);
+    ayuda, botones(semana, url));
 } else if (accion === "recordatorio") {
-  const [url, titulo] = args;
-  await enviar(mentor, `⏰ <b>Recordatorio:</b> la propuesta "${esc(titulo)}" sigue sin aprobar. Si no la apruebas, el lunes no habrá aviso para el grupo.\n\n${url}`);
+  const [semana, url, titulo] = args;
+  await enviar(mentor, `⏰ <b>Recordatorio:</b> la <b>Semana ${Number(semana.replace("semana-", ""))}</b> sigue sin aprobar.\n${esc(titulo)}\n\nSi no la apruebas, el lunes no habrá aviso para el grupo.` + ayuda, botones(semana, url));
 } else if (accion === "publicada") {
   const { portalUrl } = JSON.parse(fs.readFileSync(path.join(raiz, "programa", "config.json"), "utf8"));
   for (const s of args) {
