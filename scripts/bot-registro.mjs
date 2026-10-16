@@ -61,18 +61,11 @@ const pedirNumero = (chat) => api("sendMessage", {
 
 // --- Registro.
 const nombreTelegram = (u) => [u.first_name, u.last_name].filter(Boolean).join(" ");
-const sinAcentos = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 // Nombre válido: solo letras, al menos dos palabras. Se devuelve con mayúscula inicial en cada palabra.
 function limpiarNombre(txt) {
   const t = txt.trim().replace(/\s+/g, " ");
   if (t.length > 60 || !/^[\p{L}' .-]+$/u.test(t) || t.split(" ").filter((w) => w.length > 1).length < 2) return "";
   return t.split(" ").map((w) => w.charAt(0).toLocaleUpperCase("es") + w.slice(1).toLocaleLowerCase("es")).join(" ");
-}
-// Coinciden si todas las palabras del nombre más corto aparecen en el otro (al menos dos).
-function mismoNombre(a, b) {
-  const pa = sinAcentos(a).split(/\s+/).filter(Boolean), pb = sinAcentos(b).split(/\s+/).filter(Boolean);
-  const [corto, largo] = pa.length <= pb.length ? [pa, pb] : [pb, pa];
-  return corto.length >= 2 && corto.every((w) => largo.includes(w));
 }
 function nuevoCodigo(usados) {
   const letras = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -221,12 +214,10 @@ async function atender(u) {
       await api("sendMessage", { chat_id: m.chat.id, parse_mode: "HTML", text: "Escríbeme tu <b>nombre y apellido</b>, solo con letras. Por ejemplo: <i>Ana López</i>" });
       return;
     }
-    // Si coincide con alguien de la lista del mentor que aún no tiene teléfono, se queda con su código.
-    const ocupados = new Set(registro.codigos());
-    const previo = alumnos.find((x) => !tel10(x.telefono) && !ocupados.has(x.codigo) && mismoNombre(x.nombre, nombre));
-    const codigo = previo ? previo.codigo : nuevoCodigo(new Set([...ocupados, ...alumnos.map((x) => x.codigo)]));
-    await registro.activar(pend, codigo, previo ? previo.nombre.trim() : nombre);
-    return entregarCodigo(m.chat.id, previo ? previo.nombre.trim() : nombre, codigo, previo ? " (lo reconocí por su nombre en tu lista)" : "", !previo);
+    // Siempre un código nuevo: a la gente solo se le reconoce por su teléfono, nunca por el nombre.
+    const codigo = nuevoCodigo(new Set([...registro.codigos(), ...alumnos.map((x) => x.codigo)]));
+    await registro.activar(pend, codigo, nombre);
+    return entregarCodigo(m.chat.id, nombre, codigo, "", true);
   }
 
   // 4. Mensajes del mentor: aprobar, pedir cambios o ver el estado de la semana propuesta.
