@@ -12,23 +12,23 @@
       "idioma": "es",
       "titulo": "Claude Code: mejores prácticas",
       "url": "https://code.claude.com/docs/es/best-practices",
-      "minutos": 20,
+      "minutos": 15,
       "detalle": "Repasa cómo darle contexto y verificar su trabajo antes de empezar el laboratorio."
     },
     {
       "tipo": "proyecto",
       "titulo": "API de tu proyecto personal",
-      "minutos": 100,
+      "minutos": 70,
       "detalle": "Toma tu PROYECTO.md. Elige la entidad principal de tu proyecto y construye su API con SQLite (CRUD completo) y una página mínima que la consuma, igual que el viernes.\nTrabaja en una rama, pide un plan a Claude Code antes del código, haz commits pequeños y abre un PR con descripción clara."
     },
     {
       "tipo": "sinia",
       "titulo": "Reto sin IA: explícalo en voz alta",
-      "minutos": 40,
+      "minutos": 35,
       "detalle": "Sin notas ni IA, graba un audio o video de 3 minutos explicando qué pasa desde que das clic en la página hasta que se guarda un dato en la base de datos: petición, ruta, JSON, SQL, respuesta y código de estado. Así te preparas para la Compuerta 1."
     }
   ],
   "entregable": "Link al repo con la API de tu proyecto personal y el audio o video. En la explicación: cómo viaja una petición de tu página a la base de datos.",
   "pregunta": "¿Qué parte de lo construido esta semana podrías explicarle a alguien sin abrir el código?",
-  "whatsapp": "*Vibecoders · Laboratorio: tu API y repaso de fundamentos*\nSábado 31 de octubre · laboratorio\n\nDiseñar y construir la API de tu proyecto personal y comprobar que puedes explicar todo el camino de una petición.\n\n⏱ ≈ 2 h 40 min (sábado)\n✅ Entrega: API de tu proyecto personal y explicación del flujo completo\n\nTodo el material y tu checklist aquí 👉 {link}"
+  "whatsapp": "*Vibecoders · Laboratorio: tu API y repaso de fundamentos*\nSábado 31 de octubre · laboratorio\n\nDiseñar y construir la API de tu proyecto personal y comprobar que puedes explicar todo el camino de una petición.\n\n⏱ ≈ 2 h (sábado)\n✅ Entrega: API de tu proyecto personal y explicación del flujo completo\n\nTodo el material y tu checklist aquí 👉 {link}"
 }

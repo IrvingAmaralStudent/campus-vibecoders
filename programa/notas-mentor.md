@@ -10,4 +10,4 @@ Ejemplos:
 ## Notas
 
 (sin notas por ahora)
-- [pendiente] (2026-10-16, semana-02) El laboratorio del sábado 31 que dure máximo 2 horas en total
+- [aplicado] (2026-10-16, semana-02) El laboratorio del sábado 31 que dure máximo 2 horas en total
