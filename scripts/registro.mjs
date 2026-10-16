@@ -2,9 +2,10 @@
 // dentro del repo público, así que nombres y teléfonos van cifrados (AES-256-GCM) con la llave REGISTRO_KEY.
 // Para buscar sin descifrar se guardan huellas (HMAC) del teléfono y del usuario de Telegram.
 //
-// Cada registro: { codigo, estado: "pendiente" | "activo", fecha, t: huella del teléfono, u: huella del usuario,
-//                  d: { nombre, telefono } cifrado }
-// "pendiente" = ya compartió su número y falta que escriba su nombre.
+// Cada registro: { codigo, estado: "pendiente" | "activo" | "baja", fecha, t: huella del teléfono, u: huella del usuario,
+//                  d: { nombre, telefono, telegram } cifrado }
+// "pendiente" = ya compartió su número y falta que escriba su nombre. "baja" = el mentor lo dio de baja
+// (también se usa para alumnos de la lista del mentor: entonces solo lleva codigo y t).
 import crypto from "node:crypto";
 
 const RUTA = "programa/registro.json";
@@ -51,15 +52,23 @@ export function crearRegistro({ llave, repo, ghToken }) {
     porTelefono: (tel10) => lista.find((x) => x.t === huella("t", tel10)),
     porUsuario: (id) => lista.find((x) => x.u === huella("u", id)),
     codigos: () => lista.map((x) => x.codigo).filter(Boolean),
+    activos: () => lista.filter((x) => x.estado === "activo"),
+    esBaja: (tel10, codigo) => lista.some((x) => x.estado === "baja" && ((tel10 && x.t === huella("t", tel10)) || (codigo && x.codigo === codigo))),
+    async darDeBaja(tel10, codigo) {
+      const x = lista.find((y) => y.estado === "activo" && y.codigo === codigo);
+      if (x) Object.assign(x, { estado: "baja", fecha: new Date().toISOString() });
+      else lista.push({ estado: "baja", codigo, fecha: new Date().toISOString(), ...(tel10 ? { t: huella("t", tel10) } : {}) });
+      await guardar(`Registro: baja de ${codigo}`);
+    },
     datos: (x) => descifrar(x.d),
     async pendiente(id, tel10, telefono) {
       lista = lista.filter((x) => !(x.estado === "pendiente" && (x.u === huella("u", id) || x.t === huella("t", tel10))));
       lista.push({ estado: "pendiente", fecha: new Date().toISOString(), t: huella("t", tel10), u: huella("u", id), d: cifrar({ telefono }) });
       await guardar("Registro: número recibido");
     },
-    async activar(x, codigo, nombre) {
+    async activar(x, codigo, nombre, telegram) {
       const { telefono } = descifrar(x.d);
-      Object.assign(x, { estado: "activo", codigo, fecha: new Date().toISOString(), d: cifrar({ nombre, telefono }) });
+      Object.assign(x, { estado: "activo", codigo, fecha: new Date().toISOString(), d: cifrar({ nombre, telefono, telegram }) });
       await guardar(`Registro: alta de ${codigo}`);
     },
   };

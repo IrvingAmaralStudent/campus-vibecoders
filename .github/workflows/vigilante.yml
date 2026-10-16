@@ -1,0 +1,38 @@
+name: Vigilante del bot
+
+# Revisa que el bot de registro esté corriendo. Si no hay ninguna ejecución activa ni en cola,
+# lo arranca y avisa a los mentores. Los horarios de GitHub se retrasan, pero basta con que corra de vez en cuando.
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+
+concurrency:
+  group: vigilante
+  cancel-in-progress: true
+
+jobs:
+  revisar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Revisar y reiniciar si hace falta
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          MENTOR_CHAT_ID: ${{ secrets.MENTOR_CHAT_ID }}
+        run: |
+          activos() { gh run list -R "$GITHUB_REPOSITORY" -w bot-registro.yml -L 10 --json status -q '[.[] | select(.status != "completed")] | length'; }
+          # Entre que una ejecución termina y la siguiente arranca pasan unos segundos: se revisa dos veces.
+          if [ "$(activos)" != "0" ]; then echo "El bot está corriendo."; exit 0; fi
+          sleep 60
+          if [ "$(activos)" != "0" ]; then echo "El bot está corriendo."; exit 0; fi
+          gh workflow run bot-registro.yml -R "$GITHUB_REPOSITORY"
+          echo "El bot estaba detenido; lo reinicié."
+          for ID in ${MENTOR_CHAT_ID//,/ }; do
+            curl -s -o /dev/null "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+              --data-urlencode "chat_id=${ID}" \
+              --data-urlencode "text=⚠️ El Asistente estaba detenido y ya lo reinicié. Si hoy faltó algún aviso, escríbeme: aviso"
+          done

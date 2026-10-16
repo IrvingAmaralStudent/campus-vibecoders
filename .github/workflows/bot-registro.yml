@@ -2,11 +2,9 @@ name: Bot de registro
 
 # El bot se queda escuchando ~50 minutos y al terminar se relanza solo, así responde en segundos.
 # También lanza a su hora el aviso diario, el agente semanal y el recordatorio del domingo.
-# Los horarios de GitHub se retrasan mucho, por eso el cron solo sirve de respaldo por si la cadena se corta.
+# Si la cadena se corta, el workflow "Vigilante del bot" lo vuelve a arrancar y avisa a los mentores.
 # Cada relanzamiento lee los secretos de nuevo (por ejemplo, la lista ALUMNOS actualizada).
 on:
-  schedule:
-    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions:

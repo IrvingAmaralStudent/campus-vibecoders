@@ -9,7 +9,10 @@ import { enviar, esc } from "./telegram.mjs";
 
 const raiz = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const [accion, ...args] = process.argv.slice(2);
-const { MENTOR_CHAT_ID: mentor, GROUP_CHAT_ID: grupo } = process.env;
+const { MENTOR_CHAT_ID, GROUP_CHAT_ID: grupo } = process.env;
+// Puede haber varios mentores (MENTOR_CHAT_ID separado por coma): el aviso les llega a todos.
+const mentores = String(MENTOR_CHAT_ID || "").split(",").map((x) => x.trim()).filter(Boolean);
+const avisarMentores = async (html, extra) => { for (const id of mentores) await enviar(id, html, extra); };
 const leerSemana = (s) => {
   const c = path.join(raiz, "programa", "semanas", s);
   return fs.readdirSync(c).filter((f) => f.endsWith(".json")).sort().map((f) => JSON.parse(fs.readFileSync(path.join(c, f), "utf8")));
@@ -26,14 +29,14 @@ const ayuda = "\n\n💬 También puedes <b>responder a este mensaje</b> con lo q
 if (accion === "propuesta") {
   const [semana, url, actualizada] = args;
   const d = leerSemana(semana);
-  await enviar(mentor,
+  await avisarMentores(
     `📋 <b>${actualizada ? "Actualicé" : "Ya está lista"} la Semana ${d[0].semana} para revisar</b>\n` +
     `${esc(d[0].semanaTitulo)}\n${d[0].fecha} a ${d[d.length - 1].fecha} · ${d.length} días\n\n` +
     d.map((x) => `• ${esc(x.titulo)}`).join("\n") +
     ayuda, botones(semana, url));
 } else if (accion === "recordatorio") {
   const [semana, url, titulo] = args;
-  await enviar(mentor, `⏰ <b>Recordatorio:</b> la <b>Semana ${Number(semana.replace("semana-", ""))}</b> sigue sin aprobar.\n${esc(titulo)}\n\nSi no la apruebas, el lunes no habrá aviso para el grupo.` + ayuda, botones(semana, url));
+  await avisarMentores(`⏰ <b>Recordatorio:</b> la <b>Semana ${Number(semana.replace("semana-", ""))}</b> sigue sin aprobar.\n${esc(titulo)}\n\nSi no la apruebas, el lunes no habrá aviso para el grupo.` + ayuda, botones(semana, url));
 } else if (accion === "publicada") {
   const { portalUrl } = JSON.parse(fs.readFileSync(path.join(raiz, "programa", "config.json"), "utf8"));
   for (const s of args) {
