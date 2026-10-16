@@ -44,6 +44,8 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           github_token: ${{ github.token }}
+          # Lo arranca el bot (con el token de GitHub Actions), no una persona.
+          allowed_bots: "github-actions"
           claude_args: --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebFetch,WebSearch"
           prompt: Lee y sigue al pie de la letra las instrucciones de programa/agente.md. Trabaja solo con git local; no hagas push (el flujo lo hace al terminar).
       - name: Subir la propuesta y avisar al mentor
