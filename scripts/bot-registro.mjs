@@ -40,6 +40,17 @@ const tel10 = (t) => String(t || "").replace(/\D/g, "").slice(-10);
 const avisarMentor = (texto) => MENTOR && api("sendMessage", { chat_id: MENTOR, text: texto, parse_mode: "HTML" });
 
 const me = (await api("getMe", {})).result;
+// Menú "/" del chat del mentor (los alumnos solo ven /codigo).
+if (MENTOR) await api("setMyCommands", {
+  scope: { type: "chat", chat_id: MENTOR },
+  commands: [
+    { command: "estado", description: "Qué está pendiente de aprobar" },
+    { command: "aprobar", description: "Publicar la semana pendiente" },
+    { command: "cambios", description: "Pedir cambios a la semana (escribe: cambios: …)" },
+    { command: "generar", description: "Arrancar al agente ya" },
+    { command: "aviso", description: "Publicar en el grupo la actividad de hoy" },
+  ],
+});
 const enlace = `https://t.me/${me.username}?start=registro`;
 const pedirNumero = (chat) => api("sendMessage", {
   chat_id: chat,
@@ -133,8 +144,16 @@ async function atenderMentor(texto) {
     if (cambio) {
       const pr = await anotarCambio(cambio[1].trim());
       return responder(pr
-        ? `📝 Anotado para <b>${esc(pr.title)}</b>. El agente lo aplica en su siguiente revisión (todos los días a las 9:00 am de viernes a domingo) y te aviso cuando esté.`
+        ? `📝 Anotado para <b>${esc(pr.title)}</b>. El agente lo aplica en su siguiente revisión (viernes a domingo a las 9:00 am) y te aviso cuando esté. Si no quieres esperar, escribe <b>generar</b>.`
         : "📝 Anotado. No hay semana pendiente, así que se aplicará al generar la siguiente.");
+    }
+    if (/^\/?aviso\b/.test(t)) {
+      gh("workflow", "run", "aviso-diario.yml", "-R", REPO);
+      return responder("📣 Listo, en un minuto publico en el grupo la actividad de hoy (si hay una publicada).");
+    }
+    if (/^\/?generar\b/.test(t)) {
+      gh("workflow", "run", "generar-semana.yml", "-R", REPO);
+      return responder("🤖 Arranqué al agente. Si hay cambios tuyos pendientes los aplica; si toca preparar la semana siguiente, la prepara. Tarda unos 10 a 20 minutos y te aviso aquí cuando haya algo que revisar. Si no había nada que hacer, no te llega mensaje.");
     }
     if (/^\/?estado\b/.test(t)) {
       const pend = semanasPendientes();
@@ -142,7 +161,7 @@ async function atenderMentor(texto) {
         ? `📋 Pendiente de aprobar:\n${pend.map((p) => `• ${esc(p.title)}\n  ${p.url}`).join("\n")}\n\nResponde <b>aprobar</b> para publicarla.`
         : "✅ No hay nada pendiente de aprobar. La próxima semana se genera el viernes a las 9:00 am.");
     }
-    return responder("Puedo ayudarte con:\n\n• <b>aprobar</b> → publica la semana pendiente y la anuncia en el grupo\n• <b>cambios: …</b> → anoto lo que quieres cambiar y el agente lo corrige\n• <b>estado</b> → te digo qué está pendiente");
+    return responder("Puedo ayudarte con:\n\n• <b>aprobar</b> → publica la semana pendiente y la anuncia en el grupo\n• <b>cambios: …</b> → anoto lo que quieres cambiar y el agente lo corrige\n• <b>generar</b> → arranco al agente ya, sin esperar al fin de semana\n• <b>aviso</b> → publico en el grupo la actividad de hoy\n• <b>estado</b> → te digo qué está pendiente");
   } catch (e) {
     console.log(`Error con el comando del mentor: ${e.message}`);
     return responder("⚠️ No pude completar eso. Inténtalo de nuevo en unos minutos; si sigue fallando, revísalo con Claude.");
