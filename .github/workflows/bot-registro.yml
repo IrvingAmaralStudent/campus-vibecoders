@@ -1,9 +1,11 @@
 name: Bot de registro
 
+# El bot se queda escuchando ~50 minutos y al terminar se relanza solo, así responde en segundos.
+# Los horarios de GitHub se retrasan mucho, por eso el cron solo sirve de respaldo por si la cadena se corta.
+# Cada relanzamiento lee los secretos de nuevo (por ejemplo, la lista ALUMNOS actualizada).
 on:
   schedule:
-    # Cada 10 minutos: atiende a quien entra al grupo o pide su código.
-    - cron: "*/10 * * * *"
+    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -11,6 +13,7 @@ permissions:
   pull-requests: write
   actions: write
 
+# Solo un bot a la vez; si llega otra ejecución, espera en cola.
 concurrency:
   group: bot-registro
   cancel-in-progress: false
@@ -18,6 +21,7 @@ concurrency:
 jobs:
   atender:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -26,8 +30,13 @@ jobs:
       - name: Atender novedades del bot
         run: node scripts/bot-registro.mjs
         env:
+          MINUTOS: 50
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           GROUP_CHAT_ID: ${{ secrets.GROUP_CHAT_ID }}
           MENTOR_CHAT_ID: ${{ secrets.MENTOR_CHAT_ID }}
           ALUMNOS: ${{ secrets.ALUMNOS }}
           GH_TOKEN: ${{ github.token }}
+      - name: Relanzar el bot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run bot-registro.yml -R "$GITHUB_REPOSITORY"

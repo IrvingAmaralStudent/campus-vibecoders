@@ -1,5 +1,6 @@
 // Bot de registro: da la bienvenida a quien entra al grupo y le entrega su código personal
-// cuando comparte su número en privado. Lo ejecuta la GitHub Action "Bot de registro" cada 10 minutos.
+// cuando comparte su número en privado. Lo ejecuta la GitHub Action "Bot de registro", que se queda
+// escuchando ~50 minutos (MINUTOS) y luego se relanza sola, así responde en segundos.
 //
 // Secretos que usa:
 //   TELEGRAM_BOT_TOKEN  token del bot
@@ -8,6 +9,7 @@
 //   ALUMNOS             JSON [{codigo, nombre, telefono}] (lo sube contenido/sincronizar-alumnos.js)
 //
 // No guarda estado propio: al pedir las novedades con "offset", Telegram las da por leídas.
+// Sin MINUTOS (o 0) atiende lo pendiente una sola vez y termina.
 
 import { execFileSync } from "node:child_process";
 
@@ -95,12 +97,9 @@ async function atenderMentor(texto) {
   }
 }
 
-const { result: novedades = [] } = await api("getUpdates", { timeout: 0, allowed_updates: ["message"] });
-let ultimo = 0;
-for (const u of novedades) {
-  ultimo = u.update_id;
+async function atender(u) {
   const m = u.message;
-  if (!m) continue;
+  if (!m) return;
 
   // 1. Alguien entró al grupo: bienvenida con botón para registrarse.
   if (m.chat.id === GRUPO && m.new_chat_members) {
@@ -112,16 +111,16 @@ for (const u of novedades) {
         reply_markup: { inline_keyboard: [[{ text: "🔑 Recibir mi código", url: enlace }]] },
       });
     }
-    continue;
+    return;
   }
 
-  if (m.chat.type !== "private") continue;
+  if (m.chat.type !== "private") return;
 
   // 2. Compartió su contacto: buscarlo en la lista y mandarle su código.
   if (m.contact) {
     if (m.contact.user_id !== m.from.id) {
       await api("sendMessage", { chat_id: m.chat.id, text: "Necesito tu propio número. Toca el botón “📱 Compartir mi número”." });
-      continue;
+      return;
     }
     const a = alumnos.find((x) => tel10(x.telefono) && tel10(x.telefono) === tel10(m.contact.phone_number));
     if (a) {
@@ -140,18 +139,36 @@ for (const u of novedades) {
       });
       await avisarMentor(`⚠️ <b>${esc([m.from.first_name, m.from.last_name].filter(Boolean).join(" "))}</b> pidió su código, pero su número (${esc(m.contact.phone_number)}) no está en tu lista de alumnos.`);
     }
-    continue;
+    return;
   }
 
   // 3. Mensajes del mentor: aprobar, pedir cambios o ver el estado de la semana propuesta.
   if (m.chat.id === MENTOR && m.text && !/^\/start/.test(m.text)) {
     await atenderMentor(m.text.trim());
-    continue;
+    return;
   }
 
   // 4. Cualquier otro mensaje en privado (/start, /codigo, "hola"…): pedir el número.
   await pedirNumero(m.chat.id);
 }
 
-if (ultimo) await api("getUpdates", { offset: ultimo + 1, timeout: 0 });
-console.log(`Novedades procesadas: ${novedades.length}`);
+const hasta = Date.now() + Number(process.env.MINUTOS || 0) * 60_000;
+let offset, total = 0;
+do {
+  try {
+    const espera = Math.max(0, Math.min(50, Math.floor((hasta - Date.now()) / 1000)));
+    const { result: novedades = [] } = await api("getUpdates", { offset, timeout: espera, allowed_updates: ["message"] });
+    for (const u of novedades) {
+      offset = u.update_id + 1;
+      total++;
+      await atender(u);
+    }
+  } catch (e) {
+    console.log(`Error al atender novedades: ${e.message}`);
+    await new Promise((r) => setTimeout(r, 5000));
+  }
+} while (Date.now() < hasta);
+
+// Confirma a Telegram lo ya atendido para que no se repita en la siguiente ejecución.
+if (offset) await api("getUpdates", { offset, timeout: 0 });
+console.log(`Novedades procesadas: ${total}`);
