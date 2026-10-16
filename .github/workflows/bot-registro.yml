@@ -43,7 +43,6 @@ jobs:
         if: ${{ !cancelled() }}
         env:
           GH_TOKEN: ${{ github.token }}
-          FALLO: ${{ failure() }}
         run: |
-          if [ "$FALLO" = "true" ]; then sleep 60; fi
+          if [ "${{ job.status }}" = "failure" ]; then sleep 60; fi
           gh workflow run bot-registro.yml -R "$GITHUB_REPOSITORY"
