@@ -22,15 +22,27 @@ const GRUPO = Number(GROUP_CHAT_ID);
 const MENTOR = Number(MENTOR_CHAT_ID);
 const PORTAL = "https://irvingamaralstudent.github.io/campus-vibecoders/";
 const alumnos = JSON.parse(ALUMNOS || "[]");
+// Reintenta ante cortes de red momentáneos (ECONNRESET, timeouts) en lugar de tirar el bot.
+const pausa = (ms) => new Promise((r) => setTimeout(r, ms));
+async function reintentar(fn, intentos = 6) {
+  for (let i = 1; ; i++) {
+    try { return await fn(); } catch (e) {
+      if (i >= intentos) throw e;
+      console.log(`Reintento ${i} tras error de red: ${e.message}`);
+      await pausa(Math.min(30_000, 2000 * 2 ** i));
+    }
+  }
+}
+
 const registro = crearRegistro({ llave: process.env.REGISTRO_KEY, repo: process.env.GITHUB_REPOSITORY, ghToken: process.env.GH_TOKEN });
-await registro.cargar();
+await reintentar(() => registro.cargar());
 
 const api = async (metodo, cuerpo) => {
-  const r = await fetch(`https://api.telegram.org/bot${token}/${metodo}`, {
+  const r = await reintentar(() => fetch(`https://api.telegram.org/bot${token}/${metodo}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(cuerpo),
-  }).then((x) => x.json());
+  }).then((x) => x.json()));
   if (!r.ok) console.log(`Aviso: ${metodo} falló (${r.description})`);
   return r;
 };
@@ -230,10 +242,50 @@ async function atender(u) {
   await pedirNumero(m.chat.id);
 }
 
+// --- Tareas programadas. Los horarios de GitHub no son confiables (se retrasan horas o no corren),
+// así que el bot, que está siempre encendido, lanza los workflows a su hora (Ciudad de México).
+// programa/tareas.json guarda la última fecha en que se lanzó cada tarea, para no repetirla.
+const TAREAS = [
+  { id: "aviso", workflow: "aviso-diario.yml", toca: (d) => d.hora >= 7 && d.hora < 21 },
+  { id: "generar", workflow: "generar-semana.yml", toca: (d) => [5, 6, 0].includes(d.dia) && d.hora >= 9 },
+  { id: "recordatorio", workflow: "recordatorio.yml", toca: (d) => d.dia === 0 && d.hora >= 12 && d.hora < 21 },
+];
+const urlTareas = `https://api.github.com/repos/${REPO}/contents/programa/tareas.json`;
+const ghHeaders = { Authorization: `Bearer ${process.env.GH_TOKEN}`, Accept: "application/vnd.github+json", "User-Agent": "campus-vibecoders" };
+let tareas = {}, shaTareas;
+async function cargarTareas() {
+  const r = await reintentar(() => fetch(`${urlTareas}?ref=main`, { headers: ghHeaders }));
+  if (r.status === 404) return;
+  if (!r.ok) throw new Error(`No pude leer tareas.json (${r.status}).`);
+  const j = await r.json();
+  tareas = JSON.parse(Buffer.from(j.content, "base64").toString("utf8"));
+  shaTareas = j.sha;
+}
+function ahoraCdmx() {
+  const p = Object.fromEntries(new Intl.DateTimeFormat("en-CA", { timeZone: "America/Mexico_City", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", hourCycle: "h23", weekday: "short" })
+    .formatToParts(new Date()).map((x) => [x.type, x.value]));
+  return { fecha: `${p.year}-${p.month}-${p.day}`, hora: Number(p.hour), dia: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(p.weekday) };
+}
+async function revisarTareas() {
+  const d = ahoraCdmx();
+  for (const t of TAREAS) {
+    if (tareas[t.id] === d.fecha || !t.toca(d)) continue;
+    gh("workflow", "run", t.workflow, "-R", REPO);
+    tareas[t.id] = d.fecha;
+    const contenido = Buffer.from(JSON.stringify(tareas, null, 1) + "\n", "utf8").toString("base64");
+    const r = await reintentar(() => fetch(urlTareas, { method: "PUT", headers: ghHeaders, body: JSON.stringify({ message: `Tarea ${t.id} del ${d.fecha}`, content: contenido, sha: shaTareas, branch: "main" }) }));
+    if (r.ok) shaTareas = (await r.json()).content.sha;
+    else console.log(`Aviso: no pude guardar tareas.json (${r.status}).`);
+    console.log(`Tarea lanzada: ${t.id} (${d.fecha})`);
+  }
+}
+await cargarTareas();
+
 const hasta = Date.now() + Number(process.env.MINUTOS || 0) * 60_000;
 let offset, total = 0;
 do {
   try {
+    await revisarTareas();
     const espera = Math.max(0, Math.min(50, Math.floor((hasta - Date.now()) / 1000)));
     const { result: novedades = [] } = await api("getUpdates", { offset, timeout: espera, allowed_updates: ["message"] });
     for (const u of novedades) {
@@ -248,5 +300,5 @@ do {
 } while (Date.now() < hasta);
 
 // Confirma a Telegram lo ya atendido para que no se repita en la siguiente ejecución.
-if (offset) await api("getUpdates", { offset, timeout: 0 });
+if (offset) await api("getUpdates", { offset, timeout: 0 }).catch((e) => console.log(`Aviso: no pude confirmar novedades (${e.message}).`));
 console.log(`Novedades procesadas: ${total}`);

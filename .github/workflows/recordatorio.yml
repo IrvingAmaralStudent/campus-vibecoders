@@ -1,9 +1,8 @@
 name: Recordatorio de aprobación
 
 on:
-  schedule:
-    # Domingo 12:00 pm en Ciudad de México = 18:00 UTC
-    - cron: "0 18 * * 0"
+  # La hora la lleva el bot de registro (scripts/bot-registro.mjs), porque los horarios de GitHub no son confiables.
+  # Domingo 12:00 pm de Ciudad de México.
   workflow_dispatch:
 
 permissions:

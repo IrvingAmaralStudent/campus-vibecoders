@@ -3,9 +3,8 @@ name: Generar semana
 # Claude Code prepara la semana siguiente (o aplica los cambios que pidió el mentor) y la deja como propuesta.
 # Usa la suscripción de Claude del mentor (secreto CLAUDE_CODE_OAUTH_TOKEN).
 on:
-  schedule:
-    # Viernes, sábado y domingo a las 9:00 am de Ciudad de México = 15:00 UTC
-    - cron: "0 15 * * 0,5,6"
+  # La hora la lleva el bot de registro (scripts/bot-registro.mjs), porque los horarios de GitHub no son confiables.
+  # Viernes, sábado y domingo a las 9:00 am de Ciudad de México.
   workflow_dispatch:
     inputs:
       fecha_hoy:

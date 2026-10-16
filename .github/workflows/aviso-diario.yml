@@ -1,9 +1,8 @@
 name: Aviso diario
 
 on:
-  schedule:
-    # 7:00 am en Ciudad de México (UTC-6, sin horario de verano) = 13:00 UTC
-    - cron: "0 13 * * *"
+  # La hora la lleva el bot de registro (scripts/bot-registro.mjs), porque los horarios de GitHub no son confiables.
+  # 7:00 am de Ciudad de México.
   workflow_dispatch:
     inputs:
       fecha:

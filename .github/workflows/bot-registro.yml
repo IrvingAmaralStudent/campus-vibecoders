@@ -1,6 +1,7 @@
 name: Bot de registro
 
 # El bot se queda escuchando ~50 minutos y al terminar se relanza solo, así responde en segundos.
+# También lanza a su hora el aviso diario, el agente semanal y el recordatorio del domingo.
 # Los horarios de GitHub se retrasan mucho, por eso el cron solo sirve de respaldo por si la cadena se corta.
 # Cada relanzamiento lee los secretos de nuevo (por ejemplo, la lista ALUMNOS actualizada).
 on:
@@ -37,7 +38,12 @@ jobs:
           ALUMNOS: ${{ secrets.ALUMNOS }}
           REGISTRO_KEY: ${{ secrets.REGISTRO_KEY }}
           GH_TOKEN: ${{ github.token }}
+      # Se relanza aunque haya fallado (si falló, espera un minuto para no ciclarse); solo no se relanza si lo cancelaron.
       - name: Relanzar el bot
+        if: ${{ !cancelled() }}
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run bot-registro.yml -R "$GITHUB_REPOSITORY"
+          FALLO: ${{ failure() }}
+        run: |
+          if [ "$FALLO" = "true" ]; then sleep 60; fi
+          gh workflow run bot-registro.yml -R "$GITHUB_REPOSITORY"
