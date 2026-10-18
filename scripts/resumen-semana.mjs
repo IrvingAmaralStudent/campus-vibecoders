@@ -20,7 +20,7 @@ const l = [];
 l.push(`## Semana ${dias[0].semana} · ${dias[0].semanaTitulo}`, "");
 l.push(`**Fase ${dias[0].fase}** · ${dias[0].fecha} a ${dias[dias.length - 1].fecha}`, "");
 l.push(`**Entregable de la semana:** ${dias[0].entregableSemana}`, "");
-l.push("> ✅ **Para aprobar:** responde **aprobar** al bot en Telegram (o da clic en **Merge pull request** aquí).", ">", "> ✏️ **Para pedir cambios:** responde al bot **cambios: …** con lo que quieras ajustar. El agente lo corrige y te avisa.", "");
+l.push("> ✅ **Para aprobar:** toca **Aprobar** en el mensaje de esta semana en el chat con el Asistente (o da clic en **Merge pull request** aquí).", ">", "> ✏️ **Para pedir cambios:** toca **Pedir cambios** en ese mensaje, o respóndele con lo que quieras ajustar. El agente lo corrige en minutos y te manda la semana actualizada.", "");
 for (const d of dias) {
   const min = d.bloques.filter((b) => b.tipo !== "extra").reduce((s, b) => s + (Number(b.minutos) || 0), 0);
   l.push(`### ${nombreDia(d.fecha)} ${d.fecha.slice(8)} · ${d.titulo} (≈ ${Math.floor(min / 60)} h ${min % 60} min)`, "");
