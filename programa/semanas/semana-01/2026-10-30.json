@@ -1,0 +1,40 @@
+{
+  "fecha": "2026-10-30",
+  "semana": 1,
+  "fase": 1,
+  "semanaTitulo": "Claude Code y el ciclo pedir-revisar-probar",
+  "entregableSemana": "App web de una página en TypeScript (gestor de gastos personales) que guarda datos en localStorage, con repo en GitHub, CLAUDE.md y README.",
+  "titulo": "Contexto: cuándo limpiar y cuándo documentar",
+  "objetivo": "Manejar la memoria del agente: limpiar el contexto cuando estorba, documentar las decisiones en el repo y cerrar la semana con un pull request.",
+  "bloques": [
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Memoria: cómo Claude recuerda tu proyecto",
+      "url": "https://code.claude.com/docs/es/memory",
+      "minutos": 20,
+      "detalle": "Los niveles de CLAUDE.md (personal, de proyecto) y cómo editar la memoria. Relaciónalo con /clear y /compact."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "README y decisiones",
+      "minutos": 40,
+      "detalle": "Haz /clear y pídele a Claude un README con: qué hace la app, cómo correrla y las decisiones técnicas (por qué localStorage, por qué Vite).\nRevisa que sea cierto lo que dice: corre los comandos del README en una carpeta nueva."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Tu primer pull request",
+      "minutos": 40,
+      "detalle": "Trabaja la última mejora en una rama (por ejemplo, filtro por mes) y abre un pull request en GitHub hacia main.\nLa descripción del PR la escribes tú: qué cambia, cómo se prueba y una sección \"Explicación en mis palabras\"."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: explica tu app en 2 minutos",
+      "minutos": 15,
+      "detalle": "Graba un audio o video de 2 minutos explicando cómo fluye un gasto desde el formulario hasta localStorage y de vuelta a la pantalla. Sin leer el código. Esto es lo que se te va a preguntar en la compuerta."
+    }
+  ],
+  "entregable": "Link a tu pull request en GitHub. En la explicación: el link a tu audio o video de 2 minutos.",
+  "pregunta": "¿Cuándo notaste esta semana que la sesión con Claude ya estaba \"cargada\" y convenía empezar de cero?",
+  "whatsapp": "*Vibecoders · Contexto: cuándo limpiar y cuándo documentar*\nViernes 30 de octubre\n\nManejar la memoria del agente: limpiar el contexto cuando estorba, documentar las decisiones en el repo y cerrar la semana con un pull request.\n\n⏱ ≈ 1 h 55 min (+ sesión de revisión del viernes)\n✅ Entrega: pull request del gestor de gastos + audio de 2 min\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
