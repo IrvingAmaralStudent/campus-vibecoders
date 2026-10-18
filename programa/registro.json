@@ -1,9 +1,10 @@
 [
  {
-  "estado": "pendiente",
-  "fecha": "2026-10-18T20:53:57.606Z",
+  "estado": "activo",
+  "fecha": "2026-10-18T20:54:03.604Z",
   "t": "mtRvrOvSsMIWYvT076LPsU",
   "u": "FvSNC9b5LAWTlEJ2rjT3fd",
-  "d": "TZzaQN/EBfcDLR7klLxJ53IMjFyJoRzFILL/b7OjisLjvUFi7op7HEBDvZzEQ9E403BlM0Oheg=="
+  "d": "eCBUWyCAt1AK6pfDqufFYoxWDXdvxymYAc0C4fIWzeYVGUPwKVv2eH4C6vRtewwnAkO4SIVDftcbqCKVzXUmFgxFCu9GmZhhuVh8noIPUBGTvoMsUt0aXKO5Ka9uNjCvOqNp9k3+t+Dt0y5NWJJjRSqYZbPG",
+  "codigo": "VC-GMA"
  }
 ]
