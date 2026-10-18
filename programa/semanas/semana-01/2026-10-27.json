@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-10-20",
+  "fecha": "2026-10-27",
   "semana": 1,
   "fase": 1,
   "semanaTitulo": "Claude Code y el ciclo pedir-revisar-probar",
@@ -46,5 +46,5 @@
   ],
   "entregable": "Link al repo con las 3 ramas (prompt-a, prompt-b, prompt-c). En la explicación: qué cambió en el resultado entre la versión vaga y la precisa.",
   "pregunta": "De la versión C, ¿qué parte del prompt crees que hizo más diferencia en el resultado?",
-  "whatsapp": "*Vibecoders · Pedir bien: contexto, restricciones y criterio de terminado*\nMartes 20 de octubre\n\nAprender a escribir pedidos que la IA no pueda malinterpretar: qué quieres, para qué, con qué restricciones y cómo sabrás que quedó.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: 3 ramas con 3 versiones del mismo prompt\n\nTodo el material y tu checklist aquí 👉 {link}"
+  "whatsapp": "*Vibecoders · Pedir bien: contexto, restricciones y criterio de terminado*\nMartes 27 de octubre\n\nAprender a escribir pedidos que la IA no pueda malinterpretar: qué quieres, para qué, con qué restricciones y cómo sabrás que quedó.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: 3 ramas con 3 versiones del mismo prompt\n\nTodo el material y tu checklist aquí 👉 {link}"
 }

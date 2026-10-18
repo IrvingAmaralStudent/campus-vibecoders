@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-10-19",
+  "fecha": "2026-10-26",
   "semana": 1,
   "fase": 1,
   "semanaTitulo": "Claude Code y el ciclo pedir-revisar-probar",
@@ -38,5 +38,5 @@
   ],
   "entregable": "Link al repo gestor-gastos con el proyecto base y tu CLAUDE.md editado. En la explicación: qué es el CLAUDE.md y por qué agregaste esas 3 reglas.",
   "pregunta": "¿Por qué crees que un agente necesita un archivo de instrucciones del proyecto, si ya puede leer todo el código?",
-  "whatsapp": "*Vibecoders · Cómo piensa Claude Code*\nLunes 19 de octubre\n\nEntender el ciclo de trabajo de un agente (leer, planear, actuar, verificar) y arrancar el proyecto de la semana con un CLAUDE.md que tú entiendes.\n\n⏱ ≈ 2 h 20 min\n✅ Entrega: repo gestor-gastos con CLAUDE.md editado por ti\n\nTodo el material y tu checklist aquí 👉 {link}"
+  "whatsapp": "*Vibecoders · Cómo piensa Claude Code*\nLunes 26 de octubre\n\nEntender el ciclo de trabajo de un agente (leer, planear, actuar, verificar) y arrancar el proyecto de la semana con un CLAUDE.md que tú entiendes.\n\n⏱ ≈ 2 h 20 min\n✅ Entrega: repo gestor-gastos con CLAUDE.md editado por ti\n\nTodo el material y tu checklist aquí 👉 {link}"
 }

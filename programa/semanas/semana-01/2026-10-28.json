@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-10-21",
+  "fecha": "2026-10-28",
   "semana": 1,
   "fase": 1,
   "semanaTitulo": "Claude Code y el ciclo pedir-revisar-probar",
@@ -46,5 +46,5 @@
   ],
   "entregable": "Link al commit donde se agrega la persistencia. En la explicación: las 2 preguntas que le hiciste al plan y qué cambió por ellas.",
   "pregunta": "¿En qué momento conviene saltarse el modo plan y pedir el cambio directo?",
-  "whatsapp": "*Vibecoders · Modo plan: pensar antes de construir*\nMiércoles 21 de octubre\n\nUsar el modo plan para que Claude proponga cómo resolver algo antes de tocar código, y aprender a cuestionar ese plan.\n\n⏱ ≈ 2 h 05 min\n✅ Entrega: gastos que sobreviven al recargar + preguntas que le hiciste al plan\n\nTodo el material y tu checklist aquí 👉 {link}"
+  "whatsapp": "*Vibecoders · Modo plan: pensar antes de construir*\nMiércoles 28 de octubre\n\nUsar el modo plan para que Claude proponga cómo resolver algo antes de tocar código, y aprender a cuestionar ese plan.\n\n⏱ ≈ 2 h 05 min\n✅ Entrega: gastos que sobreviven al recargar + preguntas que le hiciste al plan\n\nTodo el material y tu checklist aquí 👉 {link}"
 }

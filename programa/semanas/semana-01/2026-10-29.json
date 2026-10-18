@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-10-22",
+  "fecha": "2026-10-29",
   "semana": 1,
   "fase": 1,
   "semanaTitulo": "Claude Code y el ciclo pedir-revisar-probar",
@@ -44,5 +44,5 @@
   ],
   "entregable": "Link al commit con los totales por categoría. En la explicación: los problemas que encontró Claude, cuáles descartaste y por qué.",
   "pregunta": "Cuando Claude marcó un problema que no era real, ¿cómo supiste que estaba equivocado?",
-  "whatsapp": "*Vibecoders · Revisar lo que la IA escribió*\nJueves 22 de octubre\n\nLeer TypeScript con suficiente soltura para revisar el código que entregas, y encontrar errores sin depender de la IA.\n\n⏱ ≈ 2 h 25 min\n✅ Entrega: totales por categoría + qué hallazgos de Claude descartaste\n\nTodo el material y tu checklist aquí 👉 {link}"
+  "whatsapp": "*Vibecoders · Revisar lo que la IA escribió*\nJueves 29 de octubre\n\nLeer TypeScript con suficiente soltura para revisar el código que entregas, y encontrar errores sin depender de la IA.\n\n⏱ ≈ 2 h 25 min\n✅ Entrega: totales por categoría + qué hallazgos de Claude descartaste\n\nTodo el material y tu checklist aquí 👉 {link}"
 }
