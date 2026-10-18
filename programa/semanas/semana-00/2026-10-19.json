@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-10-15",
+  "fecha": "2026-10-19",
   "semana": 0,
   "fase": 1,
   "semanaTitulo": "Puesta a punto: herramientas y mentalidad",
@@ -50,5 +50,5 @@
   ],
   "entregable": "Captura de pantalla de `claude --version` funcionando (súbela a tu repo o a un link compartido) y, en la caja de explicación, 5 líneas con tus palabras: ¿qué diferencia hay entre un vibecoder profesional y alguien que copia y pega lo que dice la IA?",
   "pregunta": "¿Qué parte de tu trabajo crees que la IA hará mejor que tú, y qué parte nunca deberías delegarle?",
-  "whatsapp": "*Vibecoders · Qué es (y qué no es) un vibecoder*\nJueves 15 de octubre\n\nEntender la diferencia entre generar código con IA y construir software con IA del que eres responsable. Dejar Claude Code instalado.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: captura de Claude Code instalado + 5 líneas en tus palabras\n\nTodo el material y tu checklist aquí 👉 {link}"
+  "whatsapp": "*Vibecoders · Qué es (y qué no es) un vibecoder*\nLunes 19 de octubre\n\nEntender la diferencia entre generar código con IA y construir software con IA del que eres responsable. Dejar Claude Code instalado.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: captura de Claude Code instalado + 5 líneas en tus palabras\n\nTodo el material y tu checklist aquí 👉 {link}"
 }

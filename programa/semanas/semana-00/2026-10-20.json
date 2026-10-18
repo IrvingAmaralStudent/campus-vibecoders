@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-10-16",
+  "fecha": "2026-10-20",
   "semana": 0,
   "fase": 1,
   "semanaTitulo": "Puesta a punto: herramientas y mentalidad",
@@ -56,5 +56,5 @@
   ],
   "entregable": "Link a tu repo sandbox en GitHub con al menos 5 commits y una rama mergeada. En la explicación: qué comando te costó más y qué aprendiste al equivocarte.",
   "pregunta": "Si Claude Code hace 20 cambios en tu proyecto y algo se rompe, ¿cómo usarías Git para encontrar qué cambio lo rompió?",
-  "whatsapp": "*Vibecoders · Terminal y Git: el idioma del que trabaja con agentes*\nViernes 16 de octubre\n\nMoverte con soltura en la terminal y entender commits y ramas. Claude Code vive en la terminal y todo su trabajo queda en Git: si no lo entiendes, no puedes revisarlo.\n\n⏱ ≈ 2 h 25 min\n✅ Entrega: link a tu repo con 5 commits hechos a mano\n\nTodo el material y tu checklist aquí 👉 {link}"
+  "whatsapp": "*Vibecoders · Terminal y Git: el idioma del que trabaja con agentes*\nMartes 20 de octubre\n\nMoverte con soltura en la terminal y entender commits y ramas. Claude Code vive en la terminal y todo su trabajo queda en Git: si no lo entiendes, no puedes revisarlo.\n\n⏱ ≈ 2 h 25 min\n✅ Entrega: link a tu repo con 5 commits hechos a mano\n\nTodo el material y tu checklist aquí 👉 {link}"
 }

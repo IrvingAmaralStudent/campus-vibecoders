@@ -1,0 +1,59 @@
+{
+  "fecha": "2026-10-22",
+  "semana": 0,
+  "fase": 1,
+  "semanaTitulo": "Puesta a punto: herramientas y mentalidad",
+  "entregableSemana": "Claude Code instalado y funcionando, repo sandbox en GitHub con tus primeros commits y una página personal hecha con Claude Code.",
+  "titulo": "HTML y CSS: lo justo para revisar lo que hace la IA",
+  "objetivo": "Entender cómo se arma una página web con HTML y CSS, para poder leer y corregir lo que Claude Code genere en el laboratorio del sábado.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Aprende HTML y CSS: curso desde cero (freeCodeCamp Español)",
+      "url": "https://www.youtube.com/watch?v=XqFR2lqBYPs",
+      "minutos": 50,
+      "detalle": "Mira los primeros 50 minutos: estructura de un documento, etiquetas, enlaces, imágenes y listas. Escribe los ejemplos en tu editor mientras lo ves."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: Sintaxis básica de HTML",
+      "url": "https://developer.mozilla.org/es/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax",
+      "minutos": 15,
+      "detalle": "Elementos, atributos y anidamiento. Fíjate en cómo se abren y se cierran las etiquetas: es el error más común en código generado."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: CSS, dar estilo al contenido",
+      "url": "https://developer.mozilla.org/es/docs/Learn_web_development/Getting_started/Your_first_website/Styling_the_content",
+      "minutos": 15,
+      "detalle": "Selectores, propiedades y cómo enlazar una hoja de estilos a tu página."
+    },
+    {
+      "tipo": "practica",
+      "idioma": "es",
+      "titulo": "Claude Code como profesor, no como autor",
+      "minutos": 25,
+      "detalle": "Pídele a Claude Code: \"Crea un archivo ejemplo.html con una tarjeta de presentación sencilla y un estilos.css. Después explícame línea por línea qué hace cada etiqueta y cada regla de CSS\".\nLuego cambia tú, a mano, un color, un texto y un tamaño, y comprueba en el navegador que entiendes qué controla cada cosa."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: una página a mano",
+      "minutos": 25,
+      "detalle": "Escribe tú solo una página con un título, un párrafo, una lista, un enlace y una imagen, y un CSS con al menos 3 reglas. Sin IA y sin copiar: si dudas, consulta MDN. Súbela a tu repo sandbox en una rama y haz merge."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "es",
+      "titulo": "MDN: ¿Qué es CSS?",
+      "url": "https://developer.mozilla.org/es/docs/Learn_web_development/Core/Styling_basics/What_is_CSS",
+      "minutos": 20,
+      "detalle": "Más a fondo: cómo el navegador aplica los estilos y qué es la cascada."
+    }
+  ],
+  "entregable": "Link a tu repo con la página hecha a mano (HTML + CSS). En la explicación: qué etiqueta o regla de CSS no entendías al principio y cómo la resolviste.",
+  "pregunta": "Si Claude Code te genera 200 líneas de HTML para tu página, ¿qué revisarías primero para saber si están bien?",
+  "whatsapp": "*Vibecoders · HTML y CSS: lo justo para revisar lo que hace la IA*\nJueves 22 de octubre\n\nEntender cómo se arma una página web con HTML y CSS, para poder leer y corregir lo que Claude Code genere en el laboratorio del sábado.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: tu página hecha a mano con HTML y CSS\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
