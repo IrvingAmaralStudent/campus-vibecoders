@@ -1,0 +1,59 @@
+{
+  "fecha": "2026-10-23",
+  "semana": 0,
+  "fase": 1,
+  "semanaTitulo": "Puesta a punto: herramientas y mentalidad",
+  "entregableSemana": "Claude Code instalado y funcionando, repo sandbox en GitHub con tus primeros commits y una página personal hecha con Claude Code.",
+  "titulo": "Cómo funciona la IA que usas y qué nunca debes darle",
+  "objetivo": "Entender a grandes rasgos cómo funciona un modelo de lenguaje, por qué a veces inventa cosas y qué cuidados de seguridad tener al trabajar con Claude Code.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "en-sub",
+      "titulo": "3Blue1Brown: Large Language Models explained briefly",
+      "url": "https://www.youtube.com/watch?v=LPZh9BOjkQs",
+      "minutos": 20,
+      "detalle": "8 minutos con animaciones: cómo un modelo predice la siguiente palabra y cómo se entrena. Míralo dos veces y anota con tus palabras qué significa \"predecir la siguiente palabra\".\nVideo en inglés: activa subtítulos en ⚙ Configuración → Subtítulos → Traducir automáticamente → Español."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Reducir alucinaciones (documentación de Claude)",
+      "url": "https://platform.claude.com/docs/es/test-and-evaluate/strengthen-guardrails/reduce-hallucinations",
+      "minutos": 20,
+      "detalle": "Por qué un modelo puede responder con total seguridad algo falso y qué técnicas lo reducen. Quédate con la idea central: lo que la IA afirma, se verifica."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Seguridad en Claude Code",
+      "url": "https://code.claude.com/docs/es/security",
+      "minutos": 20,
+      "detalle": "Qué hace Claude Code para proteger tu equipo y qué te toca a ti: leer cada comando antes de aprobarlo, desconfiar de instrucciones que vengan de páginas o archivos de internet y nunca darle secretos."
+    },
+    {
+      "tipo": "practica",
+      "idioma": "es",
+      "titulo": "Pon a prueba a Claude Code",
+      "minutos": 35,
+      "detalle": "En tu repo sandbox hazle a Claude Code tres preguntas:\n1. \"¿Qué versión de Git tengo?\" Va a querer ejecutar un comando: léelo antes de aprobarlo.\n2. \"¿Qué hace cada archivo de este repo?\" Revisa que lo que diga sea cierto.\n3. Algo que no puede saber, como \"¿cuál es mi película favorita?\".\nAnota en BITACORA.md cuándo verificó, cuándo supuso y cómo lo notaste."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: tus reglas para trabajar con IA",
+      "minutos": 30,
+      "detalle": "Escribe a mano un archivo REGLAS-IA.md con al menos 5 cosas que nunca vas a pegarle a una IA (contraseñas, llaves de API, datos personales de otras personas, código ajeno sin permiso…) y 3 reglas propias para revisar lo que te propone antes de aceptarlo. Súbelo a tu repo sandbox."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "es",
+      "titulo": "Configurar permisos en Claude Code",
+      "url": "https://code.claude.com/docs/es/permissions",
+      "minutos": 15,
+      "detalle": "Qué puede hacer Claude Code sin preguntarte y cómo se configura. Por ahora solo ubícalo; no cambies nada."
+    }
+  ],
+  "entregable": "Link a tu BITACORA.md actualizada y a REGLAS-IA.md. En la explicación: con tus palabras, por qué un modelo de lenguaje puede inventar algo y cómo te vas a proteger de eso.",
+  "pregunta": "Si Claude Code te dice con total seguridad que tu código funciona, ¿qué haces antes de creerle?",
+  "whatsapp": "*Vibecoders · Cómo funciona la IA que usas y qué nunca debes darle*\nViernes 23 de octubre\n\nEntender a grandes rasgos cómo funciona un modelo de lenguaje, por qué a veces inventa cosas y qué cuidados de seguridad tener al trabajar con Claude Code.\n\n⏱ ≈ 2 h 5 min\n✅ Entrega: BITACORA.md actualizada + REGLAS-IA.md\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

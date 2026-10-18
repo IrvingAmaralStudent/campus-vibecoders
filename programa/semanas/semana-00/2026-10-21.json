@@ -1,0 +1,59 @@
+{
+  "fecha": "2026-10-21",
+  "semana": 0,
+  "fase": 1,
+  "semanaTitulo": "Puesta a punto: herramientas y mentalidad",
+  "entregableSemana": "Claude Code instalado y funcionando, repo sandbox en GitHub con tus primeros commits y una página personal hecha con Claude Code.",
+  "titulo": "GitHub: tu repo en la nube y cómo documentarlo",
+  "objetivo": "Subir tu trabajo a GitHub, escribir un README claro en Markdown y conocer el flujo de ramas y pull requests que vas a usar todo el programa.",
+  "bloques": [
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "GitHub Docs: Hola mundo",
+      "url": "https://docs.github.com/es/get-started/start-your-journey/hello-world",
+      "minutos": 15,
+      "detalle": "Crea un repositorio, una rama, haz cambios y abre y fusiona tu primer pull request desde la web. Hazlo mientras lees."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "GitHub flow",
+      "url": "https://docs.github.com/es/get-started/using-github/github-flow",
+      "minutos": 15,
+      "detalle": "El flujo de trabajo de todo el programa: rama → commits → pull request → revisión → merge. Fíjate en por qué nadie trabaja directo en main."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Sintaxis básica de escritura y formato (Markdown)",
+      "url": "https://docs.github.com/es/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax",
+      "minutos": 15,
+      "detalle": "Encabezados, listas, enlaces, código e imágenes. Lo vas a usar en tus README, en BITACORA.md y en cada pull request."
+    },
+    {
+      "tipo": "practica",
+      "idioma": "es",
+      "titulo": "Claude Code documenta tu repo sandbox",
+      "minutos": 50,
+      "detalle": "En tu repo sandbox abre claude y pídele: \"Lee este repositorio y propón un README.md que explique qué es, cómo está organizado y cómo se usa. No lo escribas todavía: primero muéstrame el plan\".\n1. Ajusta el plan y deja que lo escriba.\n2. Antes de hacer commit, revisa el cambio con git diff: ¿hay algo que no sea cierto o que sobre? Corrígelo.\n3. Crea la rama docs/readme, haz commit y push.\n4. Abre un pull request en GitHub, léelo como si fueras otra persona y fusiónalo."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: tu perfil en Markdown",
+      "minutos": 30,
+      "detalle": "Escribe a mano, sin IA, un archivo SOBRE-MI.md con un título, una lista de 3 cosas que quieres aprender, un enlace y un bloque de código con el comando de Git que más usaste ayer. Súbelo y revisa en GitHub que se vea bien."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "es",
+      "titulo": "Pro Git: trabajar con remotos",
+      "url": "https://git-scm.com/book/es/v2/Fundamentos-de-Git-Trabajar-con-Remotos",
+      "minutos": 20,
+      "detalle": "Referencia del libro oficial: git remote, fetch, pull y push. Para cuando quieras entender qué pasa detrás de cada push."
+    }
+  ],
+  "entregable": "Link al pull request fusionado en tu repo sandbox (con el README) y al archivo SOBRE-MI.md. En la explicación: qué corregiste del README que propuso Claude y por qué.",
+  "pregunta": "¿Por qué crees que en los equipos nadie sube cambios directo a main y todo pasa por pull requests?",
+  "whatsapp": "*Vibecoders · GitHub: tu repo en la nube y cómo documentarlo*\nMiércoles 21 de octubre\n\nSubir tu trabajo a GitHub, escribir un README claro en Markdown y conocer el flujo de ramas y pull requests que vas a usar todo el programa.\n\n⏱ ≈ 2 h 5 min\n✅ Entrega: PR fusionado con tu README + SOBRE-MI.md\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

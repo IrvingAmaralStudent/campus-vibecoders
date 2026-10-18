@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-10-17",
+  "fecha": "2026-10-24",
   "semana": 0,
   "fase": 1,
   "semanaTitulo": "Puesta a punto: herramientas y mentalidad",
@@ -13,7 +13,7 @@
       "titulo": "MoureDev: Claude Code, curso completo (parte 2)",
       "url": "https://www.youtube.com/watch?v=TCq7eZ9Lhc8",
       "minutos": 60,
-      "detalle": "Continúa desde donde te quedaste el jueves. Practica en tu terminal lo que vaya mostrando."
+      "detalle": "Continúa desde donde te quedaste el lunes. Practica en tu terminal lo que vaya mostrando."
     },
     {
       "tipo": "leer",
@@ -46,5 +46,5 @@
   ],
   "entregable": "Link a tu repo con la página personal y el archivo BITACORA.md. En la explicación: qué cambiaste del plan que te propuso Claude y por qué.",
   "pregunta": "¿Qué hizo Claude que no esperabas? ¿Fue algo bueno o algo que tuviste que corregir?",
-  "whatsapp": "*Vibecoders · Laboratorio: tu primera sesión real con Claude Code*\nSábado 17 de octubre · laboratorio\n\nConstruir algo pequeño de principio a fin con Claude Code: pedir, revisar, probar y guardar en Git. Es la primera vuelta del ciclo que vas a repetir todo el programa.\n\n⏱ ≈ 2 h 50 min (sábado)\n✅ Entrega: página personal hecha con Claude Code + BITACORA.md\n\nTodo el material y tu checklist aquí 👉 {link}"
+  "whatsapp": "*Vibecoders · Laboratorio: tu primera sesión real con Claude Code*\nSábado 24 de octubre · laboratorio\n\nConstruir algo pequeño de principio a fin con Claude Code: pedir, revisar, probar y guardar en Git. Es la primera vuelta del ciclo que vas a repetir todo el programa.\n\n⏱ ≈ 2 h 50 min (sábado)\n✅ Entrega: página personal hecha con Claude Code + BITACORA.md\n\nTodo el material y tu checklist aquí 👉 {link}"
 }
