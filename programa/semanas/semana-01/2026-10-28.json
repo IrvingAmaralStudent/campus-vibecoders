@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-10-28",
+  "semana": 1,
+  "fase": 1,
+  "semanaTitulo": "Claude Code y el ciclo pedir-revisar-probar",
+  "entregableSemana": "App web de una página en TypeScript (gestor de gastos personales) que guarda datos en localStorage, con repo en GitHub, CLAUDE.md y README.",
+  "titulo": "Modo plan: pensar antes de construir",
+  "objetivo": "Usar el modo plan para que Claude proponga cómo resolver algo antes de tocar código, y aprender a cuestionar ese plan.",
+  "bloques": [
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Modos de permisos (incluye modo plan)",
+      "url": "https://code.claude.com/docs/es/permission-modes",
+      "minutos": 15,
+      "detalle": "Qué hace cada modo y cuándo usarlo. Shift+Tab cambia de modo."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "localStorage en MDN",
+      "url": "https://developer.mozilla.org/es/docs/Web/API/Window/localStorage",
+      "minutos": 15,
+      "detalle": "Qué es, qué límites tiene y por qué solo guarda texto (de ahí JSON.stringify y JSON.parse)."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Persistencia con modo plan",
+      "minutos": 70,
+      "detalle": "En modo plan pídele: \"Planea cómo guardar los gastos en localStorage para que no se pierdan al recargar, y cómo listar y borrar gastos\".\nAntes de aprobar, hazle al menos 2 preguntas al plan (¿qué pasa si localStorage tiene datos corruptos? ¿dónde queda la lógica de guardado?).\nAprueba, revisa el diff con git diff y prueba recargando la página."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: lee el diff",
+      "minutos": 25,
+      "detalle": "Antes de hacer commit, lee línea por línea el git diff. Escribe en tu bitácora qué hace cada función nueva con tus palabras. Si hay algo que no entiendes, márcalo para preguntarlo mañana."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "es",
+      "titulo": "Flujos de trabajo comunes",
+      "url": "https://code.claude.com/docs/es/common-workflows",
+      "minutos": 20,
+      "detalle": "Recetas para tareas frecuentes: entender un código nuevo, arreglar bugs, refactorizar."
+    }
+  ],
+  "entregable": "Link al commit donde se agrega la persistencia. En la explicación: las 2 preguntas que le hiciste al plan y qué cambió por ellas.",
+  "pregunta": "¿En qué momento conviene saltarse el modo plan y pedir el cambio directo?",
+  "whatsapp": "*Vibecoders · Modo plan: pensar antes de construir*\nMiércoles 28 de octubre\n\nUsar el modo plan para que Claude proponga cómo resolver algo antes de tocar código, y aprender a cuestionar ese plan.\n\n⏱ ≈ 2 h 05 min\n✅ Entrega: gastos que sobreviven al recargar + preguntas que le hiciste al plan\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

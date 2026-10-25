@@ -1,0 +1,42 @@
+{
+  "fecha": "2026-10-31",
+  "semana": 1,
+  "fase": 1,
+  "semanaTitulo": "Claude Code y el ciclo pedir-revisar-probar",
+  "entregableSemana": "App web de una página en TypeScript (gestor de gastos personales) que guarda datos en localStorage, con repo en GitHub, CLAUDE.md y README.",
+  "titulo": "Laboratorio: elige tu proyecto personal",
+  "objetivo": "Definir el proyecto personal que vas a construir a lo largo del programa, y terminar el curso de Claude Code.",
+  "bloques": [
+    {
+      "tipo": "curso",
+      "idioma": "es",
+      "titulo": "MoureDev: Claude Code, curso completo (final)",
+      "url": "https://www.youtube.com/watch?v=TCq7eZ9Lhc8",
+      "minutos": 40,
+      "detalle": "Termina el curso. Anota en tu bitácora 3 cosas que no sabías y vas a empezar a usar."
+    },
+    {
+      "tipo": "proyecto",
+      "titulo": "Propuesta de proyecto personal",
+      "minutos": 60,
+      "detalle": "Elige un problema real tuyo o de alguien cercano (un negocio familiar, tu escuela, un hobby). Debe tener usuarios, datos que se guardan y al menos 3 pantallas.\nUsa Claude (chat o Claude Code en modo plan) como entrevistador: pídele que te haga preguntas hasta que el alcance quede claro. Tú decides el alcance, no la IA."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Documento de una página",
+      "minutos": 40,
+      "detalle": "Escribe tú PROYECTO.md en un repo nuevo: problema, quién lo usa, 5 funcionalidades del MVP, qué queda fuera y cómo sabrás que funciona. Este proyecto lo vas a reconstruir en .NET y Angular en las siguientes semanas."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "Claude Code in Action (Anthropic Academy, certificado oficial)",
+      "url": "https://anthropic.skilljar.com/claude-code-in-action",
+      "minutos": 60,
+      "detalle": "Curso oficial en inglés con certificado. Repasa lo de la semana con ejemplos de Anthropic."
+    }
+  ],
+  "entregable": "Link al repo de tu proyecto personal con PROYECTO.md. En la explicación: por qué elegiste este problema y qué dejaste fuera del MVP.",
+  "pregunta": "¿Qué parte del proyecto te da más miedo construir y por qué?",
+  "whatsapp": "*Vibecoders · Laboratorio: elige tu proyecto personal*\nSábado 31 de octubre · laboratorio\n\nDefinir el proyecto personal que vas a construir a lo largo del programa, y terminar el curso de Claude Code.\n\n⏱ ≈ 2 h 20 min (sábado)\n✅ Entrega: PROYECTO.md de tu proyecto personal\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
