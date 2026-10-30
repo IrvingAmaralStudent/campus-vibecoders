@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-11-04",
+  "semana": 2,
+  "fase": 1,
+  "semanaTitulo": "Cómo funciona una app web: HTTP, JSON, cliente y servidor, API REST, SQL básico",
+  "entregableSemana": "API en Node + SQLite con CRUD completo y frontend mínimo que la consume. Compuerta 1 (Fundamentos) al cerrar la semana.",
+  "titulo": "CRUD en memoria con Express",
+  "objetivo": "Implementar el CRUD completo de gastos en Express, con datos en memoria y códigos de estado correctos.",
+  "bloques": [
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Node.js: Introducción a Node.js",
+      "url": "https://nodejs.org/es/learn/getting-started/introduction-to-nodejs",
+      "minutos": 20,
+      "detalle": "Qué es Node y cómo ejecuta JavaScript fuera del navegador."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: Introducción a Express/Node",
+      "url": "https://developer.mozilla.org/es/docs/Learn_web_development/Extensions/Server-side/Express_Nodejs/Introduction",
+      "minutos": 30,
+      "detalle": "Rutas, manejadores y middleware. No necesitas hacer todo el tutorial; entiende cómo se declara una ruta."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: Códigos de estado HTTP",
+      "url": "https://developer.mozilla.org/es/docs/Web/HTTP/Reference/Status",
+      "minutos": 10,
+      "detalle": "Repasa 200, 201, 204, 400, 404 y 500: los que usarás en tu API."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "CRUD completo con Claude Code",
+      "minutos": 50,
+      "detalle": "Crea la rama crud-memoria. Pídele a Claude Code que implemente tu API.md: GET, POST, PUT y DELETE sobre /api/gastos con un arreglo en memoria, validando que el cuerpo tenga descripción y monto.\nPrueba cada endpoint con curl (también los casos de error). Pídele que escriba un archivo pruebas.http o un script de curl con tus pruebas.\nHaz commit y abre PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: escribe un endpoint a mano",
+      "minutos": 25,
+      "detalle": "Borra el manejador de DELETE y vuelve a escribirlo tú, sin IA y sin mirar el código anterior. Debe responder 204 si existía y 404 si no. Pruébalo y haz commit."
+    }
+  ],
+  "entregable": "Link al PR con el CRUD en memoria y tu archivo de pruebas. En la explicación: qué pasa con los datos cuando reinicias el servidor y por qué.",
+  "pregunta": "¿Qué se pierde y qué se conserva al reiniciar un servidor que guarda los datos en memoria?",
+  "whatsapp": "*Vibecoders · CRUD en memoria con Express*\nMiércoles 4 de noviembre\n\nImplementar el CRUD completo de gastos en Express, con datos en memoria y códigos de estado correctos.\n\n⏱ ≈ 2 h 15 min\n✅ Entrega: PR con CRUD de gastos en memoria y archivo de pruebas con curl\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

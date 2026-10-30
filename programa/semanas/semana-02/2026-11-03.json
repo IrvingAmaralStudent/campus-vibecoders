@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-11-03",
+  "semana": 2,
+  "fase": 1,
+  "semanaTitulo": "Cómo funciona una app web: HTTP, JSON, cliente y servidor, API REST, SQL básico",
+  "entregableSemana": "API en Node + SQLite con CRUD completo y frontend mínimo que la consume. Compuerta 1 (Fundamentos) al cerrar la semana.",
+  "titulo": "JSON y API REST",
+  "objetivo": "Entender qué es una API REST y levantar tu primer servidor en Node que responde JSON.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "EDteam: ¿Qué es una API?",
+      "url": "https://www.youtube.com/watch?v=u2Ms34GE14U",
+      "minutos": 20,
+      "detalle": "La idea de API con ejemplos sencillos. Anota la diferencia entre API y API REST."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: Trabajar con JSON",
+      "url": "https://developer.mozilla.org/es/docs/Learn_web_development/Core/Scripting/JSON",
+      "minutos": 25,
+      "detalle": "Cómo se ve un JSON, JSON.parse y JSON.stringify. Practica en la consola del navegador."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: Métodos de petición HTTP",
+      "url": "https://developer.mozilla.org/es/docs/Web/HTTP/Reference/Methods",
+      "minutos": 15,
+      "detalle": "Aprende qué método usar para leer, crear, actualizar y borrar."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Tu primer servidor con Claude Code",
+      "minutos": 45,
+      "detalle": "En api-gastos crea la rama servidor-basico. Pídele a Claude Code, en modo plan primero: \"Propón un servidor Node con Express que tenga GET /api/gastos y devuelva una lista fija de 3 gastos en JSON\".\nRevisa el plan, aprueba, corre el servidor y prueba con curl y con el navegador.\nHaz commit y abre un PR hacia main con una descripción de qué hace."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: diseña los endpoints",
+      "minutos": 25,
+      "detalle": "Sin IA, escribe en API.md la tabla de endpoints del gestor de gastos (método, ruta, qué recibe, qué devuelve y código de estado). Debe cubrir listar, ver uno, crear, editar y borrar."
+    }
+  ],
+  "entregable": "Link al PR del servidor básico y a API.md. En la explicación: qué hace cada método HTTP de tu tabla y por qué elegiste esas rutas.",
+  "pregunta": "¿Por qué las rutas de una API REST usan sustantivos (/gastos) y no verbos (/obtenerGastos)?",
+  "whatsapp": "*Vibecoders · JSON y API REST*\nMartes 3 de noviembre\n\nEntender qué es una API REST y levantar tu primer servidor en Node que responde JSON.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: PR con servidor Node que responde JSON y API.md con tus endpoints\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
