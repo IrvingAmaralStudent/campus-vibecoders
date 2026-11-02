@@ -1,0 +1,42 @@
+{
+  "fecha": "2026-11-06",
+  "semana": 2,
+  "fase": 1,
+  "semanaTitulo": "Cómo funciona una app web: HTTP, JSON, cliente y servidor, API REST, SQL básico",
+  "entregableSemana": "API en Node + SQLite con CRUD completo y frontend mínimo que la consume. Compuerta 1 (Fundamentos) al cerrar la semana.",
+  "titulo": "Frontend mínimo que consume la API",
+  "objetivo": "Conectar una página web con tu API usando fetch y entender por qué el navegador a veces bloquea la petición (CORS).",
+  "bloques": [
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: Usar la API Fetch",
+      "url": "https://developer.mozilla.org/es/docs/Web/API/Fetch_API/Using_Fetch",
+      "minutos": 25,
+      "detalle": "Cómo hacer GET y POST con fetch, leer la respuesta como JSON y manejar errores."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: Intercambio de recursos de origen cruzado (CORS)",
+      "url": "https://developer.mozilla.org/es/docs/Web/HTTP/Guides/CORS",
+      "minutos": 20,
+      "detalle": "Lee la introducción y los ejemplos simples. Entiende qué es un origen y quién decide si se permite la petición."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Frontend con Claude Code",
+      "minutos": 55,
+      "detalle": "Crea la rama frontend. Pídele a Claude Code una página simple (HTML, TypeScript o JavaScript) que liste los gastos, tenga un formulario para crear uno y un botón para borrar, todo usando fetch contra tu API.\nSi ves un error de CORS en la consola, no lo copies a ciegas: pídele que te explique la causa antes de arreglarlo.\nRevisa el código de fetch y el manejo de errores. Haz commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: lista de gastos con fetch",
+      "minutos": 25,
+      "detalle": "Sin IA, escribe una función que haga fetch a GET /api/gastos y pinte el total en la página. Si algo falla, depura con la consola y la pestaña Red antes de pedir ayuda."
+    }
+  ],
+  "entregable": "Link al PR con el frontend funcionando y una captura de la página con datos de tu API. En la explicación: qué es CORS y cómo lo resolviste.",
+  "pregunta": "¿Por qué el navegador protege contra peticiones a otros orígenes y un comando curl no?",
+  "whatsapp": "*Vibecoders · Frontend mínimo que consume la API*\nViernes 6 de noviembre\n\nConectar una página web con tu API usando fetch y entender por qué el navegador a veces bloquea la petición (CORS).\n\n⏱ ≈ 2 h 5 min\n✅ Entrega: PR con frontend mínimo que lista, crea y borra gastos usando tu API\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

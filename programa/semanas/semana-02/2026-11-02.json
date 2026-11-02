@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-11-02",
+  "semana": 2,
+  "fase": 1,
+  "semanaTitulo": "Cómo funciona una app web: HTTP, JSON, cliente y servidor, API REST, SQL básico",
+  "entregableSemana": "API en Node + SQLite con CRUD completo y frontend mínimo que la consume. Compuerta 1 (Fundamentos) al cerrar la semana.",
+  "titulo": "Cliente, servidor y HTTP",
+  "objetivo": "Explicar con tus palabras qué pasa desde que escribes una dirección en el navegador hasta que ves la página, y leer una petición y una respuesta HTTP.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Fazt: Modelo Cliente Servidor, Explicación Simple",
+      "url": "https://www.youtube.com/watch?v=49zdlyLSwhQ",
+      "minutos": 15,
+      "detalle": "Video corto para tener la idea general. Anota quién pide y quién responde."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: Visión general cliente-servidor",
+      "url": "https://developer.mozilla.org/es/docs/Learn_web_development/Extensions/Server-side/First_steps/Client-Server_overview",
+      "minutos": 25,
+      "detalle": "Fíjate en el ciclo petición-respuesta y en qué es una petición GET frente a una POST."
+    },
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "MatchCode: ¿Cómo FUNCIONA el PROTOCOLO HTTP?",
+      "url": "https://www.youtube.com/watch?v=BHdNbplsu8g",
+      "minutos": 20,
+      "detalle": "Métodos, encabezados y códigos de estado. Pausa y repite lo que no quede claro."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Mira HTTP en vivo con Claude Code",
+      "minutos": 50,
+      "detalle": "Crea el repo api-gastos en GitHub y clónalo.\nAbre las herramientas de desarrollo del navegador (F12 → Red) en cualquier sitio y localiza una petición: método, URL, código de estado y encabezados.\nLuego pídele a Claude Code: \"Muéstrame con curl -v una petición GET a https://example.com y explícame línea por línea qué es cada parte de la petición y de la respuesta\".\nCompara con lo que viste en el navegador. Guarda tus hallazgos en NOTAS.md y haz commit en la rama main del repo."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: dibuja el viaje de una petición",
+      "minutos": 20,
+      "detalle": "Sin ayuda de la IA, dibuja a mano o en una herramienta de diagramas el recorrido de una petición: navegador, servidor y respuesta. Rotula método, URL, código de estado y cuerpo. Súbelo al repo como diagrama-http.png."
+    }
+  ],
+  "entregable": "Link al repo api-gastos con NOTAS.md y tu diagrama. En la explicación: qué es una petición HTTP y qué significan el método y el código de estado.",
+  "pregunta": "Si el servidor responde 404 y otro responde 500, ¿de quién crees que es el problema en cada caso?",
+  "whatsapp": "*Vibecoders · Cliente, servidor y HTTP*\nLunes 2 de noviembre\n\nExplicar con tus palabras qué pasa desde que escribes una dirección en el navegador hasta que ves la página, y leer una petición y una respuesta HTTP.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: repo api-gastos con NOTAS.md y diagrama del viaje de una petición\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

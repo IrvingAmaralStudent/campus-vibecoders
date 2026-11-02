@@ -1,0 +1,32 @@
+{
+  "fecha": "2026-11-07",
+  "semana": 2,
+  "fase": 1,
+  "semanaTitulo": "Cómo funciona una app web: HTTP, JSON, cliente y servidor, API REST, SQL básico",
+  "entregableSemana": "API en Node + SQLite con CRUD completo y frontend mínimo que la consume. Compuerta 1 (Fundamentos) al cerrar la semana.",
+  "titulo": "Laboratorio: tu API de punta a punta",
+  "objetivo": "Integrar lo de la semana: una API con CRUD y SQLite, un frontend que la usa y un README. También te preparas para explicarlo en la Compuerta 1.",
+  "bloques": [
+    {
+      "tipo": "proyecto",
+      "titulo": "API de tu proyecto personal",
+      "minutos": 100,
+      "detalle": "Con tu PROYECTO.md a la mano, elige la entidad principal de tu proyecto y construye en un repo nuevo su API con CRUD sobre SQLite, usando el mismo flujo de la semana: plan en Claude Code, rama, revisión, pruebas con curl, commit y PR.\nSi vas atrasado con api-gastos, usa este tiempo para terminarla primero."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "README y revisión con Claude Code",
+      "minutos": 30,
+      "detalle": "Pídele a Claude Code que revise tu repo y escriba un README con cómo instalar, correr y probar la API, con ejemplos de curl. Corrige lo que esté mal o no entiendas. Pídele también que busque problemas de seguridad evidentes y revisa si tienen sentido."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: explícalo en voz alta",
+      "minutos": 30,
+      "detalle": "Sin IA y sin mirar el código, explica en voz alta o grabando tu pantalla qué pasa cuando haces clic en \"Guardar gasto\": frontend, petición HTTP, servidor, SQL y respuesta. Anota en qué parte dudaste; eso es lo que debes repasar antes de la Compuerta 1."
+    }
+  ],
+  "entregable": "Link a tu repo con la API, su README y, si lo grabaste, tu explicación. En la explicación: el recorrido completo de una petición y qué parte te costó más.",
+  "pregunta": "¿Qué parte del recorrido de una petición te cuesta más explicar y qué harás esta semana para dominarla?",
+  "whatsapp": "*Vibecoders · Laboratorio: tu API de punta a punta*\nSábado 7 de noviembre · laboratorio\n\nIntegrar lo de la semana: una API con CRUD y SQLite, un frontend que la usa y un README. También te preparas para explicarlo en la Compuerta 1.\n\n⏱ ≈ 2 h 40 min (sábado)\n✅ Entrega: repo con API CRUD sobre SQLite, README y tu explicación del recorrido de una petición\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

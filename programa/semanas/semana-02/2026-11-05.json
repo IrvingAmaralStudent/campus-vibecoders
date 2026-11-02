@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-11-05",
+  "semana": 2,
+  "fase": 1,
+  "semanaTitulo": "Cómo funciona una app web: HTTP, JSON, cliente y servidor, API REST, SQL básico",
+  "entregableSemana": "API en Node + SQLite con CRUD completo y frontend mínimo que la consume. Compuerta 1 (Fundamentos) al cerrar la semana.",
+  "titulo": "SQL básico y SQLite",
+  "objetivo": "Escribir consultas SQL básicas y guardar los gastos de tu API en una base SQLite para que no se pierdan.",
+  "bloques": [
+    {
+      "tipo": "curso",
+      "idioma": "es",
+      "titulo": "freeCodeCamp Español: Aprende SQL, curso desde cero (primera parte)",
+      "url": "https://www.youtube.com/watch?v=6JBsoPOwPew",
+      "minutos": 40,
+      "detalle": "Ve solo los primeros capítulos: qué es una base de datos, tablas, SELECT, INSERT, UPDATE y DELETE. Detente donde empiecen temas de Docker o de servidores específicos."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: CRUD (glosario)",
+      "url": "https://developer.mozilla.org/es/docs/Glossary/CRUD",
+      "minutos": 10,
+      "detalle": "Relaciona cada letra de CRUD con un método HTTP y con una sentencia SQL."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Pasa tu API a SQLite con Claude Code",
+      "minutos": 50,
+      "detalle": "Crea la rama sqlite. Pídele a Claude Code, en modo plan: \"Reemplaza el arreglo en memoria por una base SQLite con una tabla gastos (id, descripcion, monto, fecha)\". Pregúntale por qué eligió esa librería.\nRevisa que las consultas usen parámetros (?) y no concatenen texto.\nReinicia el servidor y confirma que los datos se conservan. Agrega gastos.db al .gitignore. Haz commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: 5 consultas a mano",
+      "minutos": 30,
+      "detalle": "Sin IA, escribe en consultas.sql cinco consultas sobre tu tabla gastos: todos los gastos, los de monto mayor a 500, el total, el promedio y los 3 más recientes. Ábrelas en un cliente de SQLite o con la herramienta de línea de comandos y comprueba que funcionan."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "SQLBolt: lecciones interactivas de SQL",
+      "url": "https://sqlbolt.com/",
+      "minutos": 30,
+      "detalle": "Ejercicios interactivos en inglés para reforzar SELECT, filtros y agregaciones."
+    }
+  ],
+  "entregable": "Link al PR con SQLite y tu consultas.sql. En la explicación: qué ventaja tiene guardar en SQLite frente a memoria y por qué se usan parámetros en las consultas.",
+  "pregunta": "¿Qué podría pasar si armas una consulta SQL pegando texto que escribió el usuario?",
+  "whatsapp": "*Vibecoders · SQL básico y SQLite*\nJueves 5 de noviembre\n\nEscribir consultas SQL básicas y guardar los gastos de tu API en una base SQLite para que no se pierdan.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: PR con la API guardando en SQLite y consultas.sql hecho por ti\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
