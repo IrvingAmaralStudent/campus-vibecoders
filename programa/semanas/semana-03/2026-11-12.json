@@ -1,0 +1,42 @@
+{
+  "fecha": "2026-11-12",
+  "semana": 3,
+  "fase": 2,
+  "semanaTitulo": "Backend en .NET I: C# esencial, ASP.NET Core Web API",
+  "entregableSemana": "La API de la semana 2 reescrita en ASP.NET Core",
+  "titulo": "Tu primera Web API en ASP.NET Core",
+  "objetivo": "Crear una Web API mínima con rutas GET y POST, probarla con curl y entender cómo se compara con tu API de Node.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "NET University: Curso Web APIs con ASP.NET 9",
+      "url": "https://www.youtube.com/watch?v=zjEyQCfbVB4",
+      "minutos": 25,
+      "detalle": "Es un curso largo: ve solo los primeros 25 minutos (qué es una API y cómo se crea el proyecto). Pausa y repite lo que no quede claro."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Tutorial de API mínima con ASP.NET Core",
+      "url": "https://learn.microsoft.com/es-es/aspnet/core/tutorials/min-web-api",
+      "minutos": 35,
+      "detalle": "Sigue los pasos hasta tener rutas GET y POST funcionando. Fíjate en Program.cs, en cómo se declaran las rutas y en los códigos de estado que devuelve cada una."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Rutas de gastos con Claude Code",
+      "minutos": 50,
+      "detalle": "Dentro de api-gastos-dotnet, en la rama api-minima, crea el proyecto con `dotnet new web -o GastosApi`.\nPídele a Claude Code: \"Agrega rutas GET /gastos, GET /gastos/{id} y POST /gastos usando el record Gasto y una lista en memoria. Devuelve 201 al crear y 404 si no existe\".\nPruébalo con curl y compara las respuestas con tu API de Node de la semana 2. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: ruta DELETE",
+      "minutos": 20,
+      "detalle": "Sin IA, agrega la ruta DELETE /gastos/{id}: borra el gasto y devuelve 204, o 404 si no existe. Pruébala con curl antes de hacer commit."
+    }
+  ],
+  "entregable": "Link al PR con las rutas GET, POST y DELETE funcionando. En la explicación: cómo pasa una petición POST por tu Program.cs hasta devolver 201.",
+  "pregunta": "¿En qué se parece y en qué se diferencia declarar una ruta en ASP.NET Core y en Express?",
+  "whatsapp": "*Vibecoders · Tu primera Web API en ASP.NET Core*\nJueves 12 de noviembre\n\nCrear una Web API mínima con rutas GET y POST, probarla con curl y entender cómo se compara con tu API de Node.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: PR con la API mínima de gastos (GET, POST, DELETE)\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

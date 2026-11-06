@@ -1,0 +1,58 @@
+{
+  "fecha": "2026-11-11",
+  "semana": 3,
+  "fase": 2,
+  "semanaTitulo": "Backend en .NET I: C# esencial, ASP.NET Core Web API",
+  "entregableSemana": "La API de la semana 2 reescrita en ASP.NET Core",
+  "titulo": "Colecciones, LINQ y manejo de errores",
+  "objetivo": "Filtrar, ordenar y sumar colecciones con LINQ, y manejar errores con try/catch de forma clara.",
+  "bloques": [
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Introducción a las consultas LINQ",
+      "url": "https://learn.microsoft.com/es-es/dotnet/csharp/linq/get-started/introduction-to-linq-queries",
+      "minutos": 25,
+      "detalle": "Entiende las tres partes de una consulta: fuente, consulta y ejecución. Compáralo con map y filter de JavaScript."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Escribir consultas LINQ",
+      "url": "https://learn.microsoft.com/es-es/dotnet/csharp/linq/get-started/write-linq-queries",
+      "minutos": 25,
+      "detalle": "Practica los ejemplos de Where, OrderBy, Select y GroupBy en tu consola."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Instrucciones de excepciones",
+      "url": "https://learn.microsoft.com/es-es/dotnet/csharp/language-reference/statements/exception-handling-statements",
+      "minutos": 15,
+      "detalle": "Fíjate en try, catch, finally y throw, y cuándo es mejor validar antes que atrapar una excepción."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Consultas sobre gastos con Claude Code",
+      "minutos": 40,
+      "detalle": "En la rama consultas-linq pídele a Claude Code: \"Agrega a CuentaDeGastos métodos para filtrar por categoría, sumar por mes y obtener los 3 gastos más altos con LINQ, y explícame cada consulta\".\nPídele también que agregue datos de ejemplo. Revisa que los resultados sean correctos a mano. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: gastos por categoría",
+      "minutos": 20,
+      "detalle": "Sin IA, escribe una consulta LINQ que agrupe los gastos por categoría y muestre el total de cada una, de mayor a menor. Después explica con tus palabras qué hace cada método encadenado."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "Questpond: What is LINQ in C#? (en inglés)",
+      "url": "https://www.youtube.com/watch?v=Kn_clV8mVOM",
+      "minutos": 30,
+      "detalle": "Opcional. Está solo en inglés; úsalo si quieres otra explicación de LINQ con más ejemplos."
+    }
+  ],
+  "entregable": "Link al PR con las consultas LINQ y los datos de ejemplo. En la explicación: qué hace cada método encadenado de tu consulta por categoría.",
+  "pregunta": "¿Cuándo es mejor validar un dato antes de usarlo que atrapar la excepción después?",
+  "whatsapp": "*Vibecoders · Colecciones, LINQ y manejo de errores*\nMiércoles 11 de noviembre\n\nFiltrar, ordenar y sumar colecciones con LINQ, y manejar errores con try/catch de forma clara.\n\n⏱ ≈ 2 h 5 min\n✅ Entrega: PR con consultas LINQ sobre gastos y manejo de errores\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
