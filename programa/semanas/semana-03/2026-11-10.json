@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-11-10",
+  "semana": 3,
+  "fase": 2,
+  "semanaTitulo": "Backend en .NET I: C# esencial, ASP.NET Core Web API",
+  "entregableSemana": "La API de la semana 2 reescrita en ASP.NET Core",
+  "titulo": "Tipos, clases y records",
+  "objetivo": "Modelar un gasto con clases y records, y explicar la diferencia entre tipos por valor y por referencia.",
+  "bloques": [
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Sistema de tipos de C#",
+      "url": "https://learn.microsoft.com/es-es/dotnet/csharp/fundamentals/types/",
+      "minutos": 25,
+      "detalle": "Distingue tipos por valor y por referencia, y qué es `null`. Anota un ejemplo de cada uno."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Tutorial de clases",
+      "url": "https://learn.microsoft.com/es-es/dotnet/csharp/fundamentals/tutorials/classes",
+      "minutos": 30,
+      "detalle": "Haz el tutorial hasta entender propiedades, constructores y métodos."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Tipos record",
+      "url": "https://learn.microsoft.com/es-es/dotnet/csharp/language-reference/builtin-types/record",
+      "minutos": 15,
+      "detalle": "Lee cuándo conviene un record frente a una clase. Los usaremos como modelo de datos de la API."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Modela Gasto con Claude Code",
+      "minutos": 35,
+      "detalle": "En la rama modelo-gasto pídele a Claude Code: \"Crea un record Gasto con Id, Descripcion, Monto y Fecha, y una clase Categoria. Explícame por qué elegiste record o clase en cada caso\".\nRevisa nombres, tipos y qué pasa con valores nulos. Pídele un ejemplo de `with` para copiar un gasto cambiando el monto. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: clase CuentaDeGastos",
+      "minutos": 20,
+      "detalle": "Sin IA, escribe una clase CuentaDeGastos con una lista privada de gastos, un método Agregar que rechace montos menores o iguales a cero y una propiedad Total. Pruébala desde Program.cs."
+    }
+  ],
+  "entregable": "Link al PR con Gasto, Categoria y CuentaDeGastos. En la explicación: diferencia entre record y clase, y entre tipo por valor y por referencia.",
+  "pregunta": "Si dos gastos tienen los mismos datos, ¿deberían considerarse iguales? ¿Qué te dice eso sobre record frente a clase?",
+  "whatsapp": "*Vibecoders · Tipos, clases y records*\nMartes 10 de noviembre\n\nModelar un gasto con clases y records, y explicar la diferencia entre tipos por valor y por referencia.\n\n⏱ ≈ 2 h 5 min\n✅ Entrega: PR con el modelo Gasto (record) y la clase CuentaDeGastos\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
