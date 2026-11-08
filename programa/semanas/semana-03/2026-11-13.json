@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-11-13",
+  "semana": 3,
+  "fase": 2,
+  "semanaTitulo": "Backend en .NET I: C# esencial, ASP.NET Core Web API",
+  "entregableSemana": "La API de la semana 2 reescrita en ASP.NET Core",
+  "titulo": "Controladores, inyección de dependencias y validación",
+  "objetivo": "Pasar de rutas sueltas a un controlador, entender la inyección de dependencias y validar los datos de entrada.",
+  "bloques": [
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Inyección de dependencias en ASP.NET Core",
+      "url": "https://learn.microsoft.com/es-es/aspnet/core/fundamentals/dependency-injection",
+      "minutos": 25,
+      "detalle": "Entiende qué es un servicio, cómo se registra y qué significa la vida útil (singleton, scoped, transient). Explícalo con tus palabras en NOTAS.md."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Crear una API web con controladores",
+      "url": "https://learn.microsoft.com/es-es/aspnet/core/tutorials/first-web-api",
+      "minutos": 30,
+      "detalle": "Revisa cómo se estructura un controlador y cómo devuelve resultados. Fíjate en los atributos [ApiController] y [Route]."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Validación de modelos",
+      "url": "https://learn.microsoft.com/es-es/aspnet/core/mvc/models/validation",
+      "minutos": 15,
+      "detalle": "Mira los atributos como [Required] y [Range]. Compáralos con la validación manual que hiciste el martes."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Refactor a controlador con Claude Code",
+      "minutos": 40,
+      "detalle": "En la rama controlador pídele a Claude Code: \"Mueve las rutas a un GastosController que reciba un servicio IGastosService por inyección de dependencias, con una implementación en memoria. Agrega validación de Monto y Descripcion\".\nPídele que te explique cómo se registra el servicio en Program.cs. Prueba con curl un gasto inválido y confirma que devuelve 400. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: dibuja las dependencias",
+      "minutos": 20,
+      "detalle": "Sin IA, dibuja qué objeto crea a cuál: petición, controlador, servicio y lista de gastos. Marca quién crea cada objeto y por qué el controlador no usa `new` para el servicio."
+    }
+  ],
+  "entregable": "Link al PR con el controlador, el servicio y la validación. En la explicación: qué problema resuelve la inyección de dependencias.",
+  "pregunta": "¿Por qué sería un problema que el controlador creara el servicio con `new` dentro de sí mismo?",
+  "whatsapp": "*Vibecoders · Controladores, inyección de dependencias y validación*\nViernes 13 de noviembre\n\nPasar de rutas sueltas a un controlador, entender la inyección de dependencias y validar los datos de entrada.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: PR con GastosController, servicio inyectado y validación\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

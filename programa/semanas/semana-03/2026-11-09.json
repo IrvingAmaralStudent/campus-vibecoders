@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-11-09",
+  "semana": 3,
+  "fase": 2,
+  "semanaTitulo": "Backend en .NET I: C# esencial, ASP.NET Core Web API",
+  "entregableSemana": "La API de la semana 2 reescrita en ASP.NET Core",
+  "titulo": "Hola, C# y .NET",
+  "objetivo": "Instalar el SDK de .NET, crear tu primer programa en C# y leer su estructura comparándola con lo que ya conoces de Node.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "MoureDev: Curso de C# Desde Cero, primeros pasos en una hora",
+      "url": "https://www.youtube.com/watch?v=L-f8u0hwi4Y",
+      "minutos": 30,
+      "detalle": "Ve solo la primera mitad del video (variables, tipos y condicionales). Anota qué se parece a JavaScript y qué cambia."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Instalar .NET",
+      "url": "https://learn.microsoft.com/es-es/dotnet/core/install/",
+      "minutos": 10,
+      "detalle": "Elige tu sistema operativo e instala el SDK de .NET más reciente con soporte estable. Al terminar, `dotnet --version` debe mostrar un número."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Tour de C#",
+      "url": "https://learn.microsoft.com/es-mx/dotnet/csharp/tour-of-csharp/",
+      "minutos": 25,
+      "detalle": "Fíjate en que C# tiene tipos estáticos, clases y un punto de entrada claro. No memorices: queda como mapa."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Tu primer proyecto con dotnet y Claude Code",
+      "minutos": 40,
+      "detalle": "Crea el repo api-gastos-dotnet en GitHub y clónalo. Dentro corre `dotnet new console -o GastosConsola`.\nAbre Claude Code y pídele: \"Explícame línea por línea el archivo Program.cs y compáralo con un script equivalente en Node\".\nPídele que agregue una lista de 3 gastos y que imprima el total. Corre con `dotnet run`, lee el diff y haz commit en la rama inicio-csharp. Abre un PR hacia main."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: promedio de gastos",
+      "minutos": 25,
+      "detalle": "Sin ayuda de la IA, modifica el programa para que pida cinco montos por consola, los guarde en un arreglo y muestre el mayor, el menor y el promedio. Si algo falla, lee el mensaje de error antes de buscar ayuda."
+    }
+  ],
+  "entregable": "Link al PR con el proyecto de consola corriendo. En la explicación: qué hace `dotnet run` y qué diferencia notas entre C# y JavaScript.",
+  "pregunta": "¿Qué ventaja crees que tiene que C# te obligue a declarar el tipo de cada variable?",
+  "whatsapp": "*Vibecoders · Hola, C# y .NET*\nLunes 9 de noviembre\n\nInstalar el SDK de .NET, crear tu primer programa en C# y leer su estructura comparándola con lo que ya conoces de Node.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: proyecto de consola en C# con promedio de gastos y PR\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
