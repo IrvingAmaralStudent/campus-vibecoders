@@ -1,0 +1,32 @@
+{
+  "fecha": "2026-11-21",
+  "semana": 4,
+  "fase": 2,
+  "semanaTitulo": "Backend en .NET II: Entity Framework Core, migraciones, inyección de dependencias, SQL en Docker",
+  "entregableSemana": "API .NET con EF Core y PostgreSQL o SQL Server en Docker",
+  "titulo": "Laboratorio: API de gastos con EF Core y PostgreSQL",
+  "objetivo": "Integrar la semana: API de gastos con CRUD completo sobre PostgreSQL en Docker, con migraciones, servicio inyectado y README para que otra persona la levante.",
+  "bloques": [
+    {
+      "tipo": "proyecto",
+      "titulo": "CRUD con EF Core y PostgreSQL",
+      "minutos": 100,
+      "detalle": "Completa GastosApi: CRUD de gastos y categorías sobre PostgreSQL, validación, códigos de estado correctos, migraciones aplicadas y servicio inyectado; elimina la lista en memoria.\nFlujo de siempre: plan en Claude Code, rama, revisión del diff, pruebas con curl, commit y PR.\nSi tienes tiempo, aplica lo mismo a la entidad principal de tu PROYECTO.md en otro repo."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "README y arranque desde cero con Claude Code",
+      "minutos": 35,
+      "detalle": "Pídele a Claude Code que escriba el README con cómo levantar Docker, aplicar migraciones, configurar user-secrets y probar con curl. Clona el repo en otra carpeta y sigue tu README al pie de la letra; corrige lo que falle."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: explícalo en voz alta",
+      "minutos": 30,
+      "detalle": "Sin IA y sin mirar el código, explica en voz alta o grabando tu pantalla qué ocurre desde que llega un POST /gastos hasta que se guarda la fila: ruta, servicio, DbContext, migración y base de datos. Anota dónde dudaste y repásalo."
+    }
+  ],
+  "entregable": "Link al repo con la API, docker-compose.yml, migraciones y README. Explicación: el recorrido de un POST /gastos hasta la fila en PostgreSQL.",
+  "pregunta": "¿Qué parte del recorrido petición-servicio-base de datos explicarías peor hoy y qué harás para reforzarla?",
+  "whatsapp": "*Vibecoders · Laboratorio: API de gastos con EF Core y PostgreSQL*\nSábado 21 de noviembre · laboratorio\n\nIntegrar la semana: API de gastos con CRUD completo sobre PostgreSQL en Docker, con migraciones, servicio inyectado y README para que otra persona la levante.\n\n⏱ ≈ 2 h 45 min (sábado)\n✅ Entrega: repo con API EF Core, PostgreSQL en Docker, migraciones y README\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

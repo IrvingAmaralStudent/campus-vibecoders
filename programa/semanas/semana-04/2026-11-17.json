@@ -1,0 +1,42 @@
+{
+  "fecha": "2026-11-17",
+  "semana": 4,
+  "fase": 2,
+  "semanaTitulo": "Backend en .NET II: Entity Framework Core, migraciones, inyección de dependencias, SQL en Docker",
+  "entregableSemana": "API .NET con EF Core y PostgreSQL o SQL Server en Docker",
+  "titulo": "Entity Framework Core: modelo y DbContext",
+  "objetivo": "Conectar tu API a PostgreSQL con EF Core: definir la entidad Gasto, crear el DbContext y guardar y leer un registro.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "NetMentor: Introducción a Entity Framework Core",
+      "url": "https://www.youtube.com/watch?v=4azrTdMtaO4",
+      "minutos": 25,
+      "detalle": "Identifica qué es una entidad, qué es el contexto y cómo se traduce un objeto de C# a una fila de la tabla."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Introducción a EF Core (primera aplicación)",
+      "url": "https://learn.microsoft.com/es-es/ef/core/get-started/overview/first-app",
+      "minutos": 30,
+      "detalle": "Fíjate en el modelo, el DbContext y cómo se crea, lee, actualiza y borra con LINQ. Anota qué método guarda los cambios."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "EF Core en GastosApi con Claude Code",
+      "minutos": 50,
+      "detalle": "En la rama ef-core, pídele a Claude Code: \"Agrega EF Core con el proveedor Npgsql a GastosApi, crea la clase Gasto como entidad y un AppDbContext. No cambies aún las rutas existentes; explícame los paquetes que instalaste\".\nPídele después una ruta de prueba que guarde un gasto y otra que lo lea. Revisa el diff (paquetes y Program.cs), prueba con curl y confirma el dato con psql. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: consulta con LINQ",
+      "minutos": 25,
+      "detalle": "Sin IA, agrega la ruta GET /gastos/mayores/{monto} que use LINQ (`Where` y `OrderByDescending`) sobre el DbContext. Prueba con curl y revisa en psql que el resultado coincida."
+    }
+  ],
+  "entregable": "Link al PR con Gasto, AppDbContext y una ruta que lee y guarda en PostgreSQL. Explicación: qué es un ORM y para qué sirve el DbContext.",
+  "pregunta": "¿Qué ventajas y qué riesgos ves en usar un ORM en lugar de escribir SQL directamente?",
+  "whatsapp": "*Vibecoders · Entity Framework Core: modelo y DbContext*\nMartes 17 de noviembre\n\nConectar tu API a PostgreSQL con EF Core: definir la entidad Gasto, crear el DbContext y guardar y leer un registro.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: PR con EF Core conectado a PostgreSQL (entidad y DbContext)\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

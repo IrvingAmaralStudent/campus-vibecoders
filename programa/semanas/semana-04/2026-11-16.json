@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-11-16",
+  "semana": 4,
+  "fase": 2,
+  "semanaTitulo": "Backend en .NET II: Entity Framework Core, migraciones, inyección de dependencias, SQL en Docker",
+  "entregableSemana": "API .NET con EF Core y PostgreSQL o SQL Server en Docker",
+  "titulo": "PostgreSQL en un contenedor Docker",
+  "objetivo": "Entender qué es un contenedor, levantar PostgreSQL con Docker Compose y crear tu primera tabla con SQL desde la terminal.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Pabpereza: Introducción, Docker vs VMs, casos de uso (Curso Docker 1)",
+      "url": "https://www.youtube.com/watch?v=AquOM-ISsnA",
+      "minutos": 25,
+      "detalle": "Quédate con la idea de imagen, contenedor y volumen. Anota en una línea la diferencia con una máquina virtual."
+    },
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Fazt Code: PostgreSQL y PgAdmin en docker-compose",
+      "url": "https://www.youtube.com/watch?v=uKlRp6CqpDg",
+      "minutos": 20,
+      "detalle": "Sigue el ejemplo de docker-compose.yml. Fíjate en las variables de entorno, el puerto y el volumen donde se guardan los datos."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Levanta PostgreSQL con Claude Code",
+      "minutos": 55,
+      "detalle": "Instala Docker Desktop (o Docker Engine en Linux) y comprueba `docker --version`.\nEn api-gastos-dotnet crea la rama base-de-datos. Pídele a Claude Code: \"Crea un docker-compose.yml con PostgreSQL, usuario y contraseña de desarrollo, puerto 5432 y un volumen para los datos. Explícame cada línea\".\nLevántalo con `docker compose up -d`, entra con `docker compose exec db psql -U <usuario>` y crea la tabla gastos. Revisa que la contraseña no sea una real. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: SQL a mano",
+      "minutos": 30,
+      "detalle": "Sin ayuda de la IA, en psql crea la tabla gastos (id, descripcion, monto, fecha), inserta 5 filas y escribe consultas para: total de montos, gastos mayores a un valor y los 3 más recientes. Guarda las consultas en sql/gastos.sql."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "Docker Hub: imagen oficial de PostgreSQL",
+      "url": "https://hub.docker.com/_/postgres",
+      "minutos": 10,
+      "detalle": "Opcional, en inglés. Revisa las variables de entorno que acepta la imagen y las versiones disponibles."
+    }
+  ],
+  "entregable": "Link al PR con docker-compose.yml y un archivo sql/gastos.sql. Explicación: qué es un contenedor y qué hace cada línea de tu compose.",
+  "pregunta": "¿Qué problema resuelve correr la base de datos en un contenedor en lugar de instalarla directo en tu computadora?",
+  "whatsapp": "*Vibecoders · PostgreSQL en un contenedor Docker*\nLunes 16 de noviembre\n\nEntender qué es un contenedor, levantar PostgreSQL con Docker Compose y crear tu primera tabla con SQL desde la terminal.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: PR con docker-compose.yml de PostgreSQL y script SQL de gastos\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

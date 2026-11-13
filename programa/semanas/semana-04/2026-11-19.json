@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-11-19",
+  "semana": 4,
+  "fase": 2,
+  "semanaTitulo": "Backend en .NET II: Entity Framework Core, migraciones, inyección de dependencias, SQL en Docker",
+  "entregableSemana": "API .NET con EF Core y PostgreSQL o SQL Server en Docker",
+  "titulo": "Inyección de dependencias y configuración",
+  "objetivo": "Entender la inyección de dependencias en ASP.NET Core, guardar la cadena de conexión fuera del código y mover la lógica de datos a un servicio.",
+  "bloques": [
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Inserción de dependencias en ASP.NET Core",
+      "url": "https://learn.microsoft.com/es-es/aspnet/core/fundamentals/dependency-injection",
+      "minutos": 25,
+      "detalle": "Enfócate en los tiempos de vida (Transient, Scoped, Singleton) y en cómo se registra un servicio con `builder.Services`."
+    },
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "hdeleon.net: ¿Para qué sirve la inyección de dependencias en .NET?",
+      "url": "https://www.youtube.com/watch?v=h9wa5WA63zA",
+      "minutos": 15,
+      "detalle": "Compara el ejemplo con lo que leíste. Anota con tus palabras qué problema resuelve."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Secretos de usuario en desarrollo",
+      "url": "https://learn.microsoft.com/es-es/aspnet/core/security/app-secrets",
+      "minutos": 15,
+      "detalle": "Aprende a guardar la cadena de conexión con `dotnet user-secrets` para que no llegue a GitHub."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Servicio y secretos con Claude Code",
+      "minutos": 50,
+      "detalle": "En la rama servicio-gastos, pídele a Claude Code: \"Crea una interfaz IGastosServicio y su implementación con el AppDbContext, regístrala con inyección de dependencias y haz que las rutas de /gastos la usen. Mueve la cadena de conexión a user-secrets\".\nRevisa que no quede ninguna contraseña en appsettings.json ni en el historial de Git. Prueba con curl. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: dibuja el recorrido",
+      "minutos": 25,
+      "detalle": "Sin IA, dibuja a mano o en papel el recorrido de una petición GET /gastos: ruta, servicio, DbContext, PostgreSQL y respuesta, indicando quién crea cada objeto. Toma una foto y súbela al PR."
+    }
+  ],
+  "entregable": "Link al PR con GastosServicio inyectado, la cadena de conexión en user-secrets y las rutas usando EF Core. Explicación: qué significa Scoped y por qué el DbContext es Scoped.",
+  "pregunta": "¿Qué se te complica si cada clase crea sus propias dependencias en lugar de recibirlas?",
+  "whatsapp": "*Vibecoders · Inyección de dependencias y configuración*\nJueves 19 de noviembre\n\nEntender la inyección de dependencias en ASP.NET Core, guardar la cadena de conexión fuera del código y mover la lógica de datos a un servicio.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: PR con servicio inyectado, user-secrets y rutas usando la base de datos\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
