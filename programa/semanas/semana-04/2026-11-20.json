@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-11-20",
+  "semana": 4,
+  "fase": 2,
+  "semanaTitulo": "Backend en .NET II: Entity Framework Core, migraciones, inyección de dependencias, SQL en Docker",
+  "entregableSemana": "API .NET con EF Core y PostgreSQL o SQL Server en Docker",
+  "titulo": "Relaciones y consultas: categorías",
+  "objetivo": "Modelar una relación uno a muchos entre Categoria y Gasto, crear la migración y consultar datos relacionados con EF Core.",
+  "bloques": [
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Relaciones en EF Core",
+      "url": "https://learn.microsoft.com/es-es/ef/core/modeling/relationships",
+      "minutos": 30,
+      "detalle": "Enfócate en la relación uno a muchos, la llave foránea y la propiedad de navegación."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Carga anticipada de datos relacionados",
+      "url": "https://learn.microsoft.com/es-es/ef/core/querying/related-data/eager",
+      "minutos": 15,
+      "detalle": "Entiende `Include` y cuándo hace falta. Anota qué pasa si lo olvidas."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Categorías con Claude Code",
+      "minutos": 50,
+      "detalle": "En la rama categorias, pídele a Claude Code: \"Agrega la entidad Categoria con relación uno a muchos con Gasto, genera la migración y haz que GET /gastos devuelva la categoría de cada gasto sin ciclos infinitos en el JSON. Explícame qué hace Include\".\nAntes de aplicar, lee el SQL de la migración y confirma la llave foránea. Prueba con curl y psql. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: gastos por categoría",
+      "minutos": 30,
+      "detalle": "Sin IA, escribe la ruta GET /categorias/{id}/gastos con LINQ que devuelva los gastos de esa categoría, o 404 si no existe. Prueba con curl con una categoría válida y otra inexistente."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "es",
+      "titulo": "render2web: Relaciones en Entity Framework Core con ejemplos reales",
+      "url": "https://www.youtube.com/watch?v=Z1UQ_ItyNmk",
+      "minutos": 25,
+      "detalle": "Opcional. Refuerza los tipos de relación con ejemplos."
+    }
+  ],
+  "entregable": "Link al PR con la entidad Categoria, su migración y una ruta que devuelve gastos con su categoría. Explicación: qué es una llave foránea y qué hace Include.",
+  "pregunta": "¿Qué pasaría con los gastos de una categoría si la borras? ¿Cómo lo decidirías?",
+  "whatsapp": "*Vibecoders · Relaciones y consultas: categorías*\nViernes 20 de noviembre\n\nModelar una relación uno a muchos entre Categoria y Gasto, crear la migración y consultar datos relacionados con EF Core.\n\n⏱ ≈ 2 h 5 min\n✅ Entrega: PR con Categoria, migración y consulta de gastos por categoría\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

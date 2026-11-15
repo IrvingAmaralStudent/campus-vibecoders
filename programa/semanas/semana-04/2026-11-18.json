@@ -1,0 +1,42 @@
+{
+  "fecha": "2026-11-18",
+  "semana": 4,
+  "fase": 2,
+  "semanaTitulo": "Backend en .NET II: Entity Framework Core, migraciones, inyección de dependencias, SQL en Docker",
+  "entregableSemana": "API .NET con EF Core y PostgreSQL o SQL Server en Docker",
+  "titulo": "Migraciones: versionar el esquema",
+  "objetivo": "Crear y aplicar migraciones de EF Core para que la base de datos se construya desde el código, y entender por qué se versiona el esquema.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "NetMentor: Migraciones en Entity Framework Core de manera efectiva",
+      "url": "https://www.youtube.com/watch?v=GPZhfHpyHpo",
+      "minutos": 20,
+      "detalle": "Identifica los comandos para agregar, aplicar y revertir una migración."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Migraciones en EF Core",
+      "url": "https://learn.microsoft.com/es-es/ef/core/managing-schemas/migrations/",
+      "minutos": 25,
+      "detalle": "Lee hasta el apartado de aplicar migraciones. Fíjate en el archivo de instantánea (snapshot) y en qué contiene cada migración."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Primera migración con Claude Code",
+      "minutos": 50,
+      "detalle": "En la rama migraciones, pídele a Claude Code: \"Instala la herramienta dotnet-ef, genera la migración inicial para Gasto y explícame los archivos creados. Aplícala a mi PostgreSQL de Docker\".\nBorra la tabla gastos que creaste a mano el lunes (o usa una base nueva) para que la migración la cree. Revisa el SQL que generó con `dotnet ef migrations script` y comprueba la tabla en psql. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: agrega una columna",
+      "minutos": 30,
+      "detalle": "Sin IA, agrega la propiedad Nota (texto opcional) a Gasto, genera tú mismo la migración, aplícala y verifica la columna en psql. Si falla, lee el error completo antes de pedir ayuda."
+    }
+  ],
+  "entregable": "Link al PR con la carpeta Migrations y una migración nueva. Explicación: qué hace una migración y qué pasa si dos personas cambian el modelo a la vez.",
+  "pregunta": "¿Por qué es mejor versionar los cambios de la base de datos con migraciones que editar las tablas a mano?",
+  "whatsapp": "*Vibecoders · Migraciones: versionar el esquema*\nMiércoles 18 de noviembre\n\nCrear y aplicar migraciones de EF Core para que la base de datos se construya desde el código, y entender por qué se versiona el esquema.\n\n⏱ ≈ 2 h 5 min\n✅ Entrega: PR con migración inicial y una migración extra aplicadas en PostgreSQL\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
