@@ -1,0 +1,58 @@
+{
+  "fecha": "2026-11-24",
+  "semana": 5,
+  "fase": 2,
+  "semanaTitulo": "Frontend en Angular I: componentes, servicios, routing",
+  "entregableSemana": "Frontend Angular que lista y crea registros contra la API",
+  "titulo": "Plantillas, signals y control de flujo",
+  "objetivo": "Usar enlaces de datos, @for, @if y signals para que la lista de gastos reaccione a lo que hace la persona usuaria.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Carlos Codea: ¿Qué son las signals/señales en Angular y por qué son tan importantes?",
+      "url": "https://www.youtube.com/watch?v=fKp4VUKDyA4",
+      "minutos": 20,
+      "detalle": "Anota con tus palabras qué es una signal y cómo se lee y se actualiza."
+    },
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Código Tipado: Tutorial Angular Signals, explicación completa para principiantes",
+      "url": "https://www.youtube.com/watch?v=SiHdkVZpQKs",
+      "minutos": 25,
+      "detalle": "Sigue los ejemplos de signal, computed y set/update. Mira hasta donde alcances en el tiempo."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Lista dinámica con Claude Code",
+      "minutos": 50,
+      "detalle": "En la rama plantillas pídele a Claude Code: \"Usa una signal con la lista de gastos, @for para pintarla, @if para mostrar un mensaje cuando esté vacía y un computed con el total. Agrega un botón que elimine un gasto\".\nRevisa que use la sintaxis moderna (@for con track) y no *ngFor. Prueba en el navegador. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: contador de gastos",
+      "minutos": 30,
+      "detalle": "Sin IA, agrega un filtro de texto con un input y una signal, y muestra solo los gastos cuya descripción coincida. Explica en un comentario qué cambia en pantalla cuando cambia la signal."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "angular.dev: Plantillas",
+      "url": "https://angular.dev/essentials/templates",
+      "minutos": 15,
+      "detalle": "Opcional, en inglés. Repasa enlaces de datos, eventos y control de flujo."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "angular.dev: Signals",
+      "url": "https://angular.dev/essentials/signals",
+      "minutos": 15,
+      "detalle": "Opcional, en inglés. Compara con lo que viste en los videos."
+    }
+  ],
+  "entregable": "Link al PR con la lista dinámica (@for, @if, signal y computed). Explicación: qué es una signal y en qué se diferencia de una variable normal.",
+  "pregunta": "¿Qué se complicaría en tu pantalla si cada dato se actualizara a mano en lugar de usar signals?",
+  "whatsapp": "*Vibecoders · Plantillas, signals y control de flujo*\nMartes 24 de noviembre\n\nUsar enlaces de datos, @for, @if y signals para que la lista de gastos reaccione a lo que hace la persona usuaria.\n\n⏱ ≈ 2 h 5 min\n✅ Entrega: PR con lista dinámica usando @for, @if y signals\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
