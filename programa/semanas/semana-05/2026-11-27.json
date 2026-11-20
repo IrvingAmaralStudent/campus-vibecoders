@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-11-27",
+  "semana": 5,
+  "fase": 2,
+  "semanaTitulo": "Frontend en Angular I: componentes, servicios, routing",
+  "entregableSemana": "Frontend Angular que lista y crea registros contra la API",
+  "titulo": "Routing: varias pantallas en una app",
+  "objetivo": "Definir rutas en Angular para tener pantallas de lista, detalle y creación de gastos.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Moldeo Interactive: Curso de Angular, Rutas / Routing",
+      "url": "https://www.youtube.com/watch?v=HaKFGV6EYTs",
+      "minutos": 20,
+      "detalle": "Anota cómo se declara un arreglo de rutas y cómo se enlaza con routerLink."
+    },
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Moldeo Interactive: Curso de Angular, Rutas / Routing con Datos",
+      "url": "https://www.youtube.com/watch?v=fpZAkZvtI9k",
+      "minutos": 20,
+      "detalle": "Fíjate en los parámetros de ruta (por ejemplo /gastos/:id) y cómo se leen."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Rutas con Claude Code",
+      "minutos": 55,
+      "detalle": "En la rama rutas pídele a Claude Code: \"Agrega routing con tres rutas: /gastos (lista), /gastos/nuevo (formulario simple para crear) y /gastos/:id (detalle). Agrega un menú con routerLink y una ruta comodín para 'no encontrado'\".\nRevisa app.routes.ts y que la navegación no recargue la página. Prueba cada ruta escribiendo la URL a mano. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: ruta de detalle",
+      "minutos": 30,
+      "detalle": "Sin IA, crea la ruta /gastos/:id, lee el id con la ruta activa y muestra el gasto correspondiente desde el servicio. Si no existe, muestra un mensaje."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "angular.dev: Definir rutas",
+      "url": "https://angular.dev/guide/routing/define-routes",
+      "minutos": 15,
+      "detalle": "Opcional, en inglés. Repasa rutas, parámetros y redirecciones."
+    }
+  ],
+  "entregable": "Link al PR con las tres rutas, el menú y la ruta comodín. Explicación: qué hace el router y cómo viaja el id de la URL al componente.",
+  "pregunta": "¿Qué diferencia notas entre navegar con routerLink y con un enlace normal?",
+  "whatsapp": "*Vibecoders · Routing: varias pantallas en una app*\nViernes 27 de noviembre\n\nDefinir rutas en Angular para tener pantallas de lista, detalle y creación de gastos.\n\n⏱ ≈ 2 h 5 min\n✅ Entrega: PR con rutas de lista, creación y detalle\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
