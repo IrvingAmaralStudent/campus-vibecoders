@@ -1,0 +1,58 @@
+{
+  "fecha": "2026-11-23",
+  "semana": 5,
+  "fase": 2,
+  "semanaTitulo": "Frontend en Angular I: componentes, servicios, routing",
+  "entregableSemana": "Frontend Angular que lista y crea registros contra la API",
+  "titulo": "Angular CLI y tu primer componente",
+  "objetivo": "Crear un proyecto Angular con la CLI, entender qué es un componente y mostrar una lista de gastos con datos fijos.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Victor Robles WEB: Aprende Angular 21 en 15 Minutos",
+      "url": "https://www.youtube.com/watch?v=NYkXSClmaQg",
+      "minutos": 15,
+      "detalle": "Vista general: proyecto, componentes y plantillas. No te preocupes por entenderlo todo; anota tres palabras nuevas."
+    },
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "AMazaing Code: Angular - Curso COMPLETO desde 0",
+      "url": "https://www.youtube.com/watch?v=l8oOg5CiNO8",
+      "minutos": 30,
+      "detalle": "Mira los primeros 30 minutos: instalación, estructura del proyecto y primer componente. Pausa y repite los pasos en tu equipo."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Proyecto Angular con Claude Code",
+      "minutos": 50,
+      "detalle": "Instala Node LTS si hace falta y `npm install -g @angular/cli`. Crea un repo nuevo en tu GitHub personal (gastos-web) y la rama base-angular.\nPídele a Claude Code: \"Crea un proyecto Angular con `ng new`, explícame cada carpeta y crea un componente gastos-lista que muestre un arreglo fijo de gastos en una tabla\".\nEjecuta `ng serve`, abre el navegador y revisa el diff: qué archivos creó y para qué sirve cada uno. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: componente tarjeta",
+      "minutos": 30,
+      "detalle": "Sin IA, genera con `ng generate component gasto-tarjeta` un componente que reciba descripción y monto con `input()` y los muestre. Úsalo tres veces desde el componente principal."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "angular.dev: Instalación local",
+      "url": "https://angular.dev/tools/cli/setup-local",
+      "minutos": 15,
+      "detalle": "Opcional, en inglés. Revisa los requisitos de Node y los comandos básicos de la CLI."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "angular.dev: Componentes",
+      "url": "https://angular.dev/essentials/components",
+      "minutos": 15,
+      "detalle": "Opcional, en inglés. Fíjate en el decorador @Component y en cómo se usa el selector."
+    }
+  ],
+  "entregable": "Link al PR del repo gastos-web con el proyecto y los componentes gastos-lista y gasto-tarjeta. Explicación: qué es un componente y qué hace cada archivo que genera la CLI.",
+  "pregunta": "¿Qué ventaja tiene dividir una pantalla en componentes pequeños en lugar de un solo archivo grande?",
+  "whatsapp": "*Vibecoders · Angular CLI y tu primer componente*\nLunes 23 de noviembre\n\nCrear un proyecto Angular con la CLI, entender qué es un componente y mostrar una lista de gastos con datos fijos.\n\n⏱ ≈ 2 h 5 min\n✅ Entrega: PR con proyecto Angular y componentes de lista y tarjeta\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

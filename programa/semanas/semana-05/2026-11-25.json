@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-11-25",
+  "semana": 5,
+  "fase": 2,
+  "semanaTitulo": "Frontend en Angular I: componentes, servicios, routing",
+  "entregableSemana": "Frontend Angular que lista y crea registros contra la API",
+  "titulo": "Servicios e inyección de dependencias en Angular",
+  "objetivo": "Mover los datos y la lógica a un servicio inyectable y compartirlo entre componentes.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Fernando Herrera: Angular moderno, Servicios en Angular",
+      "url": "https://www.youtube.com/watch?v=ipdC8xo_o3c",
+      "minutos": 30,
+      "detalle": "Fíjate en cómo se crea el servicio, qué hace `providedIn: 'root'` y cómo se inyecta con `inject()`."
+    },
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Carlos Codea: Entendiendo los servicios, inyección de dependencias",
+      "url": "https://www.youtube.com/watch?v=ONtQ8r0sxCw",
+      "minutos": 20,
+      "detalle": "Compara con la inyección de dependencias que viste en .NET: anota dos parecidos."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Servicio de gastos con Claude Code",
+      "minutos": 50,
+      "detalle": "En la rama servicio-gastos pídele a Claude Code: \"Crea un GastosService con `ng generate service`, que guarde la lista en una signal y exponga métodos para agregar y eliminar. Haz que los componentes lo usen con inject()\".\nRevisa que los componentes ya no tengan el arreglo propio. Prueba que dos componentes compartan los mismos datos. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: servicio contador",
+      "minutos": 30,
+      "detalle": "Sin IA, crea un servicio ContadorService con una signal y dos componentes distintos que lo muestren y lo modifiquen. Anota por qué ambos ven el mismo valor."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "angular.dev: Inyección de dependencias",
+      "url": "https://angular.dev/essentials/dependency-injection",
+      "minutos": 15,
+      "detalle": "Opcional, en inglés. Repasa cómo se declara e inyecta un servicio."
+    }
+  ],
+  "entregable": "Link al PR con GastosService compartido entre componentes. Explicación: qué es un servicio y por qué los componentes lo reciben en lugar de crearlo.",
+  "pregunta": "¿Qué pasaría si cada componente creara su propia copia de la lista de gastos?",
+  "whatsapp": "*Vibecoders · Servicios e inyección de dependencias en Angular*\nMiércoles 25 de noviembre\n\nMover los datos y la lógica a un servicio inyectable y compartirlo entre componentes.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: PR con GastosService inyectado en los componentes\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

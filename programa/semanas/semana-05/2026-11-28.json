@@ -1,0 +1,32 @@
+{
+  "fecha": "2026-11-28",
+  "semana": 5,
+  "fase": 2,
+  "semanaTitulo": "Frontend en Angular I: componentes, servicios, routing",
+  "entregableSemana": "Frontend Angular que lista y crea registros contra la API",
+  "titulo": "Laboratorio: frontend Angular que lista y crea gastos",
+  "objetivo": "Integrar la semana: frontend Angular con rutas, servicio y HttpClient que lista y crea gastos contra tu API, con README para que otra persona lo levante.",
+  "bloques": [
+    {
+      "tipo": "proyecto",
+      "titulo": "Frontend de gastos conectado a la API",
+      "minutos": 110,
+      "detalle": "Completa gastos-web: lista, formulario de creación (puede ser simple), detalle, servicio con HttpClient, manejo básico de errores (mensaje si la API no responde) y rutas.\nFlujo de siempre: plan en Claude Code, rama, revisión del diff, prueba en el navegador, commit y PR.\nSi tienes tiempo, empieza la pantalla principal de tu PROYECTO.md en otro repo."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "README y arranque desde cero con Claude Code",
+      "minutos": 35,
+      "detalle": "Pídele a Claude Code que escriba el README: cómo levantar la API con Docker, cómo instalar y correr Angular y cómo configurar la URL de la API. Clona el repo en otra carpeta, sigue tu README al pie de la letra y corrige lo que falle."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: explícalo en voz alta",
+      "minutos": 30,
+      "detalle": "Sin IA y sin mirar el código, explica en voz alta o grabando tu pantalla qué ocurre desde que haces clic en 'Guardar' hasta que el gasto aparece en la lista: componente, servicio, HttpClient, API, base de datos y actualización de la pantalla. Anota dónde dudaste y repásalo."
+    }
+  ],
+  "entregable": "Link al repo gastos-web con el frontend, el README y la API funcionando. Explicación: el recorrido de crear un gasto desde el clic hasta verlo en la lista.",
+  "pregunta": "¿Qué parte del recorrido componente-servicio-API explicarías peor hoy y qué harás para reforzarla?",
+  "whatsapp": "*Vibecoders · Laboratorio: frontend Angular que lista y crea gastos*\nSábado 28 de noviembre · laboratorio\n\nIntegrar la semana: frontend Angular con rutas, servicio y HttpClient que lista y crea gastos contra tu API, con README para que otra persona lo levante.\n\n⏱ ≈ 2 h 55 min (sábado)\n✅ Entrega: repo Angular conectado a la API con README\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

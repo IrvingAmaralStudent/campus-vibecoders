@@ -1,0 +1,58 @@
+{
+  "fecha": "2026-11-26",
+  "semana": 5,
+  "fase": 2,
+  "semanaTitulo": "Frontend en Angular I: componentes, servicios, routing",
+  "entregableSemana": "Frontend Angular que lista y crea registros contra la API",
+  "titulo": "Conectar Angular con la API usando HttpClient",
+  "objetivo": "Listar y crear gastos desde Angular contra la API de la semana 4, resolviendo el problema de CORS.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "AMazaing Code: Angular - API REQUESTS, HttpClient, petición GET a una API",
+      "url": "https://www.youtube.com/watch?v=UV_anqLaBko",
+      "minutos": 20,
+      "detalle": "Fíjate en cómo se configura `provideHttpClient` y cómo se hace un GET."
+    },
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Programando con estilo: Cómo consumir una API RESTful con Angular",
+      "url": "https://www.youtube.com/watch?v=mTTVJcr0D_I",
+      "minutos": 25,
+      "detalle": "Observa cómo se hacen las peticiones POST y DELETE y cómo se maneja la respuesta."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Habilitar solicitudes entre orígenes (CORS) en ASP.NET Core",
+      "url": "https://learn.microsoft.com/es-es/aspnet/core/security/cors",
+      "minutos": 15,
+      "detalle": "Entiende por qué el navegador bloquea las peticiones desde localhost:4200 y cómo se permite un origen concreto."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Angular + API con Claude Code",
+      "minutos": 45,
+      "detalle": "Levanta tu API .NET con PostgreSQL en Docker. En la rama conectar-api pídele a Claude Code: \"Configura provideHttpClient, haz que GastosService use HttpClient para GET y POST contra mi API y habilita CORS solo para http://localhost:4200 en la API\".\nRevisa que la URL base esté en un solo lugar y que CORS no use `AllowAnyOrigin`. Prueba listar y crear desde el navegador. Commit y PR en ambos repos."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: lee la pestaña Red",
+      "minutos": 25,
+      "detalle": "Sin IA, abre las herramientas del navegador (pestaña Red), crea un gasto y anota método, URL, código de estado y cuerpo de la petición y de la respuesta. Provoca un error apagando la API y describe qué ves."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "angular.dev: Hacer peticiones HTTP",
+      "url": "https://angular.dev/guide/http/making-requests",
+      "minutos": 15,
+      "detalle": "Opcional, en inglés. Revisa los métodos de HttpClient y sus opciones."
+    }
+  ],
+  "entregable": "Links a los PR de Angular y de la API con GET y POST funcionando y CORS limitado. Explicación: qué es CORS y por qué el navegador lo aplica.",
+  "pregunta": "¿Por qué permitir cualquier origen en CORS puede ser un riesgo?",
+  "whatsapp": "*Vibecoders · Conectar Angular con la API usando HttpClient*\nJueves 26 de noviembre\n\nListar y crear gastos desde Angular contra la API de la semana 4, resolviendo el problema de CORS.\n\n⏱ ≈ 2 h 10 min\n✅ Entrega: PRs con Angular consumiendo la API y CORS configurado\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
