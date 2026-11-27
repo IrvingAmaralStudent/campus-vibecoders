@@ -1,0 +1,42 @@
+{
+  "fecha": "2026-12-02",
+  "semana": 6,
+  "fase": 2,
+  "semanaTitulo": "Frontend en Angular II: formularios reactivos, manejo de errores, autenticación con JWT",
+  "entregableSemana": "App completa con login JWT",
+  "titulo": "Manejo de errores HTTP e interceptores",
+  "objetivo": "Interpretar los códigos de error de la API y centralizar su manejo con un interceptor para mostrar mensajes útiles.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Carlos Codea: ¡Domina las Solicitudes HTTP con Interceptores en Angular 19!",
+      "url": "https://www.youtube.com/watch?v=3gCLSlTag14",
+      "minutos": 15,
+      "detalle": "Anota qué es un interceptor funcional y cómo se registra con `withInterceptors`."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "MDN: Códigos de estado de respuesta HTTP",
+      "url": "https://developer.mozilla.org/es/docs/Web/HTTP/Reference/Status",
+      "minutos": 20,
+      "detalle": "Repasa 400, 401, 403, 404 y 500: qué significa cada uno y quién tiene la culpa (cliente o servidor)."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Interceptor de errores con Claude Code",
+      "minutos": 55,
+      "detalle": "En la rama manejo-errores pídele a Claude Code: \"Crea un interceptor funcional que capture los errores de HttpClient, traduzca 0, 400, 404 y 500 a mensajes en español y los guarde en una signal de un NotificacionesService. Muestra esos mensajes en un componente de avisos\".\nRevisa que el interceptor vuelva a lanzar el error (con throwError) para que el componente pueda reaccionar y que no se muestren detalles técnicos a la persona usuaria. Prueba apagando la API. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: interceptor de registro",
+      "minutos": 30,
+      "detalle": "Sin IA, escribe un interceptor que imprima en consola método y URL de cada petición. Anota en qué orden se ejecutan si registras dos interceptores."
+    }
+  ],
+  "entregable": "Link al PR con el interceptor de errores y el componente de avisos. Explicación: qué hace un interceptor y por qué es mejor centralizar el manejo de errores.",
+  "pregunta": "¿Qué mensaje de error le mostrarías a una persona usuaria y cuál dejarías solo en la consola?",
+  "whatsapp": "*Vibecoders · Manejo de errores HTTP e interceptores*\nMiércoles 2 de diciembre\n\nInterpretar los códigos de error de la API y centralizar su manejo con un interceptor para mostrar mensajes útiles.\n\n⏱ ≈ 2 h 0 min\n✅ Entrega: PR con interceptor de errores y avisos\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

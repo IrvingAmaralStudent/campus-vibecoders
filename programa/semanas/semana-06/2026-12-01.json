@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-12-01",
+  "semana": 6,
+  "fase": 2,
+  "semanaTitulo": "Frontend en Angular II: formularios reactivos, manejo de errores, autenticación con JWT",
+  "entregableSemana": "App completa con login JWT",
+  "titulo": "Validaciones y mensajes de error en formularios",
+  "objetivo": "Validar el formulario con reglas integradas y propias, y mostrar mensajes claros solo cuando corresponde.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "DevCuellar: Validación Avanzada de Formularios Reactivos - Angular 18",
+      "url": "https://www.youtube.com/watch?v=FWuAS5iR_to",
+      "minutos": 25,
+      "detalle": "Fíjate en los validadores integrados (required, min, minLength) y en cómo se crea un validador personalizado."
+    },
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "CodeScript: Validaciones a nivel de formulario en Angular 19 con Reactive Forms",
+      "url": "https://www.youtube.com/watch?v=fp2pG3trNig",
+      "minutos": 15,
+      "detalle": "Anota cuándo conviene validar un campo y cuándo el formulario completo."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Validaciones con Claude Code",
+      "minutos": 50,
+      "detalle": "En la rama validaciones pídele a Claude Code: \"Agrega validaciones al formulario de gastos: descripción obligatoria de mínimo 3 caracteres, monto mayor a 0, fecha no futura. Muestra el mensaje de error debajo de cada campo solo si fue tocado, y agrega un validador propio reutilizable para la fecha\".\nRevisa que los mensajes sean claros, en español, y que no aparezcan antes de que la persona interactúe. Prueba con datos inválidos a propósito. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: validador de contraseña",
+      "minutos": 30,
+      "detalle": "Sin IA, escribe un validador propio que exija mínimo 8 caracteres y al menos un número, y úsalo en un campo. Muestra un mensaje distinto para cada regla incumplida."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "angular.dev: Validar entrada de formularios",
+      "url": "https://angular.dev/guide/forms/form-validation",
+      "minutos": 15,
+      "detalle": "Opcional, en inglés. Repasa validadores integrados y personalizados."
+    }
+  ],
+  "entregable": "Link al PR con las validaciones y los mensajes de error. Explicación: qué diferencia hay entre un validador integrado y uno propio, y por qué hay que validar también en la API.",
+  "pregunta": "¿Por qué validar en el frontend no basta y la API también debe validar?",
+  "whatsapp": "*Vibecoders · Validaciones y mensajes de error en formularios*\nMartes 1 de diciembre\n\nValidar el formulario con reglas integradas y propias, y mostrar mensajes claros solo cuando corresponde.\n\n⏱ ≈ 2 h 0 min\n✅ Entrega: PR con validaciones y mensajes de error\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

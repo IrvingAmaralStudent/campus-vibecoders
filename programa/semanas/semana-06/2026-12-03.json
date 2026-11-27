@@ -1,0 +1,58 @@
+{
+  "fecha": "2026-12-03",
+  "semana": 6,
+  "fase": 2,
+  "semanaTitulo": "Frontend en Angular II: formularios reactivos, manejo de errores, autenticación con JWT",
+  "entregableSemana": "App completa con login JWT",
+  "titulo": "JWT: login en la API de .NET",
+  "objetivo": "Entender qué es un JWT y agregar a la API un endpoint de login que lo emita, con rutas protegidas por [Authorize].",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "The Coder Cave: JWT en 10 minutos - ¿Qué es JWT?",
+      "url": "https://www.youtube.com/watch?v=tWQobKFQLG0",
+      "minutos": 12,
+      "detalle": "Anota las tres partes de un token (encabezado, carga y firma) y por qué la firma evita que lo alteren."
+    },
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Coffee & Data: Autenticación y Autorización en .NET Core con JWT",
+      "url": "https://www.youtube.com/watch?v=c-jobrDjYSY",
+      "minutos": 25,
+      "detalle": "Fíjate en cómo se configura AddAuthentication().AddJwtBearer, cómo se genera el token y dónde se guarda la clave secreta."
+    },
+    {
+      "tipo": "leer",
+      "idioma": "es",
+      "titulo": "Microsoft Learn: Introducción a la autenticación de ASP.NET Core",
+      "url": "https://learn.microsoft.com/es-es/aspnet/core/security/authentication/",
+      "minutos": 15,
+      "detalle": "Lee la diferencia entre autenticación y autorización."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Login con JWT en la API con Claude Code",
+      "minutos": 50,
+      "detalle": "En la rama login-jwt de tu API pídele a Claude Code: \"Agrega JWT bearer a la API: un endpoint POST /auth/login que valide un usuario (por ahora uno fijo en la base de datos, con la contraseña guardada con hash) y devuelva un token que expira en 1 hora, y protege los endpoints de gastos con [Authorize]. La clave secreta debe venir de user-secrets o variables de entorno\".\nRevisa que la clave NO esté escrita en el código ni en el repo, que la contraseña no esté en texto plano y que sin token los endpoints den 401. Prueba con Swagger o curl. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: decodifica un token",
+      "minutos": 25,
+      "detalle": "Sin IA, copia el token que devuelve tu login, decodifica a mano la carga con base64 (o con jwt.io) y anota qué datos contiene. Responde: ¿por qué no debes poner contraseñas dentro de un JWT?"
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "jwt.io: Introduction",
+      "url": "https://jwt.io/introduction",
+      "minutos": 15,
+      "detalle": "Opcional, en inglés. Repasa la estructura de un JWT con ejemplos."
+    }
+  ],
+  "entregable": "Link al PR de la API con /auth/login, el token y endpoints protegidos. Explicación: qué es un JWT, qué contiene y quién lo firma.",
+  "pregunta": "¿Qué riesgo hay si alguien obtiene la clave secreta con la que se firman los tokens?",
+  "whatsapp": "*Vibecoders · JWT: login en la API de .NET*\nJueves 3 de diciembre\n\nEntender qué es un JWT y agregar a la API un endpoint de login que lo emita, con rutas protegidas por [Authorize].\n\n⏱ ≈ 2 h 7 min\n✅ Entrega: PR de la API con login JWT y endpoints protegidos\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
