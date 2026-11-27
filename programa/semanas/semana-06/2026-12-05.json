@@ -1,0 +1,32 @@
+{
+  "fecha": "2026-12-05",
+  "semana": 6,
+  "fase": 2,
+  "semanaTitulo": "Frontend en Angular II: formularios reactivos, manejo de errores, autenticación con JWT",
+  "entregableSemana": "App completa con login JWT",
+  "titulo": "Laboratorio: app de gastos con login JWT",
+  "objetivo": "Integrar la semana: app Angular con login, rutas protegidas, formulario validado y errores claros contra tu API con JWT, documentada en el README.",
+  "bloques": [
+    {
+      "tipo": "proyecto",
+      "titulo": "App de gastos completa con login",
+      "minutos": 110,
+      "detalle": "Une todo en gastos-web y en tu API: login, token en cada petición, guard en las rutas de gastos, formulario reactivo con validaciones, interceptor de errores y cierre de sesión.\nFlujo de siempre: plan en Claude Code, rama, revisión del diff, prueba en el navegador, commit y PR.\nChecklist de seguridad: la clave JWT no está en el repo, el CORS sigue limitado y sin token la API responde 401."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "README y revisión de seguridad con Claude Code",
+      "minutos": 35,
+      "detalle": "Pídele a Claude Code que actualice el README (cómo configurar la clave JWT con user-secrets o variables de entorno, usuario de prueba, cómo correr API y Angular). Después pídele: \"Revisa mi repo y dime si hay secretos, contraseñas o tokens expuestos\". Verifica a mano cada hallazgo y corrige lo que sea real."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: explícalo en voz alta",
+      "minutos": 30,
+      "detalle": "Sin IA y sin mirar el código, explica en voz alta o grabando tu pantalla qué pasa desde que escribes usuario y contraseña hasta que ves tus gastos: formulario, AuthService, API, JWT, interceptor, guard y base de datos. Anota dónde dudaste y repásalo."
+    }
+  ],
+  "entregable": "Link al repo gastos-web y a la API con login JWT funcionando, README actualizado y sin secretos en el repo. Explicación: el recorrido completo de un login y de una petición protegida.",
+  "pregunta": "¿Qué parte de la autenticación explicarías peor hoy y qué harás para reforzarla?",
+  "whatsapp": "*Vibecoders · Laboratorio: app de gastos con login JWT*\nSábado 5 de diciembre · laboratorio\n\nIntegrar la semana: app Angular con login, rutas protegidas, formulario validado y errores claros contra tu API con JWT, documentada en el README.\n\n⏱ ≈ 2 h 55 min (sábado)\n✅ Entrega: app con login JWT, README y sin secretos en el repo\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

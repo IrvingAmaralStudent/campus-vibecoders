@@ -1,0 +1,42 @@
+{
+  "fecha": "2026-11-30",
+  "semana": 6,
+  "fase": 2,
+  "semanaTitulo": "Frontend en Angular II: formularios reactivos, manejo de errores, autenticación con JWT",
+  "entregableSemana": "App completa con login JWT",
+  "titulo": "Formularios reactivos: FormGroup y FormControl",
+  "objetivo": "Crear el formulario de gastos con formularios reactivos de Angular y enviar sus valores al servicio.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "AMazaing Code: Angular - Formularios Reactivos - Cómo crearlos y usarlos",
+      "url": "https://www.youtube.com/watch?v=YhmdLiX1RE8",
+      "minutos": 25,
+      "detalle": "Anota la diferencia entre FormControl y FormGroup y cómo se enlazan con [formGroup] y formControlName."
+    },
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Domini Code: Formularios Reactivos en Angular",
+      "url": "https://www.youtube.com/watch?v=vLfn5dqzbYA",
+      "minutos": 20,
+      "detalle": "Compara con el video anterior y fíjate en cómo se leen los valores con `value` y se envían con (ngSubmit)."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Formulario de gastos con Claude Code",
+      "minutos": 50,
+      "detalle": "En la rama formulario-reactivo de gastos-web pídele a Claude Code: \"Convierte el formulario de crear gasto en un formulario reactivo con FormGroup (descripción, monto, fecha, categoría), usa inject(FormBuilder) y al enviar llama a GastosService\".\nRevisa que no use ngModel, que el botón se deshabilite si el formulario no es válido y que se limpie al guardar. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: formulario de contacto",
+      "minutos": 30,
+      "detalle": "Sin IA, crea un formulario reactivo con nombre y correo, y muestra debajo, en tiempo real, el valor del formulario con `form.value | json`. Anota qué cambia cuando escribes."
+    }
+  ],
+  "entregable": "Link al PR con el formulario reactivo de gastos. Explicación: qué es un FormGroup y cómo viajan los datos del campo al servicio.",
+  "pregunta": "¿Qué ventaja ves en definir el formulario en TypeScript y no solo en la plantilla?",
+  "whatsapp": "*Vibecoders · Formularios reactivos: FormGroup y FormControl*\nLunes 30 de noviembre\n\nCrear el formulario de gastos con formularios reactivos de Angular y enviar sus valores al servicio.\n\n⏱ ≈ 2 h 5 min\n✅ Entrega: PR con formulario reactivo de gastos\n\nTodo el material y tu checklist aquí 👉 {link}"
+}

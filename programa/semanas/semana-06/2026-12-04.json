@@ -1,0 +1,50 @@
+{
+  "fecha": "2026-12-04",
+  "semana": 6,
+  "fase": 2,
+  "semanaTitulo": "Frontend en Angular II: formularios reactivos, manejo de errores, autenticación con JWT",
+  "entregableSemana": "App completa con login JWT",
+  "titulo": "Login en Angular: token, interceptor y guards",
+  "objetivo": "Hacer el login desde Angular, guardar el token, enviarlo en cada petición y proteger las rutas con un guard.",
+  "bloques": [
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Neiser Custodio: ¡Crea un Login Moderno en Angular 18 con JWT!",
+      "url": "https://www.youtube.com/watch?v=Hq6y9SDk0bU",
+      "minutos": 30,
+      "detalle": "Fíjate en el servicio de autenticación, dónde se guarda el token y cómo se lee. Mira hasta donde alcances en el tiempo."
+    },
+    {
+      "tipo": "ver",
+      "idioma": "es",
+      "titulo": "Programación en español: Functional route guards en Angular",
+      "url": "https://www.youtube.com/watch?v=ODIw02GU9r0",
+      "minutos": 15,
+      "detalle": "Anota cómo un guard funcional decide si deja pasar a una ruta o redirige al login."
+    },
+    {
+      "tipo": "practica",
+      "titulo": "Login y rutas protegidas con Claude Code",
+      "minutos": 55,
+      "detalle": "En la rama login-angular pídele a Claude Code: \"Crea un AuthService con signals que haga POST a /auth/login y guarde el token, una pantalla de login con formulario reactivo, un interceptor que agregue el encabezado Authorization: Bearer, un guard funcional que redirija a /login si no hay sesión y un botón de cerrar sesión. Si la API responde 401, cierra la sesión y manda al login\".\nRevisa dónde se guarda el token (localStorage es lo más simple, pero anota su riesgo ante XSS), que el token no se imprima en consola y que el interceptor no lo mande a otros dominios. Prueba con y sin sesión. Commit y PR."
+    },
+    {
+      "tipo": "sinia",
+      "titulo": "Reto sin IA: guard de sesión",
+      "minutos": 25,
+      "detalle": "Sin IA, escribe un guard funcional que revise una signal `sesionIniciada` y redirija con `Router` a /login si es falsa. Aplícalo a una ruta y pruébalo."
+    },
+    {
+      "tipo": "extra",
+      "idioma": "en",
+      "titulo": "angular.dev: Route guards",
+      "url": "https://angular.dev/guide/routing/route-guards",
+      "minutos": 15,
+      "detalle": "Opcional, en inglés. Repasa canActivate y las redirecciones."
+    }
+  ],
+  "entregable": "Link al PR de Angular con login, interceptor de token y guard. Explicación: cómo viaja el token desde el login hasta cada petición y qué pasa si expira.",
+  "pregunta": "¿Qué riesgo implica guardar el token en localStorage y cómo lo reducirías?",
+  "whatsapp": "*Vibecoders · Login en Angular: token, interceptor y guards*\nViernes 4 de diciembre\n\nHacer el login desde Angular, guardar el token, enviarlo en cada petición y proteger las rutas con un guard.\n\n⏱ ≈ 2 h 5 min\n✅ Entrega: PR con login, interceptor de token y guard\n\nTodo el material y tu checklist aquí 👉 {link}"
+}
